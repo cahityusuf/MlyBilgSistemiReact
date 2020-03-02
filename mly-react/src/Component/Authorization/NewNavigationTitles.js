@@ -5,13 +5,13 @@ const Example = (props) => {
   return (
     <Form>
        <FormGroup>
-        <Label for="exampleAddress">Sayfa Url</Label>
-        <Input type="text" name="page" id="pages" placeholder="Componen Adını Gir"/>
+        <Label for="exampleAddress">Menü başlık Adı</Label>
+        <Input type="text" name="page" id="pages" placeholder="Başlık oluşturunuz"/>
       </FormGroup>
 
       <FormGroup>
-      <Label for="exampleAddress">Sayfa Tanımı</Label>
-        <Input type="text" name="detail" id="pagedetail" placeholder="Sayfanın ekranda görünen tanımı"/>
+      <Label for="exampleAddress">Başlık Açıklaması</Label>
+        <Input type="textaria" name="detail" id="pagedetail" placeholder="Başlık hakkında açıklama giriniz"/>
       </FormGroup>      
       <FormGroup check>
         <Label check>

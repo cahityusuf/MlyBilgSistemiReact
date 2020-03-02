@@ -1,11 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react';
+import { Button, Form, FormGroup, Label, Input, FormText,Row,Col } from 'reactstrap';
 
-export default class PagesRequest extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        )
-    }
+const Example = (props) => {
+  return (
+    <Row>
+        <Col xs="3">
+            
+        </Col>
+        <Col xs="9">
+        </Col>
+    </Row>
+  );
 }
+
+export default Example;
