@@ -1,16 +1,12 @@
-import React from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import React, { Component } from 'react'
+//import {connect} from "react-redux"
 
-const Example = (props) => {
-  return (
-    <Form>
-      <FormGroup>
-        <Label for="exampleAddress">Role Adı</Label>
-        <Input type="text" name="role" id="roles" placeholder="Yetki Tipini Giriniz"/>
-      </FormGroup>
-      <Button>Submit</Button>
-    </Form>
-  );
+export default class NewRole extends Component {
+  render() {
+    return (
+      <div>
+        
+      </div>
+    )
+  }
 }
-
-export default Example;

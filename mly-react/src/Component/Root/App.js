@@ -1,13 +1,15 @@
 import React from "react";
 //import Navigation from "../Navigation/Navigation";
 
-import Dashboard from "./Dashboard"
+//import Dashboard from "./Dashboard"
 import { Container } from "reactstrap";
+//import RolesPages from "../Authorization/RolesPages";
+import NewRole from "../Authorization/NewRole";
 
 function App() {
   return (
     <div>
-      <Container className="flex"><Dashboard/></Container>    
+      <Container className="flex"><NewRole/></Container>    
     </div>
   );
 }

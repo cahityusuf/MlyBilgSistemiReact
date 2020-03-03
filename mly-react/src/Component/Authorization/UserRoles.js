@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import {connect} from "react-redux"
 
-const Example = (props) => {
+const UserRoles = (props) => {
   return (
     <Form>
       <FormGroup>
@@ -76,4 +77,9 @@ const Example = (props) => {
   );
 }
 
-export default Example;
+function mapStoreToProps(state){
+  return {
+    currentRole:state.ChanceRolesReducer
+  }
+}
+export default connect(mapStoreToProps)(UserRoles);

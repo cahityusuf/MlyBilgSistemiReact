@@ -1,10 +1,10 @@
 import * as actionType from '../Actions/ActionTypes'
 import initialState from './InitialState'
 
-export default function ChangeRequestReducer(state=initialState.currentRequest,action)
+export default function LoginListReducer(state=initialState.login,action)
 {
     switch (action.type) {
-        case actionType.CHANGE_REQUEST:           
+        case actionType.GET_LOGIN_SUCCESS:           
             return action.payload   
         default:
             return state;
