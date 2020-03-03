@@ -4,12 +4,12 @@ import React from "react";
 //import Dashboard from "./Dashboard"
 import { Container } from "reactstrap";
 //import RolesPages from "../Authorization/RolesPages";
-import NewRole from "../Authorization/NewRole";
+import RolesPages from "../Authorization/RolesPages";
 
 function App() {
   return (
     <div>
-      <Container className="flex"><NewRole/></Container>    
+      <Container className="flex"><RolesPages/></Container>    
     </div>
   );
 }
