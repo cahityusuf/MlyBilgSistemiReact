@@ -1,5 +1,5 @@
 export default  {
-    currentRole:{roleName:"Admin"},
+    currentRole:{},
     currentRequest:{},
     currentPage:{},
     roles:[],

@@ -14,7 +14,7 @@ export function getPages()
 {
     return function(dispatch)
     {
-        let  url ="https://localhost:44335/api/roles/list"
+        let  url ="https://localhost:44335/api/pages/list"
 
         return fetch(url).then(response=>response.json())
         .then(result=>dispatch(getPageSuccess(result)));
