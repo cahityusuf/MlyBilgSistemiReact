@@ -6,6 +6,7 @@ import roleListReducer from "./RoleListReducer"
 import pageListReducer from "./PageListReducer"
 import requestListReducer from "./RequestListReducer"
 import loginListReducer from "./LoginListReducer"
+import rolesPagesListReducer from "./RolesPagesListReducer"
 
 const rootReducer = combineReducers({
     changePageReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     roleListReducer,
     pageListReducer,
     requestListReducer,
-    loginListReducer
+    loginListReducer,
+    rolesPagesListReducer
 
 })
 

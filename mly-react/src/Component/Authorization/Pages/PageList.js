@@ -1,24 +1,40 @@
 import React, { Component } from "react";
-import { Label, Input } from "reactstrap";
+import { Table } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as pagesActions from "../../../Redux/Actions/PageAction";
+import * as rolesPagesActions from "../../../Redux/Actions/RolesPagesAction"
 
 class PageList extends Component {
 
-    componentDidMount() {
-        this.props.actions.getPages();
-      }
+  componentDidMount() {
+    this.props.actions.getRolesPages();
+  }
 
   render() {
+  
     return (
       <div>
-        <Label for="exampleSelect">Sayfayı Seçiniz</Label>
-        <Input type="select" name="select" id="exampleSelect">
-          {this.props.pages.map(page => (
-            <option key={page.pagesId}>{page.pagesDetail}</option>
-          ))}
-        </Input>
+    <Table striped>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Rol</th>
+          <th>Sayfa Url</th>
+          <th>Detay</th>
+        </tr>
+      </thead>
+      <tbody>
+        {this.props.currentRolesPages.map(rolesPages=>(
+        <tr key={rolesPages.rolesPagesId}>
+          <th scope="row">1</th>
+          <td>{rolesPages.roleName}</td>
+          <td>{rolesPages.pagesURL}</td>
+          <td>{rolesPages.pagesDetail}</td>
+        </tr>          
+        ))}
+
+      </tbody>
+    </Table>
       </div>
     );
   }
@@ -26,14 +42,15 @@ class PageList extends Component {
 
 function mapStateToProps(state) {
   return {
-    pages: state.pageListReducer
+    currentRolesPages: state.rolesPagesListReducer,
   };
 }
+
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      getPages: bindActionCreators(pagesActions.getPages, dispatch)
+      getRolesPages: bindActionCreators(rolesPagesActions.getRolesPages, dispatch),
     }
   };
 }

@@ -4,11 +4,15 @@ import {
   Col,
   Row
 } from "reactstrap";
-import { connect } from "react-redux";
-import RoleList from './Roles/RoleList'
-import PageList from './Pages/PageList'
+import RoleList from "./Roles/RoleList";
+import PageList from "./Pages/PageList";
+//import * as rolesPagesActions from "../../Redux/Actions/RolesPagesAction"
 
 class RolesPages extends Component {
+
+  // componentDidMount() {
+  //   this.props.actions.getRolesPages();
+  // }
 
   render() {
     return (
@@ -21,8 +25,8 @@ class RolesPages extends Component {
             <PageList></PageList>
             <hr />
             <Button>Submit</Button>
-            <h5>Seçili Role Adı:{this.props.currentRole.name}</h5>
-            <h5>Seçili Role Id:{this.props.currentRole.id}</h5>
+            {/* <h5>Seçili Role Adı:{this.props.currentRole.name}</h5>
+            <h5>Seçili Role Id:{this.props.currentRole.id}</h5> */}
           </Col>
         </Row>
       </div>
@@ -30,11 +34,22 @@ class RolesPages extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  console.log(state)
-  return {
-    currentRole: state.changeRolesReducer,
-  };
-}
+// function mapStateToProps(state) {
+//   console.log(state)
+//   return {
+//     currentRole: state.changeRolesReducer,
+//     currentRolesPages: state.rolesPagesListReducer,
+//   };
+// }
 
-export default connect(mapStateToProps)(RolesPages);
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     actions: {
+//       getRolesPages: bindActionCreators(rolesPagesActions.getRolesPages, dispatch),
+//     }
+//   };
+// }
+
+
+export default RolesPages;

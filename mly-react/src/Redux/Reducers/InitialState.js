@@ -3,6 +3,7 @@ export default  {
     currentRequest:{},
     currentPage:{},
     roles:[],
+    rolesPages:[],
     pages:[],
     request:[],
     login:[]

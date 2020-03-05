@@ -3,6 +3,7 @@ import { Label, ListGroupItem} from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as rolesActions from "../../../Redux/Actions/RolesActions";
+import * as rolesPagesActions from "../../../Redux/Actions/RolesPagesAction"
 
 class RoleList extends Component {
   componentDidMount() {
@@ -11,9 +12,11 @@ class RoleList extends Component {
 
   selectCategory = role => {
     this.props.actions.changeRole(role);
+    this.props.actions.getRolesPages(role.id);
   };
 
   render() {
+
     return (
       <div>
         <Label for="exampleAddress">Sayfa Yetkisi Verilecek Rolü Seçiniz</Label>
@@ -36,6 +39,7 @@ function mapStateToProps(state) {
   return {
     currentRole: state.changeRolesReducer,
     roles: state.roleListReducer,
+    currentRolesPages: state.rolesPagesListReducer,
   };
 }
 
@@ -43,7 +47,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       getRoles: bindActionCreators(rolesActions.getRoles, dispatch),
-      changeRole: bindActionCreators(rolesActions.ChangeRoles, dispatch)
+      changeRole: bindActionCreators(rolesActions.ChangeRoles, dispatch),
+      getRolesPages: bindActionCreators(rolesPagesActions.getRolesPages, dispatch),
     }
   };
 }
