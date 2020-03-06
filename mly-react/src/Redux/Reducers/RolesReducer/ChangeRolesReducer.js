@@ -1,5 +1,5 @@
-import * as actionType from '../Actions/ActionTypes'
-import initialState from './InitialState'
+import * as actionType from '../../Actions/ActionTypes'
+import initialState from '../InitialState'
 
 export default function ChangeRolesReducer(state=initialState.currentRole,action)
 {

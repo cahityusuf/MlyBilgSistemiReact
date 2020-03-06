@@ -1,12 +1,16 @@
 import {combineReducers} from "redux"
-import changePageReducer from "./ChangePageReducer"
-import changeRequestReducer from "./ChangeRequestReducer"
-import changeRolesReducer from "./ChangeRolesReducer"
-import roleListReducer from "./RoleListReducer"
-import pageListReducer from "./PageListReducer"
-import requestListReducer from "./RequestListReducer"
+import changePageReducer from "./PagesReducer/ChangePageReducer"
+import changeRequestReducer from "./RequestsReducer/ChangeRequestReducer"
+import changeRolesReducer from "./RolesReducer/ChangeRolesReducer"
+import roleListReducer from "./RolesReducer/RoleListReducer"
+import pageListReducer from "./PagesReducer/PageListReducer"
+import requestListReducer from "./RequestsReducer/RequestListReducer"
 import loginListReducer from "./LoginListReducer"
-import rolesPagesListReducer from "./RolesPagesListReducer"
+import rolesPagesListReducer from "./RolesPagesReducer/RolesPagesListReducer"
+import saveRoleReducer from "./RolesReducer/SaveRoleReducer"
+import savePagesReducer from "./PagesReducer/SavePagesReducer"
+import saveRequestReducer from "./RequestsReducer/SaveRequestReducer"
+import saveRolesPagesReducer from "./RolesPagesReducer/SaveRolesPagesReducer"
 
 const rootReducer = combineReducers({
     changePageReducer,
@@ -16,7 +20,11 @@ const rootReducer = combineReducers({
     pageListReducer,
     requestListReducer,
     loginListReducer,
-    rolesPagesListReducer
+    rolesPagesListReducer,
+    saveRoleReducer,
+    savePagesReducer,
+    saveRequestReducer,
+    saveRolesPagesReducer
 
 })
 

@@ -1,15 +1,18 @@
 import React from "react";
-//import Navigation from "../Navigation/Navigation";
-
 //import Dashboard from "./Dashboard"
 import { Container } from "reactstrap";
+import Navigation from '../Navigation/Navigation'
 //import RolesPages from "../Authorization/RolesPages";
-import RolesPages from "../Authorization/RolesPages";
+import Router from "../../Router"
 
 function App() {
   return (
     <div>
-      <Container className="flex"><RolesPages/></Container>    
+      <Container className="flex">
+      <Navigation/>
+      <br/>
+        <Router/>
+        </Container>    
     </div>
   );
 }

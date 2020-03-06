@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Navigation from '../Navigation/Navigation'
+
 
 export default class Dashboard extends Component {
   render() {
     return (
       <div>
-          <Navigation></Navigation>
+         
       </div>
     )
   }
