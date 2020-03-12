@@ -67,11 +67,11 @@ export function savePageApi(page) {
     };
   }
   
-  export function updateRole(role) {
+  export function updatePage(page) {
     return function(dispatch) {
-      return updatePageApi(role)
-        .then(updateRole => {
-          dispatch(updatePagesSuccess(updateRole));
+      return updatePageApi(page)
+        .then(updatePage => {
+          dispatch(updatePagesSuccess(updatePage));
         })
         .catch(error => {
           throw error;

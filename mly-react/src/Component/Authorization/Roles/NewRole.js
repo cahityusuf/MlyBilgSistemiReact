@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getRoles, saveRole } from "../../../Redux/Actions/RolesActions";
-import RoleDetail from "./RoleDetail";
+import AddRole from "./AddRole";
 
 
 function NewRole({ getRoles, saveRole, updateRole, roles, history, ...props }) {
@@ -29,7 +29,7 @@ function NewRole({ getRoles, saveRole, updateRole, roles, history, ...props }) {
     });
   }
 
-  return <RoleDetail role={role} onChange={handleChange} onSave={handleSave} />;
+  return <AddRole role={role} onChange={handleChange} onSave={handleSave} />;
 }
 
 export function getRoleById(roles, Id) {

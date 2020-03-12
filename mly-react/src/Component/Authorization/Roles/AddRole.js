@@ -2,7 +2,7 @@ import React from "react";
 import TextInput from "../../Toolbox/TextInput";
 import { Button } from "reactstrap";
 
-const RoleDetail = (role, onSave, onChange) => {
+const AddRole = (role, onSave, onChange) => {
   return (
     <form onSubmit={onSave}>
       <h2>"Ekle"</h2>
@@ -21,4 +21,4 @@ const RoleDetail = (role, onSave, onChange) => {
   );
 };
 
-export default RoleDetail;
+export default AddRole;
