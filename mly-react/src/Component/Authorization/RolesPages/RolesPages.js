@@ -8,16 +8,18 @@ import {getRolesPages} from "../../../Redux/Actions/RolesPagesAction"
 function RolesPages({
   getRoles,
   getPages,
+  getRolesPages,
   saveRole,
   updateRole,
   roles,
   pages,
-  getRolesPages,
+  rolesPages,
   history,
   ...props
 }) {
   const [role, setRole] = useState({ ...props.role });
   const [page, setPage] = useState({ ...props.page });
+  const [rolesPage, setRolesPages] = useState({ ...props.rolesPages });
   const [errors, setErrors] = useState({});
 
   useEffect(
@@ -25,12 +27,15 @@ function RolesPages({
       if (roles.length === 0 && pages.length===0) {
         getRoles();
         getPages();
+        getRolesPages();
       }
       setRole({ ...props.role });
       setPage({ ...props.page });
+      setRolesPages({ ...props.rolesPage });
     },
     [props.role],
-    [props.page]
+    [props.page],
+    [props.rolesPage],
   );
 
   function handleChange(event) {
@@ -39,7 +44,8 @@ function RolesPages({
       ...previousRole,
       [name]: name === value
     }));
-
+  console.log(getRolesPages(value))
+    getRolesPages(value);
     Validate(name,value);
   }
 
@@ -71,7 +77,7 @@ function RolesPages({
       onChange={handleChange}
       onSave={handleSave}
       errors={errors}
-      //rolesPages={GetRolesPagesList()}
+      rolesPages={rolesPages}
     />
   );
 }
@@ -84,7 +90,8 @@ function RolesPages({
 function mapStateToProps(state) {
   return {
     roles: state.roleListReducer,
-    pages: state.pageListReducer
+    pages: state.pageListReducer,
+    rolesPages:state.rolesPagesListReducer
   };
 }
 

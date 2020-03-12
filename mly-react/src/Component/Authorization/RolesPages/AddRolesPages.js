@@ -35,7 +35,7 @@ const AddRolesPages = ({ roles, pages, onChange, onSave, errors, rolesPages }) =
       <Button type="submit" className="btn btn-success">
         Kaydet
       </Button>
-
+      <hr/>
       <Table striped>
         <thead>
           <tr>
@@ -46,14 +46,14 @@ const AddRolesPages = ({ roles, pages, onChange, onSave, errors, rolesPages }) =
           </tr>
         </thead>
         <tbody>
-          {/* {rolesPages.map(rolesPages => (
+          {rolesPages.map(rolesPages => (
             <tr key={rolesPages.rolesPagesId}>
               <th scope="row">1</th>
               <td>{rolesPages.roleName}</td>
               <td>{rolesPages.pagesURL}</td>
               <td>{rolesPages.pagesDetail}</td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </Table>
     </form>
