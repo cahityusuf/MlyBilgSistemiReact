@@ -1,62 +1,81 @@
 import React from "react";
 import SelectInput from "../../Toolbox/SelectInput";
-import { Button, Table } from "reactstrap";
+import { Button } from "reactstrap";
+import ListRolesPages from "./ListRolesPages";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
 
-const AddRolesPages = ({ roles, pages, onChange, onSave, errors, rolesPages }) => {
-  console.log(rolesPages);
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "left",
+    color: theme.palette.text.secondary
+  }
+}));
+
+const AddRolesPages = ({
+  roles,
+  pages,
+  onChange,
+  onSave,
+  errors,
+  rolesPages
+}) => {
+  const classes = useStyles();
+
   return (
+    <div className={classes.root}>
+      <form onSubmit={onSave}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <SelectInput
+                name="roleId"
+                label="Role"
+                value={roles.name}
+                defaultOption="Seçiniz..."
+                options={roles.map(role => ({
+                  value: role.id,
+                  text: role.name
+                }))}
+                onChange={onChange}
+                error={errors.name}
+              />
 
-    <form onSubmit={onSave}>
-      <SelectInput
-        name="roleId"
-        label="Role"
-        value={roles.name}
-        defaultOption="Seçiniz..."
-        options={roles.map(role => ({
-          value: role.id,
-          text: role.name
-        }))}
-        onChange={onChange}
-        error={errors.name}
-      />
+              <SelectInput
+                name="pageId"
+                label="Page"
+                value={pages.pagesId}
+                defaultOption="Seçiniz..."
+                options={pages.map(page => ({
+                  value: page.pagesId,
+                  text: page.pagesURL + " ---> " + page.pagesDetail
+                }))}
+                onChange={onChange}
+                error={errors.pagesURL}
+              />
+            </Paper>
+          </Grid>
 
-      <SelectInput
-        name="pageId"
-        label="Page"
-        value={pages.pagesId}
-        defaultOption="Seçiniz..."
-        options={pages.map(page => ({
-          value: page.pagesId,
-          text: page.pagesURL + " ---> " + page.pagesDetail
-        }))}
-        onChange={onChange}
-        error={errors.pagesURL}
-      />
-      <Button type="submit" className="btn btn-success">
-        Kaydet
-      </Button>
-      <hr/>
-      <Table striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Rol</th>
-            <th>Sayfa Url</th>
-            <th>Detay</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rolesPages.map(rolesPages => (
-            <tr key={rolesPages.rolesPagesId}>
-              <th scope="row">1</th>
-              <td>{rolesPages.roleName}</td>
-              <td>{rolesPages.pagesURL}</td>
-              <td>{rolesPages.pagesDetail}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </form>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Button type="submit" className="btn btn-success">
+                Kaydet
+              </Button>
+            </Paper>
+          </Grid>
+
+          <hr />
+          <Grid item xs={12}>
+            <ListRolesPages rolesPages={rolesPages}></ListRolesPages>
+          </Grid>
+        </Grid>
+      </form>
+    </div>
   );
 };
 

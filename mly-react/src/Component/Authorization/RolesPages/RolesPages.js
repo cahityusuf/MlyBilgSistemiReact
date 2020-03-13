@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getRoles, saveRole } from "../../../Redux/Actions/RolesActions";
+import { getRoles } from "../../../Redux/Actions/RolesActions";
 import { getPages } from "../../../Redux/Actions/PageAction";
 import AddRolesPages from "./AddRolesPages";
-import {getRolesPages} from "../../../Redux/Actions/RolesPagesAction"
+import {getRolesPages,saveRolesPages} from "../../../Redux/Actions/RolesPagesAction"
 
 function RolesPages({
   getRoles,
   getPages,
   getRolesPages,
-  saveRole,
+  saveRolesPages,
   updateRole,
   roles,
   pages,
@@ -33,9 +33,10 @@ function RolesPages({
       setPage({ ...props.page });
       setRolesPages({ ...props.rolesPage });
     },
-    [props.role],
-    [props.page],
     [props.rolesPage],
+    [props.role],
+    [props.page]
+
   );
 
   function handleChange(event) {
@@ -44,7 +45,6 @@ function RolesPages({
       ...previousRole,
       [name]: name === value
     }));
-  console.log(getRolesPages(value))
     getRolesPages(value);
     Validate(name,value);
   }
@@ -64,8 +64,9 @@ function RolesPages({
   }
 
   function handleSave(params) {
+    console.log(roles);
     params.preventDefault();
-    saveRole(role).then(() => {
+    saveRolesPages(role).then(() => {
       history.push("/");
     });
   }
@@ -98,7 +99,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getRoles,
   getPages,
-  saveRole,
+  saveRolesPages,
   getRolesPages
 };
 

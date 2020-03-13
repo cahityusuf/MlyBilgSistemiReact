@@ -1,37 +1,65 @@
 import React from "react";
-import { Table } from "reactstrap";
+import MaterialTable from "material-table";
 
-const ListRolesPages = ({
-  roles,
-  pages,
-  getRoles,
-  getPages,
-}) => {
-  return(
-    <div>
-    <Table striped>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Rol</th>
-          <th>Sayfa Url</th>
-          <th>Detay</th>
-        </tr>
-      </thead>
-      <tbody>
-        {this.props.currentRolesPages.map(rolesPages=>(
-        <tr key={rolesPages.rolesPagesId}>
-          <th scope="row">1</th>
-          <td>{rolesPages.roleName}</td>
-          <td>{rolesPages.pagesURL}</td>
-          <td>{rolesPages.pagesDetail}</td>
-        </tr>          
-        ))}
+export default function ListRolesPages(rolesPages) {
+   const [state, setState] = React.useState({
+    columns: [
+      { title: 'Role', field: 'role' },
+      { title: 'Sayfa Url', field: 'sayfaUrl' },
+      { title: 'Detay', field: 'detay' },
+    ],
+  });
 
-      </tbody>
-    </Table>
-      </div>
-  )
-};
+  console.log(state.data);
 
-export default ListRolesPages;
+  return (
+    <MaterialTable
+      title="Editable Example"
+      columns={state.columns}
+      data={rolesPages.rolesPages.map(rolespages=>({
+      
+        role:rolespages.roleName,
+        sayfaUrl:rolespages.pagesURL,
+        detay:rolespages.pagesDetail
+        
+      }))}
+      editable={{
+        onRowAdd: newData =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              setState(prevState => {
+                const data = [...prevState.data];
+                data.push(newData);
+                return { ...prevState, data };
+              });
+            }, 600);
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              if (oldData) {
+                setState(prevState => {
+                  const data = [...prevState.data];
+                  data[data.indexOf(oldData)] = newData;
+                  return { ...prevState, data };
+                });
+              }
+            }, 600);
+          }),
+        onRowDelete: oldData =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              setState(prevState => {
+                const data = [...prevState.data];
+                data.splice(data.indexOf(oldData), 1);
+                return { ...prevState, data };
+              });
+            }, 600);
+          })
+      }}
+    />
+  );
+}

@@ -1,6 +1,23 @@
-import React from "react";
 
-const SelectInput = ({
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    width: '100%'
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  }
+}));
+
+export default function SimpleSelect({
   name,
   label,
   onChange,
@@ -8,25 +25,40 @@ const SelectInput = ({
   value,
   error,
   options
-}) => {
-  return(
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
-      <select name={name} value={value} onChange={onChange} className="form-control">
-        <option value="">
-          {defaultOption}
-        </option>
-        {options.map(option=>{
-          return(
-            <option key={option.value} value={option.value}>
-              {option.text}
-            </option>
-          )
-        })}
-      </select>
-      {error&&<div className="alert alert-danger">{error}</div>}
-    </div>
-  )
-};
+}) {
+  const classes = useStyles();
 
-export default SelectInput;
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  return (
+    <div>
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
+          {defaultOption}
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          labelWidth={labelWidth}
+          name={name}
+          value={value}
+          onChange={onChange}
+        >
+          <MenuItem value="">{defaultOption}</MenuItem>
+          {options.map(option => {
+            return (
+              <MenuItem key={option.value} value={option.value}>
+                {option.text}
+              </MenuItem>
+            );
+          })}
+        </Select>
+        {error&&<div className="alert alert-danger">{error}</div>}
+      </FormControl>
+    </div>
+  );
+}
