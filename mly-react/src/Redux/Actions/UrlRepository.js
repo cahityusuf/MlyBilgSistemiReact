@@ -15,4 +15,9 @@ export default  {
     Url_RolesPagesDetailList:"https://localhost:44335/api/rolespages/listdetail",
     Url_RolesPagesSave:"https://localhost:44335/api/rolespages/add",
     Url_RolesPagesUpdate:"https://localhost:44335/api/rolespages/update",
+
+    Url_PagesRequestList:"https://localhost:44335/api/pagesrequest/list",
+    Url_PagesRequestDetailList:"https://localhost:44335/api/pagesrequest/listdetail",
+    Url_PagesRequestSave:"https://localhost:44335/api/pagesrequest/add",
+    Url_PagesRequestUpdate:"https://localhost:44335/api/pagesrequest/update",
 }

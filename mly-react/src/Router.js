@@ -6,7 +6,7 @@ import NewRole from "../src/Component/Authorization/Roles/NewRole"
 import NewPage from "../src/Component/Authorization/Pages/NewPage"
 import NewRequest from "../src/Component/Authorization/Requests/NewRequest"
 import RolesPages from "./Component/Authorization/RolesPages/RolesPages"
-import PagesRequest from "../src/Component/Authorization/PagesRequest"
+import PagesRequest from "./Component/Authorization/PagesRequest/PagesRequest"
 import UserRoles from "../src/Component/Authorization/UserRoles"
 
 

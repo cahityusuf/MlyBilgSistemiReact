@@ -11,6 +11,8 @@ import saveRoleReducer from "./RolesReducer/SaveRoleReducer"
 import savePagesReducer from "./PagesReducer/SavePagesReducer"
 import saveRequestReducer from "./RequestsReducer/SaveRequestReducer"
 import saveRolesPagesReducer from "./RolesPagesReducer/SaveRolesPagesReducer"
+import pagesRequestListReducer from "./PagesRequestReducer/PagesRequestListReducer"
+import pagesRequestSaveReducer from "./PagesRequestReducer/PagesRequestSaveReducer"
 
 const rootReducer = combineReducers({
     changePageReducer,
@@ -24,7 +26,9 @@ const rootReducer = combineReducers({
     saveRoleReducer,
     savePagesReducer,
     saveRequestReducer,
-    saveRolesPagesReducer
+    saveRolesPagesReducer,
+    pagesRequestListReducer,
+    pagesRequestSaveReducer
 
 })
 

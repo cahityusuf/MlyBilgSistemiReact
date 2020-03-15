@@ -1,8 +1,7 @@
 import React from "react";
 import SelectInput from "../../Toolbox/SelectInput";
 import Button from "@material-ui/core/Button";
-//import { Button } from "reactstrap";
-import ListRolesPages from "./ListRolesPages";
+import ListPagesRequest from "./ListPagesRequest";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,13 +17,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddRolesPages = ({
+const AddPagesRequest = ({
+  requests,
   roles,
-  pages,
+  rolesPages,
+  pagesRequests,
   onChange,
   onSave,
-  errors,
-  rolesPages
+  errors
 }) => {
   const classes = useStyles();
 
@@ -48,13 +48,26 @@ const AddRolesPages = ({
               />
 
               <SelectInput
-                name="pagesId"
+                name="rolesPagesId"
                 label="Page"
-                value={pages.pagesId}
+                value={rolesPages.rolesPagesId}
                 defaultOption="Sayfa Seçiniz..."
-                options={pages.map(page => ({
-                  value: page.pagesId,
+                options={rolesPages.map(page => ({
+                  value: page.rolesPagesId,
                   text: page.pagesURL + " ---> " + page.pagesDetail
+                }))}
+                onChange={onChange}
+                error={errors.pagesURL}
+              />
+
+              <SelectInput
+                name="requestsId"
+                label="Request"
+                value={requests.requestId}
+                defaultOption="Request Seçiniz."
+                options={requests.map(page => ({
+                  value: page.requestId,
+                  text: page.requestName + " ---> " + page.requestType
                 }))}
                 onChange={onChange}
                 error={errors.pagesURL}
@@ -72,7 +85,7 @@ const AddRolesPages = ({
 
           <hr />
           <Grid item xs={12}>
-            <ListRolesPages rolesPages={rolesPages}></ListRolesPages>
+            <ListPagesRequest pagesRequests={pagesRequests}></ListPagesRequest>
           </Grid>
         </Grid>
       </form>
@@ -80,4 +93,4 @@ const AddRolesPages = ({
   );
 };
 
-export default AddRolesPages;
+export default AddPagesRequest;

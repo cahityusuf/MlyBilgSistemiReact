@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleSelect({
+export default function SelectInput({
   name,
   label,
   onChange,

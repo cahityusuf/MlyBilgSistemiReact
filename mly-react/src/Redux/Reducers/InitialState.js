@@ -4,11 +4,13 @@ export default  {
     currentPage:{},
     roles:[],
     rolesPages:[],
+    pagesRequests:[],
     pages:[],
-    request:[],
+    requests:[],
     login:[],
     savedRole:{}, //default kayıt edilecek seçenekler yer alabilir. Ör: Ip adresi gibi
     savedPages:{},
     savedRequest:{},
-    savedRolesPages:{}
+    savedRolesPages:{},
+    savedPagesRequest:{}
 }
