@@ -37,16 +37,16 @@ export default function SimpleSelect({
   return (
     <div>
       <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
+        <InputLabel ref={inputLabel} id={label}>
           {defaultOption}
         </InputLabel>
         <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
+          labelId={label}
           labelWidth={labelWidth}
           name={name}
           value={value}
           onChange={onChange}
+          
         >
           <MenuItem value="">{defaultOption}</MenuItem>
           {options.map(option => {

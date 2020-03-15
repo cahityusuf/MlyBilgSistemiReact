@@ -3,59 +3,54 @@ import { connect } from "react-redux";
 import { getRoles } from "../../../Redux/Actions/RolesActions";
 import { getPages } from "../../../Redux/Actions/PageAction";
 import AddRolesPages from "./AddRolesPages";
-import {getRolesPages,saveRolesPages} from "../../../Redux/Actions/RolesPagesAction"
+import {
+  getRolesPages,
+  saveRolesPages
+} from "../../../Redux/Actions/RolesPagesAction";
+import alertify from "alertifyjs";
 
 function RolesPages({
   getRoles,
   getPages,
   getRolesPages,
   saveRolesPages,
-  updateRole,
   roles,
   pages,
   rolesPages,
   history,
   ...props
 }) {
-  const [role, setRole] = useState({ ...props.role });
-  const [page, setPage] = useState({ ...props.page });
-  const [rolesPage, setRolesPages] = useState({ ...props.rolesPages });
+  const [rolesPage, setRolesPages] = useState({ ...props.rolesPage });
   const [errors, setErrors] = useState({});
 
-  useEffect(
-    () => {
-      if (roles.length === 0 && pages.length===0) {
-        getRoles();
-        getPages();
-        getRolesPages();
-      }
-      setRole({ ...props.role });
-      setPage({ ...props.page });
-      setRolesPages({ ...props.rolesPage });
-    },
-    [props.rolesPage],
-    [props.role],
-    [props.page]
-
-  );
+  useEffect(() => {
+    if (roles.length === 0 && pages.length === 0) {
+      getRoles();
+      getPages();
+      getRolesPages();
+    }
+    setRolesPages({ ...props.rolesPage });
+  }, [props.rolesPage]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setRole(previousRole => ({
+    setRolesPages(previousRole => ({
       ...previousRole,
-      [name]: name === value
+      [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
-    getRolesPages(value);
-    Validate(name,value);
+    if (event.target.name === "roleId") {
+      getRolesPages(value);
+    }
+    Validate(name, value);
   }
 
-  function Validate(name,value) {
-    if (value === "" && name==="rolId") {
+  function Validate(name, value) {
+    if (value === "" && name === "rolId") {
       setErrors(previousErrors => ({
         ...previousErrors,
         name: "Ürün ismi olmalıdır"
       }));
-    }else{
+    } else {
       setErrors(previousErrors => ({
         ...previousErrors,
         name: ""
@@ -63,12 +58,36 @@ function RolesPages({
     }
   }
 
-  function handleSave(params) {
-    console.log(roles);
-    params.preventDefault();
-    saveRolesPages(role).then(() => {
-      history.push("/");
+  function handleSave(event) {
+    let a = 0;
+
+    rolesPages.map(result => {
+      if (
+        rolesPage.roleId === result.roleId &&
+        rolesPage.pagesId === result.pagesId
+      ) {
+        a += 1;
+      }
     });
+
+    if (a === 0) {
+      saveRolesPages(rolesPage).then(() => {
+        getRolesPages(rolesPage.roleId);
+        //history.push("/");
+      });
+    } else {
+      alertify.confirm(
+        "Yetki vermeye çalıştığınız sayfa zaten yetkili",
+        function() {
+          alertify.success("Tamam");
+        },
+        function() {
+          alertify.error("Kapat");
+        }
+      );
+    }
+
+    event.preventDefault();
   }
 
   return (
@@ -92,7 +111,7 @@ function mapStateToProps(state) {
   return {
     roles: state.roleListReducer,
     pages: state.pageListReducer,
-    rolesPages:state.rolesPagesListReducer
+    rolesPages: state.rolesPagesListReducer
   };
 }
 

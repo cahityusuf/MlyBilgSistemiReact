@@ -1,5 +1,6 @@
 import React from "react";
 import SelectInput from "../../Toolbox/SelectInput";
+import AlertDialog from "../../Toolbox/AlertDialog";
 import { Button } from "reactstrap";
 import ListRolesPages from "./ListRolesPages";
 import Paper from "@material-ui/core/Paper";
@@ -37,7 +38,7 @@ const AddRolesPages = ({
                 name="roleId"
                 label="Role"
                 value={roles.name}
-                defaultOption="Seçiniz..."
+                defaultOption="Rol Seçiniz..."
                 options={roles.map(role => ({
                   value: role.id,
                   text: role.name
@@ -47,10 +48,10 @@ const AddRolesPages = ({
               />
 
               <SelectInput
-                name="pageId"
+                name="pagesId"
                 label="Page"
                 value={pages.pagesId}
-                defaultOption="Seçiniz..."
+                defaultOption="Sayfa Seçiniz..."
                 options={pages.map(page => ({
                   value: page.pagesId,
                   text: page.pagesURL + " ---> " + page.pagesDetail
@@ -74,6 +75,7 @@ const AddRolesPages = ({
             <ListRolesPages rolesPages={rolesPages}></ListRolesPages>
           </Grid>
         </Grid>
+        
       </form>
     </div>
   );

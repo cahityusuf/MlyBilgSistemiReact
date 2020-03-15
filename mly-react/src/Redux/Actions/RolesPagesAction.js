@@ -35,7 +35,10 @@ export function getRolesPages(rolId)
 export function saveRolesPagesApi(rolesPages) {
     return fetch(UrlRepository.Url_RolesPagesSave, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { 
+        "content-type": "application/json",
+        "Accept": "application/json" 
+      },
       body: JSON.stringify(rolesPages)
     })
       .then(handleResponce)
