@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { getPages, savePage } from "../../../Redux/Actions/PageAction";
 import AddPage from "./AddPage";
 
-
 function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
   const [page, setPage] = useState({ ...props.page });
   const [errors, setErrors] = useState({});
@@ -16,31 +15,33 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
   }, [props.page]);
 
   function handleChange(event) {
+
     const { name, value } = event.target;
+console.log(event.target.name)
+    if (event.target.name === "status") {
+      if (event.target.checked === true) {
+        setPage(previousRole => ({
+          ...previousRole,
+          [name]: name === "categoryId" ? parseInt(value, 10) : true
+        }));
+      } else if (event.target.checked === false) {
+        setPage(previousRole => ({
+          ...previousRole,
+          [name]: name === "categoryId" ? parseInt(value, 10) : false
+        }));
+      }
+    }else{
+      setPage(previousRole => ({
+        ...previousRole,
+        [name]: name === "categoryId" ? parseInt(value, 10) : value
+      }));
+    }
 
-    // if (event.target.name === "status") {
-    //   if(event.target.checked===true)
-    //   {
-     
-    //     event.target.value="true"
-    //   }
-    //   if(event.target.checked===false){
 
-    //     event.target.value="false"
-    //   }
-    //   console.log(page);
-    // }
-
-
-    setPage(previousRole => ({
-      ...previousRole,
-      [name]: name === "categoryId" ? parseInt(value, 10) : value
-    }));
-    console.log(event.target.value);
     if (event.target.name === "pagesId") {
       getPages(value);
     }
-   
+
     Validate(name, value);
   }
 
@@ -60,13 +61,20 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
 
   function handleSave(params) {
     params.preventDefault();
-    //console.log(page);
+    console.log(page);
     // savePage(page).then(() => {
     //   history.push("/");
     // });
   }
 
-  return <AddPage pages={pages} onChange={handleChange} onSave={handleSave} errors={errors} />;
+  return (
+    <AddPage
+      pages={pages}
+      onChange={handleChange}
+      onSave={handleSave}
+      errors={errors}
+    />
+  );
 }
 
 export function getRoleById(pages, Id) {
@@ -75,14 +83,14 @@ export function getRoleById(pages, Id) {
 }
 
 function mapStateToProps(state) {
-    return {
-      pages: state.pageListReducer,
-    };
-  }
+  return {
+    pages: state.pageListReducer
+  };
+}
 
 const mapDispatchToProps = {
   getPages,
   savePage
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPage );
+export default connect(mapStateToProps, mapDispatchToProps)(NewPage);

@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddPage = ({ pages, onChange, onSave, errors,checked }) => {
+const AddPage = ({ pages, onChange, onSave, errors, statu }) => {
   const classes = useStyles();
 
   return (
@@ -29,26 +29,42 @@ const AddPage = ({ pages, onChange, onSave, errors,checked }) => {
             <Paper className={classes.paper}>
               <TextInput
                 name="pagesURL"
+                label="Sayanın Url bilgisini giriniz"
+                value={pages.pagesURL}
+                onChance={onChange}
+                error={errors}
+              />
+              <TextInput
+                name="pagesDetail"
+                label="Sayanın amacını açıklayınız"
+                value={pages.pagesDetail}
+                onChance={onChange}
+                error={errors}
+              />
+
+              {/* <TextInput
+                onChange={onChange}
+                name="pagesURL"
+                value="ffffer"
                 label="Sayfa URL tanımını giriniz"
                 placeHolder="Sayfa URL tanımını giriniz"
-                value={pages.pagesURL}
-                id="pagesURL"
-                onChange={onChange}
                 error={errors.name}
               />
 
               <TextInput
-                name="pagesDetail"
-                label="Sayfanın amacını giriniz"
-                placeHolder="Sayfa URL tanımını giriniz"
-                value={pages.pagesDetail}
-                id="pagesDetail"
                 onChange={onChange}
+                name="pagesDetail"
+                value="ffffer"
+                label="Sayfanın amacını giriniz"
+                placeHolder="Sayfanın amacını giriniz"
                 error={errors.name}
-              />
+              /> */}
 
-              <CheckboxLabels  onChange={onChange} value={checked} label="Sayfa aktif mi?" name="status" />
-              
+              <CheckboxLabels
+                onChange={onChange}
+                label="Sayfa aktif mi?"
+                name="status"
+              />
             </Paper>
           </Grid>
 
