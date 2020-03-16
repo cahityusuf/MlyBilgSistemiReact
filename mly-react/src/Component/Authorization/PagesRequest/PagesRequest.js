@@ -47,6 +47,9 @@ function RolesRequest({
     if (event.target.name === "roleId") {
       getRolesPages(value);
     }
+    if (event.target.name === "rolesPagesId") {
+      getPagesRequest(value);
+    }
     Validate(name, value);
   }
 
