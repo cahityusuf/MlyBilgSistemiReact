@@ -1,58 +1,80 @@
-import React, { Component } from "react";
-import { Table } from "reactstrap";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as rolesPagesActions from "../../../Redux/Actions/RolesPagesAction"
+import React from "react";
+import MaterialTable from "material-table";
 
-class PageList extends Component {
+export default function ListUserRoles(pages) {
+   const [state, setState] = React.useState({
+    columns: [
+      { title: 'Sayfa Url', field: 'url' },
+      { title: 'Detayı', field: 'detail' },
+      { title: 'Statü', field: 'status' }
 
-  componentDidMount() {
-    this.props.actions.getRolesPages();
-  }
+    ],
+    
+    options:[{
+      headerStyle: {
+        backgroundColor: '#01579b',
+        color: '#FFF'
+      }
+    }]
+  });
 
-  render() {
-  
-    return (
-      <div>
-    <Table striped>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Rol</th>
-          <th>Sayfa Url</th>
-          <th>Detay</th>
-        </tr>
-      </thead>
-      <tbody>
-        {this.props.currentRolesPages.map(rolesPages=>(
-        <tr key={rolesPages.rolesPagesId}>
-          <th scope="row">1</th>
-          <td>{rolesPages.roleName}</td>
-          <td>{rolesPages.pagesURL}</td>
-          <td>{rolesPages.pagesDetail}</td>
-        </tr>          
-        ))}
-
-      </tbody>
-    </Table>
-      </div>
-    );
-  }
+  return (
+    <MaterialTable
+    options={{
+      headerStyle: {
+        backgroundColor: '#424242',
+        color: '#FFF'
+      },
+      rowStyle: {
+        backgroundColor: '#EEE',
+      }
+    }}
+      title="Sayfa kayıt listesi"
+      columns={state.columns}
+      data={pages.pages.map(page=>({
+      
+        url:page.pagesURL,
+        detail:page.pagesDetail,
+        status:page.status,
+        
+      }))}
+      editable={{
+        onRowAdd: newData =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              setState(prevState => {
+                const data = [...prevState.data];
+                data.push(newData);
+                return { ...prevState, data };
+              });
+            }, 600);
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              if (oldData) {
+                setState(prevState => {
+                  const data = [...prevState.data];
+                  data[data.indexOf(oldData)] = newData;
+                  return { ...prevState, data };
+                });
+              }
+            }, 600);
+          }),
+        onRowDelete: oldData =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+              setState(prevState => {
+                const data = [...prevState.data];
+                data.splice(data.indexOf(oldData), 1);
+                return { ...prevState, data };
+              });
+            }, 600);
+          })
+      }}
+    />
+  );
 }
-
-function mapStateToProps(state) {
-  return {
-    currentRolesPages: state.rolesPagesListReducer,
-  };
-}
-
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      getRolesPages: bindActionCreators(rolesPagesActions.getRolesPages, dispatch),
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PageList);

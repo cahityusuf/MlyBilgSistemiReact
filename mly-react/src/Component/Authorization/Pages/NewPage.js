@@ -6,6 +6,7 @@ import AddPage from "./AddPage";
 
 function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
   const [page, setPage] = useState({ ...props.page });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (pages.length === 0) {
@@ -16,20 +17,56 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
 
   function handleChange(event) {
     const { name, value } = event.target;
+
+    // if (event.target.name === "status") {
+    //   if(event.target.checked===true)
+    //   {
+     
+    //     event.target.value="true"
+    //   }
+    //   if(event.target.checked===false){
+
+    //     event.target.value="false"
+    //   }
+    //   console.log(page);
+    // }
+
+
     setPage(previousRole => ({
       ...previousRole,
-      [name]: name === value
+      [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
+    console.log(event.target.value);
+    if (event.target.name === "pagesId") {
+      getPages(value);
+    }
+   
+    Validate(name, value);
+  }
+
+  function Validate(name, value) {
+    if (value === "" && name === "rolId") {
+      setErrors(previousErrors => ({
+        ...previousErrors,
+        name: "Ürün ismi olmalıdır"
+      }));
+    } else {
+      setErrors(previousErrors => ({
+        ...previousErrors,
+        name: ""
+      }));
+    }
   }
 
   function handleSave(params) {
     params.preventDefault();
-    savePage(page).then(() => {
-      history.push("/");
-    });
+    //console.log(page);
+    // savePage(page).then(() => {
+    //   history.push("/");
+    // });
   }
 
-  return <AddPage role={page} onChange={handleChange} onSave={handleSave} />;
+  return <AddPage pages={pages} onChange={handleChange} onSave={handleSave} errors={errors} />;
 }
 
 export function getRoleById(pages, Id) {

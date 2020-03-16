@@ -39,7 +39,7 @@ function RolesRequest({
       ...previousRole,
       [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
-    console.log(usersRoles)
+
     if (event.target.name === "userId") {
       getUserRoles(value);
     }
