@@ -7,7 +7,7 @@ import NewPage from "../src/Component/Authorization/Pages/NewPage"
 import NewRequest from "../src/Component/Authorization/Requests/NewRequest"
 import RolesPages from "./Component/Authorization/RolesPages/RolesPages"
 import PagesRequest from "./Component/Authorization/PagesRequest/PagesRequest"
-import UserRoles from "../src/Component/Authorization/UserRoles"
+import UserRoles from "./Component/Authorization/UserRoles/UserRoles"
 
 
 function Router() {
