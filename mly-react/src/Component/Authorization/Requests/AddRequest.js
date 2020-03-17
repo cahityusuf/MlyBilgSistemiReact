@@ -1,7 +1,8 @@
 import React from "react";
 import SelectInput from "../../Toolbox/SelectInput";
 import Button from "@material-ui/core/Button";
-import ListUserRoles from "./ListUserRoles";
+//import { Button } from "reactstrap";
+import ListRolesPages from "./ListRolesPages";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,13 +18,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddUserRoles = ({
-  users,
+const AddRolesPages = ({
   roles,
-  userRoles,
+  pages,
   onChange,
   onSave,
-  errors
+  errors,
+  rolesPages
 }) => {
   const classes = useStyles();
 
@@ -34,26 +35,26 @@ const AddUserRoles = ({
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <SelectInput
-                name="userId"
-                label="User"
-                value={users.id}
-                defaultOption="Kullanıcı Seçiniz..."
-                options={users.map(user => ({
-                  value: user.id,
-                  text: user.name
+                name="roleId"
+                label="Role"
+                value={roles.name}
+                defaultOption="Rol Seçiniz..."
+                options={roles.map(role => ({
+                  value: role.id,
+                  text: role.name
                 }))}
                 onChange={onChange}
                 error={errors.name}
               />
 
               <SelectInput
-                name="roleId"
-                label="Role"
-                value={roles.id}
+                name="pagesId"
+                label="Page"
+                value={pages.pagesId}
                 defaultOption="Sayfa Seçiniz..."
-                options={roles.map(role => ({
-                  value: role.id,
-                  text: role.name
+                options={pages.map(page => ({
+                  value: page.pagesId,
+                  text: page.pagesURL + " ---> " + page.pagesDetail
                 }))}
                 onChange={onChange}
                 error={errors.pagesURL}
@@ -68,8 +69,10 @@ const AddUserRoles = ({
               </Button>
             </Paper>
           </Grid>
+
+          <hr />
           <Grid item xs={12}>
-            <ListUserRoles userRoles={userRoles}></ListUserRoles>
+            <ListRolesPages rolesPages={rolesPages}></ListRolesPages>
           </Grid>
         </Grid>
       </form>
@@ -77,4 +80,4 @@ const AddUserRoles = ({
   );
 };
 
-export default AddUserRoles;
+export default AddRolesPages;

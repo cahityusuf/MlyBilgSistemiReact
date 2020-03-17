@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getRequest } from "../../../Redux/Actions/RequestAction";
+import { getRequestDetail } from "../../../Redux/Actions/RequestAction";
 import { getRoles } from "../../../Redux/Actions/RolesActions";
 import { getRolesPages } from "../../../Redux/Actions/RolesPagesAction";
 import AddPagesRequest from "./AddPagesRequest";
@@ -11,7 +11,7 @@ import {
 import alertify from "alertifyjs";
 
 function RolesRequest({
-  getRequest,
+  getRequestDetail,
   getRoles,
   getPagesRequest,
   getRolesPages,
@@ -28,7 +28,7 @@ function RolesRequest({
 
   useEffect(() => {
     if (requests.length === 0 && roles.length === 0 && pagesRequests.length===0) {
-      getRequest();
+      getRequestDetail();
       getRoles();
       getPagesRequest();
       getRolesPages();
@@ -132,7 +132,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   getRoles,
   getRolesPages,
-  getRequest,
+  getRequestDetail,
   getPagesRequest,
   savePagesRequest
 };

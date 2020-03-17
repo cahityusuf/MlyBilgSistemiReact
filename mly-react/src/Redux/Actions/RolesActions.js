@@ -20,7 +20,7 @@ export function updateRolesSuccess(roles) {
 export function saveRoleApi(role) {
   return fetch(UrlRepository.Url_RoleSave, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json","Accept": "application/json"  },
     body: JSON.stringify(role)
   })
     .then(handleResponce)

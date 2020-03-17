@@ -1,15 +1,20 @@
 import React from "react";
 import TextInput from "../../Toolbox/TextInput";
 import CheckboxLabels from "../../Toolbox/CheckboxLabels";
-import PageList from "./PageList";
 import Button from "@material-ui/core/Button";
+import PageList from "./PageList";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    "& > *": {
+      margin: theme.spacing(1),
+      width: "100%"
+    }
   },
   paper: {
     padding: theme.spacing(2),
@@ -18,48 +23,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddPage = ({ pages, onChange, onSave, errors, statu }) => {
+const AddUserRoles = ({ pages, onChange, onSave, error }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <form onSubmit={onSave}>
+      <form onSubmit={onSave} className={classes.root} noValidate autoComplete="off">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <TextInput
                 name="pagesURL"
-                label="Sayanın Url bilgisini giriniz"
-                value={pages.pagesURL}
-                onChance={onChange}
-                error={errors}
-              />
-              <TextInput
-                name="pagesDetail"
-                label="Sayanın amacını açıklayınız"
-                value={pages.pagesDetail}
-                onChance={onChange}
-                error={errors}
-              />
-
-              {/* <TextInput
-                onChange={onChange}
-                name="pagesURL"
-                value="ffffer"
-                label="Sayfa URL tanımını giriniz"
                 placeHolder="Sayfa URL tanımını giriniz"
-                error={errors.name}
+                onChance={onChange}
+                errors={error}
+                variant="outlined"
               />
-
               <TextInput
-                onChange={onChange}
                 name="pagesDetail"
-                value="ffffer"
-                label="Sayfanın amacını giriniz"
-                placeHolder="Sayfanın amacını giriniz"
-                error={errors.name}
-              /> */}
-
+                placeHolder="Sayanın amacını açıklayınız"
+                onChance={onChange}
+                errors={error}
+                variant="outlined"
+              />
               <CheckboxLabels
                 onChange={onChange}
                 label="Sayfa aktif mi?"
@@ -76,14 +62,14 @@ const AddPage = ({ pages, onChange, onSave, errors, statu }) => {
             </Paper>
           </Grid>
 
-          <hr />
           <Grid item xs={12}>
             <PageList pages={pages}></PageList>
           </Grid>
+
         </Grid>
       </form>
     </div>
   );
 };
 
-export default AddPage;
+export default AddUserRoles;

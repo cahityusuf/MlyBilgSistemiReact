@@ -32,7 +32,7 @@ export function getPages()
 export function savePageApi(page) {
     return fetch(UrlRepository.Url_PageSave, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json","Accept": "application/json" },
       body: JSON.stringify(page)
     })
       .then(handleResponce)

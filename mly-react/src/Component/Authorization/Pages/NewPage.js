@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getPages, savePage } from "../../../Redux/Actions/PageAction";
 import AddPage from "./AddPage";
+import alertify from "alertifyjs";
 
 function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
   const [page, setPage] = useState({ ...props.page });
@@ -15,9 +16,8 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
   }, [props.page]);
 
   function handleChange(event) {
-
     const { name, value } = event.target;
-console.log(event.target.name)
+    console.log(event.target.name);
     if (event.target.name === "status") {
       if (event.target.checked === true) {
         setPage(previousRole => ({
@@ -30,13 +30,12 @@ console.log(event.target.name)
           [name]: name === "categoryId" ? parseInt(value, 10) : false
         }));
       }
-    }else{
+    } else {
       setPage(previousRole => ({
         ...previousRole,
         [name]: name === "categoryId" ? parseInt(value, 10) : value
       }));
     }
-
 
     if (event.target.name === "pagesId") {
       getPages(value);
@@ -59,12 +58,31 @@ console.log(event.target.name)
     }
   }
 
-  function handleSave(params) {
-    params.preventDefault();
-    console.log(page);
-    // savePage(page).then(() => {
-    //   history.push("/");
-    // });
+  function handleSave(event) {
+    event.preventDefault();
+    let a = 0;
+    pages.map(result => {
+      if (page.pagesURL === result.pagesURL && page.pagesDetail === result.pagesDetail) {
+        a += 1;
+      }
+    });
+
+    if (a === 0) {
+      savePage(page).then(() => {
+        getPages();
+        //   //history.push("/");
+      });
+    } else {
+      alertify.confirm(
+        "Yetki vermeye çalıştığınız sayfa zaten yetkili",
+        function() {
+          alertify.success("Tamam");
+        },
+        function() {
+          alertify.error("Kapat");
+        }
+      );
+    }
   }
 
   return (

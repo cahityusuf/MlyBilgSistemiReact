@@ -95,7 +95,7 @@ function RolesRequest({
       );
     }
 
-    event.preventDefault();
+
   }
 
   return (

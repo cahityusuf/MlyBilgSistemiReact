@@ -20,7 +20,7 @@ export function updateUsersSuccess(users) {
 export function saveUsersApi(users) {
   return fetch(UrlRepository.Url_UsersSave, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", "Accept": "application/json" },
     body: JSON.stringify(users)
   })
     .then(handleResponce)

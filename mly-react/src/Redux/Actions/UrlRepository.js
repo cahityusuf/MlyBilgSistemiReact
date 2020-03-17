@@ -9,7 +9,8 @@ export default  {
 
     Url_RequestList:"https://localhost:44335/api/requests/list",
     Url_RequestSave:"https://localhost:44335/api/requests/add",
-    Url_RequestUpdate:"https://localhost:44335/api/requests/update",
+    Url_RequestUpdate:"https://localhost:44335/api/requests/update", 
+    Url_RequestDetailList:"https://localhost:44335/api/requests/listdetail",
 
     Url_RolesPagesList:"https://localhost:44335/api/rolespages/list",
     Url_RolesPagesDetailList:"https://localhost:44335/api/rolespages/listdetail",
@@ -24,6 +25,12 @@ export default  {
     Url_UsersList:"https://localhost:44335/api/users/list",
     Url_UsersSave:"https://localhost:44335/api/users/add",
     Url_UsersUpdate:"https://localhost:44335/api/users/update",
+
+    Url_RequestTypeList:"https://localhost:44335/api/requesttype/list",
+    Url_RequestTypeSave:"https://localhost:44335/api/requesttype/add",
+    Url_RequestTypeUpdate:"https://localhost:44335/api/requesttype/update",
+    Url_RequestTypeDelete:"https://localhost:44335/api/requesttype/delete",
+    Url_RequestTypeDetailList:"https://localhost:44335/api/requesttype/listdetail",
 
     Url_UserRolesList:"https://localhost:44335/api/userroles/list",
     Url_UserRolesDetailList:"https://localhost:44335/api/userroles/listdetail",

@@ -1,9 +1,9 @@
 import * as actionsTypes from './ActionTypes'
 import UrlRepository from "./UrlRepository";
 
-export function ChangeRequest(requestName)
+export function ChangeRequest(request)
 {
-    return {type:actionsTypes.CHANGE_REQUEST,payload:requestName}
+    return {type:actionsTypes.CHANGE_REQUEST,payload:request}
 }
 
 export function getRequestSuccess(request)
@@ -11,63 +11,76 @@ export function getRequestSuccess(request)
     return {type:actionsTypes.GET_REQUEST_SUCCESS,payload:request}
 }
 
-export function createRequestSuccess(roles) {
-    return { type: actionsTypes.CREATE_REQUEST_SUCCESS, payload: roles };
+export function createRequestSuccess(request) {
+    return { type: actionsTypes.CREATE_REQUEST_SUCCESS, payload: request };
   }
   
-  export function updateRequestSuccess(roles) {
-    return { type: actionsTypes.UPDATE_REQUEST_SUCCESS, payload: roles };
+  export function updateRequestSuccess(request) {
+    return { type: actionsTypes.UPDATE_REQUEST_SUCCESS, payload: request };
   }
 
-export function getRequest()
-{
-    return function(dispatch)
-    {
-        let  url =UrlRepository.Url_RequestList
+// export function getRequest()
+// {
+//     return function(dispatch)
+//     {
+//         let  url =UrlRepository.Url_RequestList
 
-        return fetch(url).then(response=>response.json())
-        .then(result=>dispatch(getRequestSuccess(result)));
-    }
+//         return fetch(url).then(response=>response.json())
+//         .then(result=>dispatch(getRequestSuccess(result)));
+//     }
+// }
+
+
+export function getRequestDetail()
+{
+  return function(dispatch) {
+    let url = UrlRepository.Url_RequestDetailList;
+    return fetch(url)
+      .then(response => response.json())
+      .then(result => dispatch(getRequestSuccess(result)));
+  };
 }
 
   
-  export function saveRequestApi(role) {
-    return fetch(UrlRepository.Url_RequestSave, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(role)
-    })
-      .then(handleResponce)
-      .catch(handleError);
-  
-    // return fetch(UrlRepository.Url_RoleSave+"/"+(role.id||""),{
-    //     method:role.id?"PUT":"POST",
-    //     headers:{"content-type":"application/json"},
-    //     body:JSON.stringify(role)
-    // });
-  }
+export function saveRequestApi(request) {
+  return fetch(UrlRepository.Url_RequestSave, {
+    method: "POST",
+    headers: { "content-type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(request)
+  })
+    .then(handleResponce)
+    .catch(handleError);
+
+  // return fetch(UrlRepository.Url_RoleSave+"/"+(role.id||""),{
+  //     method:role.id?"PUT":"POST",
+  //     headers:{"content-type":"application/json"},
+  //     body:JSON.stringify(role)
+  // });
+}
   
   export function updateRequestApi(request) {
     return fetch(UrlRepository.Url_RequestUpdate, {
       method: "PUT",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json","Accept": "application/json"  },
       body: JSON.stringify(request)
     })
       .then(handleResponce)
       .catch(handleError);
   }
   
+
   export function saveRequest(request) {
     return function(dispatch) {
       return saveRequestApi(request)
-        .then(savedRequest => {
-          dispatch(createRequestSuccess(savedRequest));
+        .then(saveRequestApi => {
+          dispatch(createRequestSuccess(saveRequestApi));
         })
         .catch(error => {
           throw error;
         });
     };
   }
+
   
   export function updateRequest(request) {
     return function(dispatch) {
@@ -81,16 +94,15 @@ export function getRequest()
     };
   }
   
-  export async function handleResponce(response){
-      if(response.ok){
-          return response.json()
-      }
-      const error = await response.text()
-      throw new Error(error)
+  export async function handleResponce(response) {
+    if (response.ok) {
+      return response.json();
+    }
+    const error = await response.text();
+    throw new Error(error);
   }
   
-  export function handleError(error)
-  {
-      console.error("Bir hata oluştu")
-      throw error;
+  export function handleError(error) {
+    console.error("Bir hata oluştu");
+    throw error;
   }
