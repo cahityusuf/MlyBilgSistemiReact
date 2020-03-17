@@ -1,49 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getRoles } from "../../../Redux/Actions/RolesActions";
-import { getPages } from "../../../Redux/Actions/PageAction";
 import { getRequestType } from "../../../Redux/Actions/RequestTypeAction";
 import { getRequestDetail, saveRequest } from "../../../Redux/Actions/RequestAction";
 import AddRequest from "./AddRequest";
-import AddRolesPages from "./AddRolesPages";
-import {
-  getRolesPages,
-  saveRolesPages
-} from "../../../Redux/Actions/RolesPagesAction";
 import alertify from "alertifyjs";
 
 function NewRequest({
-  getRoles,
-  getPages,
-  getRolesPages,
-  saveRolesPages,
-  roles,
-  pages,
-  rolesPages,
+  getRequestType,
+  getRequestDetail,
+  saveRequest,
+  RequestType,
+  RequestDetail,
   history,
   ...props
 }) {
-  const [rolesPage, setRolesPages] = useState({ ...props.rolesPage });
+  const [request, setRequestType] = useState({ ...props.request });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (roles.length === 0 && pages.length === 0) {
-      getRoles();
-      getPages();
-      getRolesPages();
+    if (RequestType.length === 0 && RequestDetail.length === 0) {
+      getRequestType();
+      getRequestDetail();
     }
-    setRolesPages({ ...props.rolesPage });
-  }, [props.rolesPage]);
+    setRequestType({ ...props.request });
+  }, [props.request]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setRolesPages(previousRole => ({
+    setRequestType(previousRole => ({
       ...previousRole,
       [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
-    if (event.target.name === "roleId") {
-      getRolesPages(value);
-    }
     Validate(name, value);
   }
 
@@ -64,27 +51,27 @@ function NewRequest({
   function handleSave(event) {
     let a = 0;
 
-    rolesPages.map(result => {
+    RequestDetail.map(result => {
       if (
-        rolesPage.roleId === result.roleId &&
-        rolesPage.pagesId === result.pagesId
+        request.requestType === result.requestType &&
+        request.requestName === result.requestName
       ) {
         a += 1;
       }
     });
 
     if (a === 0) {
-      saveRolesPages(rolesPage).then(() => {
-        getRolesPages(rolesPage.roleId);
+      saveRequest(request).then(() => {
+        getRequestDetail();
         //history.push("/");
       });
     } else {
       alertify.confirm(
         "Yetki vermeye çalıştığınız sayfa zaten yetkili",
-        function() {
+        function () {
           alertify.success("Tamam");
         },
-        function() {
+        function () {
           alertify.error("Kapat");
         }
       );
@@ -94,35 +81,27 @@ function NewRequest({
   }
 
   return (
-    <AddRolesPages
-      roles={roles}
-      pages={pages}
+    <AddRequest
+      request={getRequestDetail}
+      requestType={RequestType}
       onChange={handleChange}
       onSave={handleSave}
       errors={errors}
-      rolesPages={rolesPages}
     />
   );
 }
 
-// export function getRoleById(roles, Id) {
-//   let role = roles.find(role => role.Id === Id) || null;
-//   return role;
-// }
-
 function mapStateToProps(state) {
   return {
-    roles: state.roleListReducer,
-    pages: state.pageListReducer,
-    rolesPages: state.rolesPagesListReducer
+    RequestType: state.listRequestTypeReducer,
+    RequestDetail: state.requestListReducer
   };
 }
 
 const mapDispatchToProps = {
-  getRoles,
-  getPages,
-  saveRolesPages,
-  getRolesPages
+  getRequestType,
+  getRequestDetail,
+  saveRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewRequest);
@@ -149,13 +128,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(NewRequest);
 
 //   function handleChange(event) {
 //     const { name, value } = event.target;
- 
+
 //     setRequestDetail(previousRole => ({
 //           ...previousRole,
 //           [name]: name === "categoryId" ? parseInt(value, 10) : value
 //         }));
-     
-    
+
+
 
 //     Validate(name, value);
 //   }

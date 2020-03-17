@@ -1,12 +1,13 @@
 import React from "react";
 import MaterialTable from "material-table";
 
-export default function ListRolesPages(rolesPages) {
+export default function ListRequest({request}) {
    const [state, setState] = React.useState({
     columns: [
-      { title: 'Role', field: 'role' },
-      { title: 'Sayfa Url', field: 'sayfaUrl' },
-      { title: 'Detay', field: 'detay' },
+      { title: 'Request Adı', field: 'RequestName' },
+      { title: 'Request Tipi', field: 'RequestTypeName' },
+      { title: 'Detayı', field: 'TypeDetail' }
+      
 
     ],
     
@@ -33,11 +34,11 @@ export default function ListRolesPages(rolesPages) {
     }}
       title="Editable Example"
       columns={state.columns}
-      data={rolesPages.rolesPages.map(rolespages=>({
+      data={request.map(requestDetail=>({
       
-        role:rolespages.roleName,
-        sayfaUrl:rolespages.pagesURL,
-        detay:rolespages.pagesDetail
+        RequestName:requestDetail.requestName,
+        RequestTypeName:requestDetail.requestTypeName,
+        TypeDetail:requestDetail.typeDetail
         
       }))}
       editable={{
