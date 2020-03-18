@@ -1,7 +1,7 @@
 import React from "react";
 import MaterialTable from "material-table";
 
-export default function ListRequest({request}) {
+export default function ListRequest({requestList}) {
    const [state, setState] = React.useState({
     columns: [
       { title: 'Request Adı', field: 'RequestName' },
@@ -19,7 +19,7 @@ export default function ListRequest({request}) {
     }]
   });
 
-  console.log(state.data);
+  console.log(requestList);
 
   return (
     <MaterialTable
@@ -34,7 +34,7 @@ export default function ListRequest({request}) {
     }}
       title="Editable Example"
       columns={state.columns}
-      data={request.map(requestDetail=>({
+      data={requestList.map(requestDetail=>({
       
         RequestName:requestDetail.requestName,
         RequestTypeName:requestDetail.requestTypeName,

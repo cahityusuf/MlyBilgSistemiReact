@@ -82,7 +82,7 @@ function NewRequest({
 
   return (
     <AddRequest
-      request={getRequestDetail}
+      requestList={RequestDetail}
       requestType={RequestType}
       onChange={handleChange}
       onSave={handleSave}

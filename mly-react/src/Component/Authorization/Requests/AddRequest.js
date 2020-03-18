@@ -7,7 +7,6 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -23,38 +22,38 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddUserRoles = ({   
-  request,
-  requestType,
-  onChange,
-  onSave,
-  errors, }) => {
+const AddRequest = ({ requestList, requestType, onChange, onSave, error }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <form onSubmit={onSave} className={classes.root} noValidate autoComplete="off">
+      <form
+        onSubmit={onSave}
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+      >
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-            <TextInput
+              <TextInput
                 name="requestName"
                 placeHolder="Request adını giriniz.(Ör:Roles.Get) Yetkilendirme işleminde kullanılacaktır."
                 onChance={onChange}
-                errors={errors}
+                errors={error}
                 variant="outlined"
               />
-                <SelectInput
+              <SelectInput
                 name="requestTypeId"
                 label="Page"
                 value={requestType.requestTypeId}
                 defaultOption="Request tipini seçiniz."
                 options={requestType.map(request => ({
                   value: request.requestTypeId,
-                  text: request.RequestTypeName
+                  text: request.requestTypeName
                 }))}
                 onChange={onChange}
-                error={errors.pagesURL}
+                //error={error.pagesURL}
               />
             </Paper>
           </Grid>
@@ -68,22 +67,20 @@ const AddUserRoles = ({
           </Grid>
 
           <Grid item xs={12}>
-          <ListRequest request={request}></ListRequest>
+            <ListRequest requestList={requestList}></ListRequest>
           </Grid>
-
         </Grid>
       </form>
     </div>
   );
 };
 
-export default AddUserRoles;
-
+export default AddRequest;
 
 // import React from "react";
+// import TextInput from "../../Toolbox/TextInput";
 // import SelectInput from "../../Toolbox/SelectInput";
 // import Button from "@material-ui/core/Button";
-// import TextInput from "../../Toolbox/TextInput";
 // import ListRequest from "./ListRequest";
 // import Paper from "@material-ui/core/Paper";
 // import Grid from "@material-ui/core/Grid";
@@ -91,7 +88,11 @@ export default AddUserRoles;
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
-//     flexGrow: 1
+//     flexGrow: 1,
+//     "& > *": {
+//       margin: theme.spacing(1),
+//       width: "100%"
+//     }
 //   },
 //   paper: {
 //     padding: theme.spacing(2),
@@ -100,42 +101,39 @@ export default AddUserRoles;
 //   }
 // }));
 
-// const AddRequest = ({
-  // request,
-  // requestType,
-  // onChange,
-  // onSave,
-  // errors,
-
-// }) => {
+// const AddUserRoles = ({
+//   request,
+//   requestType,
+//   onChange,
+//   onSave,
+//   errors, }) => {
 //   const classes = useStyles();
 
 //   return (
 //     <div className={classes.root}>
-//       <form onSubmit={onSave}>
+//       <form onSubmit={onSave} className={classes.root} noValidate autoComplete="off">
 //         <Grid container spacing={3}>
 //           <Grid item xs={12}>
 //             <Paper className={classes.paper}>
-            // <TextInput
-            //     name="requestName"
-            //     placeHolder="Request adını giriniz.(Ör:Roles.Get) Yetkilendirme işleminde kullanılacaktır."
-            //     onChance={onChange}
-            //     errors={errors}
-            //     variant="outlined"
-            //   />
-
-              // <SelectInput
-              //   name="requestTypeId"
-              //   label="Page"
-              //   value={requestType.requestTypeId}
-              //   defaultOption="Request tipini seçiniz."
-              //   options={requestType.map(request => ({
-              //     value: request.requestTypeId,
-              //     text: request.RequestTypeName
-              //   }))}
-              //   onChange={onChange}
-              //   error={errors.pagesURL}
-              // />
+// <TextInput
+//     name="requestName"
+//     placeHolder="Request adını giriniz.(Ör:Roles.Get) Yetkilendirme işleminde kullanılacaktır."
+//     onChance={onChange}
+//     errors={errors}
+//     variant="outlined"
+//   />
+//   <SelectInput
+//   name="requestTypeId"
+//   label="Page"
+//   value={requestType.requestTypeId}
+//   defaultOption="Request tipini seçiniz."
+//   options={requestType.map(request => ({
+//     value: request.requestTypeId,
+//     text: request.RequestTypeName
+//   }))}
+//   onChange={onChange}
+//   error={errors.pagesURL}
+// />
 //             </Paper>
 //           </Grid>
 
@@ -146,13 +144,15 @@ export default AddUserRoles;
 //               </Button>
 //             </Paper>
 //           </Grid>
-//           <Grid item xs={12}>
-//             <ListRequest request={request}></ListRequest>
-//           </Grid>
+
+// <Grid item xs={12}>
+// <ListRequest request={request}></ListRequest>
+// </Grid>
+
 //         </Grid>
 //       </form>
 //     </div>
 //   );
 // };
 
-// export default AddRequest;
+// export default AddUserRoles;
