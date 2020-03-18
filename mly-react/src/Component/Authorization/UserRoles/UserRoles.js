@@ -77,8 +77,8 @@ function RolesRequest({
     if (a === 0) {
 
       saveUserRoles(usersRoles).then(() => {
-        console.log(usersRoles)
         getUserRoles(usersRoles.userId);
+        alertify.success("Kullanıcı rolü başarıyla kaydedildi",5);
       //   //history.push("/");
        });
 

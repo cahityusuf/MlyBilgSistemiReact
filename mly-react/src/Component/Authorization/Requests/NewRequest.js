@@ -63,6 +63,7 @@ function NewRequest({
     if (a === 0) {
       saveRequest(request).then(() => {
         getRequestDetail();
+        alertify.success(request.requestName+" "+ "başarıyla kaydedildi",5);
         //history.push("/");
       });
     } else {

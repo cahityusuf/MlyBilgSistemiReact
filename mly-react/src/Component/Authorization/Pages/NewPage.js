@@ -70,6 +70,7 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
     if (a === 0) {
       savePage(page).then(() => {
         getPages();
+        alertify.success(page.pagesURL+" "+ "isimli sayfa başarıyla kaydedildi",5);
         //   //history.push("/");
       });
     } else {
@@ -95,10 +96,10 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
   );
 }
 
-export function getRoleById(pages, Id) {
-  let page = pages.find(page => page.Id === Id) || null;
-  return page;
-}
+// export function getRoleById(pages, Id) {
+//   let page = pages.find(page => page.Id === Id) || null;
+//   return page;
+// }
 
 function mapStateToProps(state) {
   return {

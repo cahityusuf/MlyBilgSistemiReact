@@ -36,4 +36,6 @@ export default  {
     Url_UserRolesDetailList:"https://localhost:44335/api/userroles/listdetail",
     Url_UserRolesSave:"https://localhost:44335/api/userroles/add",
     Url_UserRolesUpdate:"https://localhost:44335/api/userroles/update",
+
+    Url_LoginSave:"https://localhost:44335/api/auth/loginemail"
 }

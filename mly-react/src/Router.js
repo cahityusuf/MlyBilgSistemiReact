@@ -8,12 +8,14 @@ import NewRequest from "../src/Component/Authorization/Requests/NewRequest"
 import RolesPages from "./Component/Authorization/RolesPages/RolesPages"
 import PagesRequest from "./Component/Authorization/PagesRequest/PagesRequest"
 import UserRoles from "./Component/Authorization/UserRoles/UserRoles"
+import SignInSide from "./Component/Authantication/SignInSide"
 
 
 function Router() {
     return(
         <Switch>
-            <Route path="/" exact component={Dashboard}/>
+            <Route path="/"  component={SignInSide}/>
+            <Route path="/login"  component={SignInSide}/>
             <Route path="/dashboard"  component={Dashboard}/>
             <Route path="/newrole"  component={NewRole}/>
             <Route path="/newpage"  component={NewPage}/>

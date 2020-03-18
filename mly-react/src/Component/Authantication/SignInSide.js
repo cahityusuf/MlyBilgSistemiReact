@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from "react-redux";
+import { saveToken } from "../../Redux/Actions/LoginAction"
+
+
 
 function Copyright() {
   return (
@@ -26,15 +30,16 @@ function Copyright() {
   );
 }
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: '',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   },
@@ -57,9 +62,51 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Login() {
+
+const SignInSide=({saveToken,logins, auth,error, history, ...props}) => {
+  const [login, setLogin] = useState({ ...props.login });
+  const [errors, setErrors] = useState({});
   const classes = useStyles();
 
+  useEffect(() => {
+    setLogin({ ...props.login });
+  }, [props.login]);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setLogin(previousLogin => ({
+      ...previousLogin,
+      [name]: name === "categoryId" ? parseInt(value, 10) : value
+    }));
+
+    Validate(name, value);
+  }
+
+  function Validate(name, value) {
+    if (value === "" && name === "rolId") {
+      setErrors(previousErrors => ({
+        ...previousErrors,
+        name: "Ürün ismi olmalıdır"
+      }));
+    } else {
+      setErrors(previousErrors => ({
+        ...previousErrors,
+        name: ""
+      }));
+    }
+  }
+
+  function handleSave(event) {
+    event.preventDefault();
+
+    saveToken(login).then(() => {
+
+        return window.location.replace("/dashboard")
+
+      });
+    
+    }
+console.warn(login)
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -70,18 +117,19 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Oturum Aç
           </Typography>
-          <form className={classes.form} noValidate>
+          <form onSubmit={handleSave} className={classes.form} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Email Adresiniz"
               name="email"
               autoComplete="email"
+              onChange={handleChange}
               autoFocus
             />
             <TextField
@@ -90,10 +138,11 @@ export default function Login() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Paroanız"
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -106,19 +155,19 @@ export default function Login() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Giriş
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  Parolamı Unuttum
                 </Link>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <Link href="#" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
-              </Grid>
+              </Grid> */}
             </Grid>
             <Box mt={5}>
               <Copyright />
@@ -129,3 +178,16 @@ export default function Login() {
     </Grid>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    logins: state.listLoginReducer,
+    error: state.errorReducer
+  };
+}
+
+const mapDispatchToProps = {
+  saveToken
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInSide);

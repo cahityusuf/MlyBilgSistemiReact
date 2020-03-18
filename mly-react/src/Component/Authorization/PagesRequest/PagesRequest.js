@@ -85,6 +85,7 @@ function RolesRequest({
       savePagesRequest(pagesRequest).then(() => {
         console.log(pagesRequest.rolesPagesId)
         getPagesRequest(pagesRequest.rolesPagesId);
+        alertify.success("Sayfaya ait request başarıyla kaydedildi",5);
         //history.push("/");
       });
     } else {

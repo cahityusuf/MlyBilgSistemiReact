@@ -5,7 +5,7 @@ import changeRolesReducer from "./RolesReducer/ChangeRolesReducer"
 import roleListReducer from "./RolesReducer/RoleListReducer"
 import pageListReducer from "./PagesReducer/PageListReducer"
 import requestListReducer from "./RequestsReducer/RequestListReducer"
-import loginListReducer from "./LoginListReducer"
+import listLoginReducer from "./LoginReducer/ListLoginReducer"
 import rolesPagesListReducer from "./RolesPagesReducer/RolesPagesListReducer"
 import saveRoleReducer from "./RolesReducer/SaveRoleReducer"
 import savePagesReducer from "./PagesReducer/SavePagesReducer"
@@ -21,6 +21,9 @@ import listUserReducer from "./UserReducer/UserListReducer"
 import saveUserReducer from "./UserReducer/SaveUserReducer"
 import listRequestTypeReducer from "./RequestTypeReducer/ListRequestTypeReducer"
 import saveRequestTypeReducer from "./RequestTypeReducer/SaveRequestTypeReducer"
+import authReducer from "./LoginReducer/AuthReducer"
+import errorReducer from "./ErrorReducer/ErrorReducer"
+
 
 
 const rootReducer = combineReducers({
@@ -30,7 +33,7 @@ const rootReducer = combineReducers({
     roleListReducer,
     pageListReducer,
     requestListReducer,
-    loginListReducer,
+    listLoginReducer,
     rolesPagesListReducer,
     saveRoleReducer,
     savePagesReducer,
@@ -45,7 +48,9 @@ const rootReducer = combineReducers({
     listUserReducer,
     saveUserReducer,
     listRequestTypeReducer,
-    saveRequestTypeReducer
+    saveRequestTypeReducer,
+    authReducer,
+    errorReducer
 })
 
 export default rootReducer;

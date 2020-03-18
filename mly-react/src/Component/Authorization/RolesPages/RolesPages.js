@@ -73,6 +73,7 @@ function RolesPages({
     if (a === 0) {
       saveRolesPages(rolesPage).then(() => {
         getRolesPages(rolesPage.roleId);
+        alertify.success(rolesPage.name+" "+ "isimli rol başarıyla kaydedildi",5);
         //history.push("/");
       });
     } else {
