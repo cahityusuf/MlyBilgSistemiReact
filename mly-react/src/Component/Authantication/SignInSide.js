@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from "react-redux";
 import { saveToken } from "../../Redux/Actions/LoginAction"
+import { Redirect } from 'react-router'
 
 
 
@@ -63,7 +64,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const SignInSide=({saveToken,logins, auth,error, history, ...props}) => {
+const SignInSide=({saveToken,logins, auth,tokenSuccess,error, history, ...props}) => {
   const [login, setLogin] = useState({ ...props.login });
   const [errors, setErrors] = useState({});
   const classes = useStyles();
@@ -101,13 +102,15 @@ const SignInSide=({saveToken,logins, auth,error, history, ...props}) => {
 
     saveToken(login).then(() => {
 
-        return window.location.replace("/dashboard")
+      //return window.location.replace("/dashboard")
 
       });
-    
+     
     }
-console.warn(login)
+
+    //console.log(tokenSuccess)
   return (
+
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -182,7 +185,8 @@ console.warn(login)
 function mapStateToProps(state) {
   return {
     logins: state.listLoginReducer,
-    error: state.errorReducer
+    error: state.errorReducer,
+    tokenSuccess:state.tokenReducer
   };
 }
 

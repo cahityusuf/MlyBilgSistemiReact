@@ -17,10 +17,14 @@ export function updateRolesSuccess(roles) {
   return { type: actionsTypes.UPDATE_ROLES_SUCCESS, payload: roles };
 }
 
-export function saveRoleApi(role) {
+export function saveRoleApi(role, token) {
   return fetch(UrlRepository.Url_RoleSave, {
     method: "POST",
-    headers: { "content-type": "application/json","Accept": "application/json"  },
+    headers: {
+      "content-type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    },
     body: JSON.stringify(role)
   })
     .then(handleResponce)
@@ -43,9 +47,9 @@ export function updateRoleApi(role) {
     .catch(handleError);
 }
 
-export function saveRole(role) {
+export function saveRole(role, token) {
   return function(dispatch) {
-    return saveRoleApi(role)
+    return saveRoleApi(role, token)
       .then(savedRole => {
         dispatch(createRolesSuccess(savedRole));
       })
@@ -67,24 +71,30 @@ export function updateRole(role) {
   };
 }
 
-export function getRoles() {
+export function getRoles(token) {
   return function(dispatch) {
-    return fetch(UrlRepository.Url_RolesList)
+    return fetch(UrlRepository.Url_RolesList, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      Authorization: "Bearer " + token
+    })
       .then(response => response.json())
       .then(result => dispatch(getRolesSuccess(result)));
   };
 }
 
-export async function handleResponce(response){
-    if(response.ok){
-        return response.json()
-    }
-    const error = await response.text()
-    throw new Error(error)
+export async function handleResponce(response) {
+  if (response.ok) {
+    return response.json();
+  }
+  const error = await response.text();
+  throw new Error(error);
 }
 
-export function handleError(error)
-{
-    console.error("Bir hata oluştu")
-    throw error;
+export function handleError(error) {
+  console.error("Bir hata oluştu");
+  throw error;
 }

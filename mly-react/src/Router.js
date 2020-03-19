@@ -14,9 +14,9 @@ import SignInSide from "./Component/Authantication/SignInSide"
 function Router() {
     return(
         <Switch>
-            <Route path="/"  component={SignInSide}/>
+            <Route path="/" exact component={SignInSide}/>
             <Route path="/login"  component={SignInSide}/>
-            <Route path="/dashboard"  component={Dashboard}/>
+            <Route path="/dashboard" component={Dashboard}/>
             <Route path="/newrole"  component={NewRole}/>
             <Route path="/newpage"  component={NewPage}/>
             <Route path="/newrequest"  component={NewRequest}/>

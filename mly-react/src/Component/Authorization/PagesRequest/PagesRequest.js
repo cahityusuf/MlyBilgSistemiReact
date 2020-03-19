@@ -103,6 +103,7 @@ function RolesRequest({
     event.preventDefault();
   }
 
+  console.warn(pagesRequests)
   return (
     <AddPagesRequest
       roles={roles}

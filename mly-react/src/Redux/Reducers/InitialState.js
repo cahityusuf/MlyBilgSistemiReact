@@ -14,6 +14,7 @@ export default  {
     requests:[],
     requestType:[],
     token:[],
+    
     savedRole:{}, //default kayıt edilecek seçenekler yer alabilir. Ör: Ip adresi gibi
     savedPages:{},
     savedRequest:{},
@@ -22,6 +23,14 @@ export default  {
     savedUsers:{},
     savedUserRoles:{},
     savedRequestType:{},
+
+    tokenSuccess:{
+        token: [],
+        expiration: [],
+        tokenDate: [],
+        tokenHour: [],
+        isLogin: [],
+    }
     
 
 }

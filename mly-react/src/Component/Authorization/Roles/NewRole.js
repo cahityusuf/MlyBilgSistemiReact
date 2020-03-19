@@ -5,7 +5,7 @@ import AddRole from "./AddRole";
 import alertify from "alertifyjs";
 
 function NewRole({
-  getRoles, saveRole, updateRole, roles, history, ...props
+  getRoles, saveRole, updateRole, roles,tokenSuccess, history, ...props
 }) {
   const [role, setRole] = useState({ ...props.role });
   const [errors, setErrors] = useState({});
@@ -72,7 +72,7 @@ function NewRole({
 
     event.preventDefault();
   }
-
+console.warn(tokenSuccess)
   return (
     <AddRole
       roleList={roles}
@@ -85,7 +85,8 @@ function NewRole({
 
 function mapStateToProps(state) {
   return {
-    roles: state.roleListReducer
+    roles: state.roleListReducer,
+    tokenSuccess:state.tokenReducer
   };
 }
 

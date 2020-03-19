@@ -21,9 +21,9 @@ import listUserReducer from "./UserReducer/UserListReducer"
 import saveUserReducer from "./UserReducer/SaveUserReducer"
 import listRequestTypeReducer from "./RequestTypeReducer/ListRequestTypeReducer"
 import saveRequestTypeReducer from "./RequestTypeReducer/SaveRequestTypeReducer"
-import authReducer from "./LoginReducer/AuthReducer"
+//import authReducer from "./LoginReducer/AuthReducer"
 import errorReducer from "./ErrorReducer/ErrorReducer"
-
+import tokenReducer from "./LoginReducer/TokenReducer"
 
 
 const rootReducer = combineReducers({
@@ -49,8 +49,9 @@ const rootReducer = combineReducers({
     saveUserReducer,
     listRequestTypeReducer,
     saveRequestTypeReducer,
-    authReducer,
-    errorReducer
+    //authReducer,
+    errorReducer,
+    tokenReducer
 })
 
 export default rootReducer;
