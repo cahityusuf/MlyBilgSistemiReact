@@ -24,7 +24,13 @@ export function getPages()
 {
     return function(dispatch)
     {
-        return fetch(UrlRepository.Url_PageList).then(response=>response.json())
+        return fetch(UrlRepository.Url_PageList,{
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then(response=>response.json())
         .then(result=>dispatch(getPageSuccess(result)));
     }
 }
@@ -32,7 +38,11 @@ export function getPages()
 export function savePageApi(page) {
     return fetch(UrlRepository.Url_PageSave, {
       method: "POST",
-      headers: { "content-type": "application/json","Accept": "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(page)
     })
       .then(handleResponce)
@@ -48,7 +58,11 @@ export function savePageApi(page) {
   export function updatePageApi(page) {
     return fetch(UrlRepository.Url_PageUpdate, {
       method: "PUT",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(page)
     })
       .then(handleResponce)

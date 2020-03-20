@@ -21,7 +21,13 @@ export function getRequestType()
     {
         let  url =UrlRepository.Url_RequestTypeList
 
-        return fetch(url).then(response=>response.json())
+        return fetch(url,{
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then(response=>response.json())
         .then(result=>dispatch(getRequestTypeSuccess(result)));
     }
 }
@@ -30,7 +36,11 @@ export function getRequestType()
   export function saveRequestTypeApi(requestType) {
     return fetch(UrlRepository.Url_RequestTypeSave, {
       method: "POST",
-      headers: { "content-type": "application/json","Accept": "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(requestType)
     })
       .then(handleResponce)
@@ -46,7 +56,11 @@ export function getRequestType()
   export function updateRequestTypeApi(requestType) {
     return fetch(UrlRepository.Url_RequestTypeUpdate, {
       method: "PUT",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(requestType)
     })
       .then(handleResponce)

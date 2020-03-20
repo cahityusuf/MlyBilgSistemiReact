@@ -20,7 +20,11 @@ export function updateUsersSuccess(users) {
 export function saveUsersApi(users) {
   return fetch(UrlRepository.Url_UsersSave, {
     method: "POST",
-    headers: { "content-type": "application/json", "Accept": "application/json" },
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+    },
     body: JSON.stringify(users)
   })
     .then(handleResponce)
@@ -69,7 +73,13 @@ export function updateUsers(role) {
 
 export function getUsers() {
   return function(dispatch) {
-    return fetch(UrlRepository.Url_UsersList)
+    return fetch(UrlRepository.Url_UsersList,{
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      }
+    })
       .then(response => response.json())
       .then(result => dispatch(getUsersSuccess(result)));
   };

@@ -20,7 +20,11 @@ export function updateUserRolesSuccess(users) {
 export function saveUserRolesApi(users) {
   return fetch(UrlRepository.Url_UserRolesSave, {
     method: "POST",
-    headers: { "content-type": "application/json", "Accept": "application/json" },
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+    },
     body: JSON.stringify(users)
   })
     .then(handleResponce)
@@ -36,7 +40,11 @@ export function saveUserRolesApi(users) {
 export function updateUserRolesApi(role) {
   return fetch(UrlRepository.Url_UserRolesUpdate, {
     method: "PUT",
-    headers: { "content-type": "application/json" },
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+    },
     body: JSON.stringify(role)
   })
     .then(handleResponce)
@@ -76,7 +84,13 @@ export function getUserRoles(userId) {
       url = url + "?userId=" + userId;
     }
 
-    return fetch(url)
+    return fetch(url,{
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      }
+    })
       .then(response => response.json())
       .then(result => dispatch(getUserRolesSuccess(result)));
   };

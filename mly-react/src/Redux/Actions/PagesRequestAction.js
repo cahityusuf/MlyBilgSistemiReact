@@ -27,7 +27,13 @@ export function getPagesRequest(rolesPagesId)
            url = url +"?rolesPagesId="+rolesPagesId
        }
 
-        return fetch(url).then(response=>response.json())
+        return fetch(url,{
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then(response=>response.json())
         .then(result=>dispatch(getPagesRequestSuccess(result)));
     }
 }
@@ -35,9 +41,10 @@ export function getPagesRequest(rolesPagesId)
 export function savePagesRequestApi(pagesRequest) {
     return fetch(UrlRepository.Url_PagesRequestSave, {
       method: "POST",
-      headers: { 
-        "content-type": "application/json",
-        "Accept": "application/json" 
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(pagesRequest)
     })
@@ -54,7 +61,11 @@ export function savePagesRequestApi(pagesRequest) {
   export function updatePagesRequestApi(pagesRequest) {
     return fetch(UrlRepository.Url_PagesRequestUpdate, {
       method: "PUT",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(pagesRequest)
     })
       .then(handleResponce)

@@ -35,7 +35,13 @@ export function getRequestDetail()
 {
   return function(dispatch) {
     let url = UrlRepository.Url_RequestDetailList;
-    return fetch(url)
+    return fetch(url,{
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      }
+    })
       .then(response => response.json())
       .then(result => dispatch(getRequestSuccess(result)));
   };
@@ -45,7 +51,11 @@ export function getRequestDetail()
 export function saveRequestApi(request) {
   return fetch(UrlRepository.Url_RequestSave, {
     method: "POST",
-    headers: { "content-type": "application/json", "Accept": "application/json" },
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+    },
     body: JSON.stringify(request)
   })
     .then(handleResponce)
@@ -61,7 +71,11 @@ export function saveRequestApi(request) {
   export function updateRequestApi(request) {
     return fetch(UrlRepository.Url_RequestUpdate, {
       method: "PUT",
-      headers: { "content-type": "application/json","Accept": "application/json"  },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(request)
     })
       .then(handleResponce)

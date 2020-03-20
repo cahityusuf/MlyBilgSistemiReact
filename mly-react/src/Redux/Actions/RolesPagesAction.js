@@ -27,7 +27,13 @@ export function getRolesPages(rolId)
            url = url +"?roleId="+rolId
        }
 
-        return fetch(url).then(response=>response.json())
+        return fetch(url,{
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then(response=>response.json())
         .then(result=>dispatch(getRolesPagesSuccess(result)));
     }
 }
@@ -35,9 +41,10 @@ export function getRolesPages(rolId)
 export function saveRolesPagesApi(rolesPages) {
     return fetch(UrlRepository.Url_RolesPagesSave, {
       method: "POST",
-      headers: { 
-        "content-type": "application/json",
-        "Accept": "application/json" 
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(rolesPages)
     })
@@ -54,7 +61,11 @@ export function saveRolesPagesApi(rolesPages) {
   export function updateRolesPagesApi(rolesPages) {
     return fetch(UrlRepository.Url_RolesPagesUpdate, {
       method: "PUT",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      },
       body: JSON.stringify(rolesPages)
     })
       .then(handleResponce)
