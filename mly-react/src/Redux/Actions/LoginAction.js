@@ -23,10 +23,6 @@ export function createTokenSuccess(
     tokenHour: tokenHour,
     isAuthenticated: isAuthenticated
   }
-  localStorage.setItem("token",tokenSuccess)
-  localStorage.setItem("isAuthenticated",isAuthenticated)
-  localStorage.setItem("tokenDate",tokenDate)
-  localStorage.setItem("tokenHour",tokenHour)
   return {
     type: actionsTypes.CREATE_TOKEN_SUCCESS,
     payload:payload
@@ -40,10 +36,6 @@ export function loginFail(
   tokenHour,
   isAuthenticated
 ) {
-  localStorage.setItem("token",tokenSuccess)
-  localStorage.setItem("isAuthenticated",isAuthenticated)
-  localStorage.setItem("tokenDate",null)
-  localStorage.setItem("tokenHour",null)
   return {
     type: actionsTypes.CREATE_TOKEN_SUCCESS,
     payload: {
@@ -84,17 +76,17 @@ export function saveToken(login) {
   return function(dispatch) {
     return saveTokenApi(login)
       .then(savedToken => {
-        
+        console.warn('Token', savedToken)
         dispatch(
           createTokenSuccess(
-            savedToken.data.token,
-            savedToken.data.expiration,
-            savedToken.data.tokenDate,
-            savedToken.data.tokenHour,
+            savedToken.token,
+            savedToken.expiration,
+            savedToken.tokenDate,
+            savedToken.tokenHour,
             true
           )
         );
-        dispatch(createLoginSuccess(savedToken));
+        //dispatch(createLoginSuccess(savedToken));
       })
       .catch(error => {
         dispatch(loginFail(null, null, null, null, false));

@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from "react-redux";
 import { saveToken } from "../../Redux/Actions/LoginAction"
-import { Redirect } from 'react-router'
+import { useHistory  } from "react-router-dom";
 
 
 
@@ -68,6 +68,7 @@ const SignInSide=({saveToken,logins, auth,tokenSuccess,error, history, ...props}
   const [login, setLogin] = useState({ ...props.login });
   const [errors, setErrors] = useState({});
   const classes = useStyles();
+  const historyy = useHistory()
 
   useEffect(() => {
     setLogin({ ...props.login });
@@ -98,19 +99,17 @@ const SignInSide=({saveToken,logins, auth,tokenSuccess,error, history, ...props}
   }
 
   function handleSave(event) {
+
     event.preventDefault();
 
     saveToken(login).then(() => {
-
-      //return window.location.replace("/dashboard")
-
+      historyy.push("newrole")     
       });
      
     }
 
     //console.log(tokenSuccess)
   return (
-
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -165,6 +164,7 @@ const SignInSide=({saveToken,logins, auth,tokenSuccess,error, history, ...props}
                 <Link href="#" variant="body2">
                   Parolamı Unuttum
                 </Link>
+                <Link to="newrole">Rol</Link>
               </Grid>
               {/* <Grid item>
                 <Link href="#" variant="body2">

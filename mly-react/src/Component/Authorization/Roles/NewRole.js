@@ -94,6 +94,7 @@ const mapDispatchToProps = {
   getRoles, saveRole, updateRole
 };
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(NewRole);
 
 
