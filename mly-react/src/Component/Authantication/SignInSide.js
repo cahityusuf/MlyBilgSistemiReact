@@ -64,11 +64,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const SignInSide=({saveToken,logins, auth,tokenSuccess,error, history, ...props}) => {
+const SignInSide=({saveToken,logins, auth,tokenSuccess,error, ...props}) => {
   const [login, setLogin] = useState({ ...props.login });
   const [errors, setErrors] = useState({});
   const classes = useStyles();
-  const historyy = useHistory()
+  //const historyy = useHistory()
 
   useEffect(() => {
     setLogin({ ...props.login });
@@ -103,12 +103,12 @@ const SignInSide=({saveToken,logins, auth,tokenSuccess,error, history, ...props}
     event.preventDefault();
 
     saveToken(login).then(() => {
-      historyy.push("newrole")     
+      //historyy.push("dashboard")     
       });
      
     }
 
-    //console.log(tokenSuccess)
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />

@@ -1,14 +1,22 @@
 import React from "react";
-import Router from "../../Router/Router"
+import Dashboard from "../Root/Dashboard"
+import Login from "../Authantication/SignInSide"
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div>
-      
-      <Router/> 
-          
-    </div>
-  );
+function App({tokenSuccess}) {
+  
+      if (!tokenSuccess.isAuthenticated) {
+          return (<div><Login/></div>)
+        } else{
+          return (<div><Dashboard/></div>)
+        } 
+ 
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    tokenSuccess: state.tokenReducer
+  };
+}
+
+export default connect(mapStateToProps)(App);
