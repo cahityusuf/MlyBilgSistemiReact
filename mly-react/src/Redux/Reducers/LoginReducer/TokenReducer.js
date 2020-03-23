@@ -1,19 +1,19 @@
 
 import * as actionType from "../../Actions/ActionTypes";
-//import initialState from "../InitialState";
+import initialState from "../InitialState";
 
-const initialState = {
+// const initialState = {
     
-        token: [],
-        expiration:[],
-        tokenDate: [],
-        tokenHour: [],
-        isLogin: false
+//         token: [],
+//         expiration:[],
+//         tokenDate: [],
+//         tokenHour: [],
+//         isLogin: false
      
-}
+// }
 
 export default function ListLoginReducer(
-    state=initialState,
+    state=initialState.tokenSuccess,
 //   state = initialState.tokenSuccess,
   action
 ) {

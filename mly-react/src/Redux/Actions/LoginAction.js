@@ -14,14 +14,18 @@ export function createTokenSuccess(
   expiration,
   tokenDate,
   tokenHour,
+  refreshToken,
   isAuthenticated
+
 ) {
   const payload = {
     token: tokenSuccess,
     expiration: expiration,
     tokenDate: tokenDate,
     tokenHour: tokenHour,
+    refreshToken:refreshToken,
     isAuthenticated: isAuthenticated
+
   }
   return {
     type: actionsTypes.CREATE_TOKEN_SUCCESS,
@@ -34,7 +38,9 @@ export function loginFail(
   expiration,
   tokenDate,
   tokenHour,
+  refreshToken,
   isAuthenticated
+
 ) {
   return {
     type: actionsTypes.CREATE_TOKEN_SUCCESS,
@@ -43,7 +49,8 @@ export function loginFail(
       expiration: expiration,
       tokenDate: tokenDate,
       tokenHour: tokenHour,
-      isLogin: isAuthenticated
+      refreshToken:refreshToken,
+      isAuthenticated: isAuthenticated
     },
     
   };
@@ -83,6 +90,7 @@ export function saveToken(login) {
             savedToken.expiration,
             savedToken.tokenDate,
             savedToken.tokenHour,
+            savedToken.refreshToken,
             true
           )
         );
