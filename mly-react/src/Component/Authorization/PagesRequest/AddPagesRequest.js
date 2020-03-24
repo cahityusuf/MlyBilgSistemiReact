@@ -61,13 +61,13 @@ const AddPagesRequest = ({
               />
 
               <SelectInput
-                name="requestsId"
+                name="requestId"
                 label="Request"
                 value={requests.requestId}
                 defaultOption="Request Seçiniz."
                 options={requests.map(page => ({
                   value: page.requestId,
-                  text: page.requestName + " ---> " + page.requestType
+                  text: page.requestName + " ---> " + page.typeDetail
                 }))}
                 onChange={onChange}
                 error={errors.pagesURL}

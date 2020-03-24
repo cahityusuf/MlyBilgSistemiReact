@@ -18,6 +18,7 @@ import { useHistory  } from "react-router-dom";
 
 
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -64,11 +65,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const SignInSide=({saveToken,logins, auth,tokenSuccess,error, ...props}) => {
+const SignInSide=({saveToken,tokenSuccess,error, ...props}) => {
   const [login, setLogin] = useState({ ...props.login });
   const [errors, setErrors] = useState({});
   const classes = useStyles();
-  //const historyy = useHistory()
+  const historyy = useHistory()
 
   useEffect(() => {
     setLogin({ ...props.login });
@@ -99,13 +100,11 @@ const SignInSide=({saveToken,logins, auth,tokenSuccess,error, ...props}) => {
   }
 
   function handleSave(event) {
-
     event.preventDefault();
-
     saveToken(login).then(() => {
-      //historyy.push("dashboard")     
-      });
-     
+
+      //historyy.push("newrole")     
+      });    
     }
 
 
@@ -184,7 +183,6 @@ const SignInSide=({saveToken,logins, auth,tokenSuccess,error, ...props}) => {
 
 function mapStateToProps(state) {
   return {
-    logins: state.listLoginReducer,
     error: state.errorReducer,
     tokenSuccess:state.tokenReducer
   };

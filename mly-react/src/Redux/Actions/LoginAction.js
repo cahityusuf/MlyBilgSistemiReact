@@ -15,6 +15,7 @@ export function createTokenSuccess(
   tokenDate,
   tokenHour,
   refreshToken,
+  roleId,
   isAuthenticated
 
 ) {
@@ -24,6 +25,7 @@ export function createTokenSuccess(
     tokenDate: tokenDate,
     tokenHour: tokenHour,
     refreshToken:refreshToken,
+    roleId:roleId,
     isAuthenticated: isAuthenticated
 
   }
@@ -39,6 +41,7 @@ export function loginFail(
   tokenDate,
   tokenHour,
   refreshToken,
+  roleId,
   isAuthenticated
 
 ) {
@@ -50,6 +53,7 @@ export function loginFail(
       tokenDate: tokenDate,
       tokenHour: tokenHour,
       refreshToken:refreshToken,
+      roleId:roleId,
       isAuthenticated: isAuthenticated
     },
     
@@ -83,7 +87,7 @@ export function saveToken(login) {
   return function(dispatch) {
     return saveTokenApi(login)
       .then(savedToken => {
-        console.warn('Token', savedToken)
+        //console.warn('Token', savedToken)
         dispatch(
           createTokenSuccess(
             savedToken.token,
@@ -91,13 +95,14 @@ export function saveToken(login) {
             savedToken.tokenDate,
             savedToken.tokenHour,
             savedToken.refreshToken,
+            savedToken.roleId,
             true
           )
         );
         //dispatch(createLoginSuccess(savedToken));
       })
       .catch(error => {
-        dispatch(loginFail(null, null, null, null, false));
+        dispatch(loginFail(null, null, null, null,null,null, false));
       });
   };
 }

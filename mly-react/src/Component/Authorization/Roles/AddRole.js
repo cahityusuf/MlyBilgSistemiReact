@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AddRole = ({ roleList, onChange, onSave, error }) => {
+const AddRole = ({ onChange, onSave, error }) => {
   const classes = useStyles();
 
   return (
@@ -55,7 +55,7 @@ const AddRole = ({ roleList, onChange, onSave, error }) => {
           </Grid>
 
           <Grid item xs={12}>
-            <ListRole roleList={roleList}></ListRole>
+            <ListRole></ListRole>
           </Grid>
         </Grid>
       </form>

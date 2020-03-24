@@ -1,79 +1,106 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MaterialTable from "material-table";
+import { connect } from "react-redux";
+import {
+  deleteRole,
+  updateRole,
+  saveRole,
+  getRoles
+} from "../../../Redux/Actions/RolesActions";
 
-export default function ListRole({roleList}) {
-   const [state, setState] = React.useState({
+
+function ListRole({
+  roles,
+  updateRole,
+  getRoles,
+  deleteRole,
+  tokenSuccess
+}) {
+
+  useEffect(() => {
+    if (roles.length === 0) {
+      getRoles(tokenSuccess.token);
+    }
+
+  }, []);
+
+
+  const [state, setState] = React.useState({
     columns: [
-      { title: 'Rol Id', field: 'id' },
-      { title: 'Rol Adı', field: 'name' }, 
-
+      { title: "Rol Id", field: "id" },
+      { title: "Rol Adı", field: "name" }
     ],
-    
-    options:[{
-      headerStyle: {
-        backgroundColor: '#01579b',
-        color: '#FFF'
+    data: roles,
+    options: [
+      {
+        headerStyle: {
+          backgroundColor: "#01579b",
+          color: "#FFF"
+        }
       }
-    }]
+    ]
   });
-
 
   return (
     <MaterialTable
-    options={{
-      headerStyle: {
-        backgroundColor: '#424242',
-        color: '#FFF'
-      },
-      rowStyle: {
-        backgroundColor: '#EEE',
-      }
-    }}
+    // actions={[
+    //   {
+    //     icon: 'edit',
+    //     tooltip: 'Edit User',
+    //     onClick: (event, rowData) => alert('You are editing ' + rowData.name)
+    //   },
+    //   {
+    //     icon: 'delete',
+    //     tooltip: 'Delete User',
+    //     onClick: (event, rowData) => alert('You are editing ' + rowData.name)
+    //   }
+    // ]}
+    localization={{ body: { editRow: { deleteText: 'Bu satırı silmek istediğinden emin misin?' } } }}
+      options={{
+        headerStyle: {
+          backgroundColor: "#424242",
+          color: "#FFF"
+        },
+        rowStyle: {
+          backgroundColor: "#EEE"
+        }
+      }}
       title="Rol listesi"
       columns={state.columns}
-      data={roleList.map(rolDetail=>({
-      
-        id:rolDetail.id,
-        name:rolDetail.name
-        
-      }))}
+      data={roles}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
+
         onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
+          new Promise((resolve, reject) => {
             setTimeout(() => {
+              updateRole(newData, tokenSuccess.token).then(()=>{ getRoles(tokenSuccess.token)});
               resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
             }, 600);
           }),
+
         onRowDelete: oldData =>
           new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          })
+            setTimeout(() => {          
+              deleteRole(oldData, tokenSuccess.token).then(()=>{getRoles(tokenSuccess.token)});
+              resolve();           
+          },600)
+        }),
       }}
     />
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    tokenSuccess: state.tokenReducer,
+    roles: state.roleListReducer
+  };
+}
+
+const mapDispatchToProps = {
+  deleteRole,
+  updateRole,
+  getRoles
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListRole);

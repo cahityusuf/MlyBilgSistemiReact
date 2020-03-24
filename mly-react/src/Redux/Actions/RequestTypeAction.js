@@ -15,7 +15,7 @@ export function createRequestTypeSuccess(requestType) {
     return { type: actionsTypes.UPDATE_REQUEST_TYPE_SUCCESS, payload: requestType };
   }
 
-export function getRequestType()
+export function getRequestType(token)
 {
     return function(dispatch)
     {
@@ -25,7 +25,7 @@ export function getRequestType()
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+            "Authorization" : `Bearer ${token}`
           }
         }).then(response=>response.json())
         .then(result=>dispatch(getRequestTypeSuccess(result)));
@@ -33,33 +33,28 @@ export function getRequestType()
 }
 
   
-  export function saveRequestTypeApi(requestType) {
+  export function saveRequestTypeApi(requestType,token) {
     return fetch(UrlRepository.Url_RequestTypeSave, {
       method: "POST",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(requestType)
     })
       .then(handleResponce)
       .catch(handleError);
   
-    // return fetch(UrlRepository.Url_RoleSave+"/"+(role.id||""),{
-    //     method:role.id?"PUT":"POST",
-    //     headers:{"content-type":"application/json"},
-    //     body:JSON.stringify(role)
-    // });
   }
   
-  export function updateRequestTypeApi(requestType) {
+  export function updateRequestTypeApi(requestType,token) {
     return fetch(UrlRepository.Url_RequestTypeUpdate, {
       method: "PUT",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(requestType)
     })

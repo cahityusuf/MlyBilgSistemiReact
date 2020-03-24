@@ -4,13 +4,13 @@ import { getPages, savePage } from "../../../Redux/Actions/PageAction";
 import AddPage from "./AddPage";
 import alertify from "alertifyjs";
 
-function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
+function NewPage({ getPages,tokenSuccess, savePage, updatePage, pages, history, ...props }) {
   const [page, setPage] = useState({ ...props.page });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (pages.length === 0) {
-      getPages();
+      getPages(tokenSuccess.token);
     }
     setPage({ ...props.page });
   }, [props.page]);
@@ -69,7 +69,7 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
 
     if (a === 0) {
       savePage(page).then(() => {
-        getPages();
+        getPages(tokenSuccess.token);
         alertify.success(page.pagesURL+" "+ "isimli sayfa başarıyla kaydedildi",5);
         //   //history.push("/");
       });
@@ -86,6 +86,7 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
     }
   }
 
+  console.warn(pages)
   return (
     <AddPage
       pages={pages}
@@ -103,7 +104,8 @@ function NewPage({ getPages, savePage, updatePage, pages, history, ...props }) {
 
 function mapStateToProps(state) {
   return {
-    pages: state.pageListReducer
+    pages: state.pageListReducer,
+    tokenSuccess:state.tokenReducer
   };
 }
 

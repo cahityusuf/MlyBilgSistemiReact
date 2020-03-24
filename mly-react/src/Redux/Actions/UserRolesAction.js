@@ -17,13 +17,45 @@ export function updateUserRolesSuccess(users) {
   return { type: actionsTypes.UPDATE_USER_ROLES_SUCCESS, payload: users };
 }
 
-export function saveUserRolesApi(users) {
+export function deleteUserRolesSuccess(userroles) {
+  return { type: actionsTypes.DELETE_USER_ROLES_SUCCESS, payload: userroles };
+}
+
+export function deleteUserRolesApi(userroles,token) {
+  return fetch(UrlRepository.Url_UserRolesDelete, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      "Accept": "application/json",
+      "Authorization" : `Bearer ${token}`
+    },
+    body: JSON.stringify(userroles)
+  })
+    .then(handleResponce)
+    .catch(handleError);
+}
+
+
+export function deleteUserRoles(userroles, token) {
+  return function(dispatch) {
+    return deleteUserRolesApi(userroles, token)
+      .then(deleteUserRole => {
+        dispatch(deleteUserRolesSuccess(deleteUserRole));
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+
+
+export function saveUserRolesApi(users,token) {
   return fetch(UrlRepository.Url_UserRolesSave, {
     method: "POST",
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      "Authorization" : `Bearer ${token}`
     },
     body: JSON.stringify(users)
   })
@@ -37,13 +69,13 @@ export function saveUserRolesApi(users) {
   // });
 }
 
-export function updateUserRolesApi(role) {
+export function updateUserRolesApi(role,token) {
   return fetch(UrlRepository.Url_UserRolesUpdate, {
     method: "PUT",
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      "Authorization" : `Bearer ${token}`
     },
     body: JSON.stringify(role)
   })
@@ -75,7 +107,7 @@ export function updateUserRoles(role) {
   };
 }
 
-export function getUserRoles(userId) {
+export function getUserRoles(userId,token) {
 
   return function(dispatch) {
     let url = UrlRepository.Url_UserRolesDetailList;
@@ -88,7 +120,7 @@ export function getUserRoles(userId) {
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       }
     })
       .then(response => response.json())

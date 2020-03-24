@@ -7,6 +7,11 @@ export function getRolesPagesSuccess(rolesId)
     return {type:actionsTypes.GET_ROLES_PAGES_SUCCESS,payload:rolesId}
 }
 
+export function changeRolesPagesSuccess(rolesId)
+{
+    return {type:actionsTypes.CHANGE_ROLES_PAGES,payload:rolesId}
+}
+
 export function createRolesPagesSuccess(rolesPages) {
     return { type: actionsTypes.CREATE_ROLES_PAGES_SUCCESS, payload: rolesPages };
   }
@@ -15,36 +20,62 @@ export function createRolesPagesSuccess(rolesPages) {
     return { type: actionsTypes.UPDATE_ROLES_PAGES_SUCCESS, payload: rolesPages };
   }
 
-export function getRolesPages(rolId)
+
+  export function chanceRolesPages(token,roleId)
 {
+
     return function(dispatch)
     {
         
        let  url =UrlRepository.Url_RolesPagesDetailList
 
-       if(rolId)
+       if(roleId)
        {
-           url = url +"?roleId="+rolId
+           url = url +"?roleId="+roleId
        }
 
         return fetch(url,{
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+            "Authorization" : `Bearer ${token}`
+          }
+        }).then(response=>response.json())
+        .then(result=>dispatch(changeRolesPagesSuccess(result)));
+    }
+}
+
+export function getRolesPages(token,roleId)
+{
+
+    return function(dispatch)
+    {
+        
+       let  url =UrlRepository.Url_RolesPagesDetailList
+
+       if(roleId)
+       {
+           url = url +"?roleId="+roleId
+       }
+
+        return fetch(url,{
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
           }
         }).then(response=>response.json())
         .then(result=>dispatch(getRolesPagesSuccess(result)));
     }
 }
 
-export function saveRolesPagesApi(rolesPages) {
+export function saveRolesPagesApi(rolesPages,token) {
     return fetch(UrlRepository.Url_RolesPagesSave, {
       method: "POST",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(rolesPages)
     })
@@ -58,13 +89,13 @@ export function saveRolesPagesApi(rolesPages) {
     // });
   }
   
-  export function updateRolesPagesApi(rolesPages) {
+  export function updateRolesPagesApi(rolesPages,token) {
     return fetch(UrlRepository.Url_RolesPagesUpdate, {
       method: "PUT",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(rolesPages)
     })

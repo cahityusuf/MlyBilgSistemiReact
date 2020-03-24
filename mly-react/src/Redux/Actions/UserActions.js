@@ -17,13 +17,13 @@ export function updateUsersSuccess(users) {
   return { type: actionsTypes.UPDATE_USER_SUCCESS, payload: users };
 }
 
-export function saveUsersApi(users) {
+export function saveUsersApi(users, token) {
   return fetch(UrlRepository.Url_UsersSave, {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(users)
   })
@@ -37,10 +37,14 @@ export function saveUsersApi(users) {
   // });
 }
 
-export function updateUsersApi(role) {
+export function updateUsersApi(role, token) {
   return fetch(UrlRepository.Url_UsersUpdate, {
     method: "PUT",
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
     body: JSON.stringify(role)
   })
     .then(handleResponce)
@@ -71,13 +75,13 @@ export function updateUsers(role) {
   };
 }
 
-export function getUsers() {
+export function getUsers(token) {
   return function(dispatch) {
-    return fetch(UrlRepository.Url_UsersList,{
+    return fetch(UrlRepository.Url_UsersList, {
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${token}`
       }
     })
       .then(response => response.json())
@@ -85,16 +89,15 @@ export function getUsers() {
   };
 }
 
-export async function handleResponce(response){
-    if(response.ok){
-        return response.json()
-    }
-    const error = await response.text()
-    throw new Error(error)
+export async function handleResponce(response) {
+  if (response.ok) {
+    return response.json();
+  }
+  const error = await response.text();
+  throw new Error(error);
 }
 
-export function handleError(error)
-{
-    console.error("Bir hata oluştu")
-    throw error;
+export function handleError(error) {
+  console.error("Bir hata oluştu");
+  throw error;
 }

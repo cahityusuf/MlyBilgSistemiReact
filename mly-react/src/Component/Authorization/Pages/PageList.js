@@ -5,7 +5,9 @@ export default function ListUserRoles(pages) {
    const [state, setState] = React.useState({
     columns: [
       { title: 'Sayfa Url', field: 'url' },
+      { title: 'Sayfa Adı', field: 'pagesName' },
       { title: 'Detayı', field: 'detail' },
+      { title: 'Sayfa İconu', field: 'pageIconName' },
       { title: 'Statü', field: 'status' }
 
     ],
@@ -34,7 +36,9 @@ export default function ListUserRoles(pages) {
       data={pages.pages.map(page=>({
       
         url:page.pagesURL,
+        pagesName:page.pagesName,
         detail:page.pagesDetail,
+        pageIconName:page.pageIconName,
         status:page.status,
         
       }))}

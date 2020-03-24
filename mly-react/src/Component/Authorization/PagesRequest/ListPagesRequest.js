@@ -8,7 +8,7 @@ export default function ListPagesRequest(pagesRequests) {
       { title: 'Sayfa Url', field: 'sayfaUrl' },
       { title: 'Detay', field: 'detay' },
       { title: 'Request Adı', field: 'requestName' },
-      { title: 'Request Tipi', field: 'requestType' }
+      { title: 'Request Tipi', field: 'requestTypeName' }
 
     ],
     
@@ -20,7 +20,7 @@ export default function ListPagesRequest(pagesRequests) {
     }]
   });
 
-  console.log(state.data);
+ 
 
   return (
     <MaterialTable
@@ -41,7 +41,7 @@ export default function ListPagesRequest(pagesRequests) {
         sayfaUrl:pagesRequest.pagesURL,
         detay:pagesRequest.pagesDetail,
         requestName:pagesRequest.requestName,
-        requestType:pagesRequest.requestType
+        requestType:pagesRequest.requestTypeName
         
       }))}
       editable={{

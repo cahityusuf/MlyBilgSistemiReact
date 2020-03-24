@@ -19,7 +19,6 @@ export default function ListRequest({requestList}) {
     }]
   });
 
-  console.log(requestList);
 
   return (
     <MaterialTable
@@ -32,7 +31,7 @@ export default function ListRequest({requestList}) {
         backgroundColor: '#EEE',
       }
     }}
-      title="Editable Example"
+      title="Request List"
       columns={state.columns}
       data={requestList.map(requestDetail=>({
       

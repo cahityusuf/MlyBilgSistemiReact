@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useEffect }  from "react";
 import MaterialTable from "material-table";
+import { connect } from "react-redux";
+import {
+  getUserRoles,
+  updateUserRoles,
+  deleteUserRoles
+} from "../../../Redux/Actions/UserRolesAction";
 
-export default function ListUserRoles(userRoles) {
+function ListUserRoles({userRoles,getUserRoles,updateUserRoles,deleteUserRoles,tokenSuccess}) {
+
+  useEffect(() => {
+    if (userRoles.length === 0) {
+      getUserRoles(tokenSuccess.token);
+    }
+
+  }, []);
+
+
    const [state, setState] = React.useState({
     columns: [
       { title: 'Pbik', field: 'pbik' },
-      { title: 'Tc', field: 'tc' },
+      { title: 'Tc', field: 'tckimlikno' },
       { title: 'Adı', field: 'name' },
       { title: 'Soyadı', field: 'surname' },
-      { title: 'Rolü', field: 'roles' },
+      { title: 'Rolü', field: 'roleName' },
 
     ],
-    
+    data:userRoles,
     options:[{
       headerStyle: {
         backgroundColor: '#01579b',
@@ -22,6 +37,7 @@ export default function ListUserRoles(userRoles) {
 
   return (
     <MaterialTable
+    localization={{ body: { editRow: { deleteText: 'Bu satırı silmek istediğinden emin misin?' } } }}
     options={{
       headerStyle: {
         backgroundColor: '#424242',
@@ -31,54 +47,52 @@ export default function ListUserRoles(userRoles) {
         backgroundColor: '#EEE',
       }
     }}
-      title="Sayfaya ait requestler listesi"
+      title="Kullanıcı Rolleri"
       columns={state.columns}
-      data={userRoles.userRoles.map(userRole=>({
+      data={userRoles}
+      // data={userRoles.userRoles.map(userRole=>({
       
-        pbik:userRole.pbik,
-        tc:userRole.tckimlikno,
-        name:userRole.name,
-        surname:userRole.surname,
-        roles:userRole.roleName
+      //   pbik:userRole.pbik,
+      //   tc:userRole.tckimlikno,
+      //   name:userRole.name,
+      //   surname:userRole.surname,
+      //   roles:userRole.roleName
         
-      }))}
+      // }))}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
+        // onRowUpdate: (newData, oldData) =>
+        //   new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //       updateUserRoles(newData, tokenSuccess.token).then(()=>{ getUserRoles(newData.userId,tokenSuccess.token)});
+        //       resolve();
+        //     }, 600);
+        //   }),
+
         onRowDelete: oldData =>
           new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          })
+            setTimeout(() => {          
+              deleteUserRoles(oldData, tokenSuccess.token).then(()=>{ getUserRoles(oldData.userId,tokenSuccess.token)});
+              resolve();           
+          },600)
+        }),
+
       }}
     />
   );
 }
+
+
+function mapStateToProps(state) {
+  return {
+    userRoles: state.listUserRolesReducer,
+    tokenSuccess:state.tokenReducer
+  };
+}
+
+const mapDispatchToProps = {
+  getUserRoles,
+  updateUserRoles,
+  deleteUserRoles
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListUserRoles);

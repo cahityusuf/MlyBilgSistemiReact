@@ -5,18 +5,10 @@ import AddRole from "./AddRole";
 import alertify from "alertifyjs";
 
 function NewRole({
-  getRoles, saveRole, updateRole, roles,tokenSuccess, history, ...props
+  saveRole,roles,getRoles, updateRole,tokenSuccess, history, ...props
 }) {
   const [role, setRole] = useState({ ...props.role });
   const [errors, setErrors] = useState({});
-
-
-  useEffect(() => {
-    if (roles.length === 0) {
-      getRoles();
-    }
-    setRole({ ...props.role });
-  }, [props.role]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -42,6 +34,7 @@ function NewRole({
   }
 
   function handleSave(event) {
+    event.preventDefault();
     let a = 0;
 
     roles.map(result => {
@@ -54,7 +47,7 @@ function NewRole({
 
     if (a === 0) {
       saveRole(role).then(() => {
-        getRoles();
+        getRoles(tokenSuccess.token);
         alertify.success(role.name+" "+ "isimli rol başarıyla kaydedildi",5);
         //history.push("/");
       });
@@ -70,12 +63,12 @@ function NewRole({
       );
     }
 
-    event.preventDefault();
+    
   }
-console.warn(tokenSuccess)
+
+
   return (
     <AddRole
-      roleList={roles}
       onChange={handleChange}
       onSave={handleSave}
       errors={errors}
@@ -85,8 +78,8 @@ console.warn(tokenSuccess)
 
 function mapStateToProps(state) {
   return {
-    roles: state.roleListReducer,
-    tokenSuccess:state.tokenReducer
+    tokenSuccess:state.tokenReducer,
+    roles:state.roleListReducer
   };
 }
 

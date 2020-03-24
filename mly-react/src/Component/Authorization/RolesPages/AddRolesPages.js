@@ -52,10 +52,11 @@ const AddRolesPages = ({
                 label="Page"
                 value={pages.pagesId}
                 defaultOption="Sayfa Seçiniz..."
-                options={pages.map(page => ({
+                options={pages.map(page =>({
                   value: page.pagesId,
-                  text: page.pagesURL + " ---> " + page.pagesDetail
-                }))}
+                  text: page.pagesName
+                })
+                )}
                 onChange={onChange}
                 error={errors.pagesURL}
               />

@@ -1,7 +1,7 @@
 import React from "react";
 import MaterialTable from "material-table";
 
-export default function ListRolesPages(rolesPages) {
+export default function ListRolesPages({rolesPages}) {
    const [state, setState] = React.useState({
     columns: [
       { title: 'Role', field: 'role' },
@@ -18,7 +18,7 @@ export default function ListRolesPages(rolesPages) {
     }]
   });
 
-  console.log(state.data);
+
 
   return (
     <MaterialTable
@@ -33,7 +33,7 @@ export default function ListRolesPages(rolesPages) {
     }}
       title="Editable Example"
       columns={state.columns}
-      data={rolesPages.rolesPages.map(rolespages=>({
+      data={rolesPages.map(rolespages=>({
       
         role:rolespages.roleName,
         sayfaUrl:rolespages.pagesURL,

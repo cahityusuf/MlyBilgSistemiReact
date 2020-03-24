@@ -39,9 +39,23 @@ const AddUserRoles = ({ pages, onChange, onSave, error }) => {
                 errors={error}
                 variant="outlined"
               />
+               <TextInput
+                name="pagesName"
+                placeHolder="Sayfa adını giriniz. (Not:Menüde görünecek alan)"
+                onChance={onChange}
+                errors={error}
+                variant="outlined"
+              />
               <TextInput
                 name="pagesDetail"
                 placeHolder="Sayanın amacını açıklayınız"
+                onChance={onChange}
+                errors={error}
+                variant="outlined"
+              />
+               <TextInput
+                name="pageIconName"
+                placeHolder="Menüde görünecek icon adını giriniz. (Not:React Metarial Icon setinden bi isim giriniz)"
                 onChance={onChange}
                 errors={error}
                 variant="outlined"

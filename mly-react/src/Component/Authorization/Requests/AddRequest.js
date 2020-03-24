@@ -45,7 +45,7 @@ const AddRequest = ({ requestList, requestType, onChange, onSave, error }) => {
               />
               <SelectInput
                 name="requestTypeId"
-                label="Page"
+                label="Request"
                 value={requestType.requestTypeId}
                 defaultOption="Request tipini seçiniz."
                 options={requestType.map(request => ({

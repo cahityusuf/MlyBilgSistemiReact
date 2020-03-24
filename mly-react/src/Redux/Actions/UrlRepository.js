@@ -2,6 +2,7 @@ export default  {
     Url_RolesList:"https://localhost:44335/api/roles/list",
     Url_RoleSave:"https://localhost:44335/api/roles/add",
     Url_RoleUpdate:"https://localhost:44335/api/roles/update",
+    Url_RoleDelete:"https://localhost:44335/api/roles/delete",
 
     Url_PageList:"https://localhost:44335/api/pages/list",
     Url_PageSave:"https://localhost:44335/api/pages/add",
@@ -36,6 +37,7 @@ export default  {
     Url_UserRolesDetailList:"https://localhost:44335/api/userroles/listdetail",
     Url_UserRolesSave:"https://localhost:44335/api/userroles/add",
     Url_UserRolesUpdate:"https://localhost:44335/api/userroles/update",
+    Url_UserRolesDelete:"https://localhost:44335/api/userroles/delete",
 
     Url_LoginSave:"https://localhost:44335/api/auth/loginemail"
 }

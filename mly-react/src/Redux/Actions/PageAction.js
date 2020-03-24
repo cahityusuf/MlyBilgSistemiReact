@@ -8,7 +8,7 @@ export function ChangePage(page)
 
 export function getPageSuccess(pages)
 {
-    return {type:actionsTypes.GET_REQUEST_SUCCESS,payload:pages}
+    return {type:actionsTypes.GET_PAGES_SUCCESS,payload:pages}
 }
 
 export function createPagesSuccess(pages) {
@@ -20,7 +20,7 @@ export function createPagesSuccess(pages) {
   }
 
 
-export function getPages()
+export function getPages(token)
 {
     return function(dispatch)
     {
@@ -28,20 +28,20 @@ export function getPages()
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+            "Authorization" : `Bearer ${token}`
           }
         }).then(response=>response.json())
         .then(result=>dispatch(getPageSuccess(result)));
     }
 }
 
-export function savePageApi(page) {
+export function savePageApi(page,token) {
     return fetch(UrlRepository.Url_PageSave, {
       method: "POST",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(page)
     })
@@ -55,13 +55,13 @@ export function savePageApi(page) {
     // });
   }
   
-  export function updatePageApi(page) {
+  export function updatePageApi(page,token) {
     return fetch(UrlRepository.Url_PageUpdate, {
       method: "PUT",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(page)
     })

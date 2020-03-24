@@ -5,6 +5,7 @@ export default  {
     currentPage:{},
     currentUser:{},
     currentUserRoles:{},
+    currentRolesPages:[],
     roles:[],
     rolesPages:[],
     pagesRequests:[],

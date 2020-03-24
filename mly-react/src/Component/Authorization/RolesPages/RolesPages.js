@@ -4,19 +4,20 @@ import { getRoles } from "../../../Redux/Actions/RolesActions";
 import { getPages } from "../../../Redux/Actions/PageAction";
 import AddRolesPages from "./AddRolesPages";
 import {
-  getRolesPages,
-  saveRolesPages
+  saveRolesPages,chanceRolesPages
 } from "../../../Redux/Actions/RolesPagesAction";
 import alertify from "alertifyjs";
 
 function RolesPages({
   getRoles,
   getPages,
-  getRolesPages,
+  chanceRolesPages,
   saveRolesPages,
   roles,
   pages,
   rolesPages,
+  chanceRolesPagesList,
+  tokenSuccess,
   history,
   ...props
 }) {
@@ -25,9 +26,9 @@ function RolesPages({
 
   useEffect(() => {
     if (roles.length === 0 && pages.length === 0) {
-      getRoles();
-      getPages();
-      getRolesPages();
+      getRoles(tokenSuccess.token);
+      getPages(tokenSuccess.token);
+      chanceRolesPages(tokenSuccess.token,tokenSuccess.roleId)
     }
     setRolesPages({ ...props.rolesPage });
   }, [props.rolesPage]);
@@ -39,7 +40,7 @@ function RolesPages({
       [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
     if (event.target.name === "roleId") {
-      getRolesPages(value);
+      chanceRolesPages(tokenSuccess.token,value)
     }
     Validate(name, value);
   }
@@ -59,6 +60,9 @@ function RolesPages({
   }
 
   function handleSave(event) {
+
+    event.preventDefault();
+
     let a = 0;
 
     rolesPages.map(result => {
@@ -72,7 +76,7 @@ function RolesPages({
 
     if (a === 0) {
       saveRolesPages(rolesPage).then(() => {
-        getRolesPages(rolesPage.roleId);
+        chanceRolesPages(tokenSuccess.token,rolesPage.roleId);
         alertify.success(rolesPage.name+" "+ "isimli rol başarıyla kaydedildi",5);
         //history.push("/");
       });
@@ -88,7 +92,6 @@ function RolesPages({
       );
     }
 
-    event.preventDefault();
   }
 
   return (
@@ -98,7 +101,8 @@ function RolesPages({
       onChange={handleChange}
       onSave={handleSave}
       errors={errors}
-      rolesPages={rolesPages}
+      rolesPages={chanceRolesPagesList}
+      //rolesPages={chanceRolesPages!==null ? chanceRolesPages : []}
     />
   );
 }
@@ -112,7 +116,9 @@ function mapStateToProps(state) {
   return {
     roles: state.roleListReducer,
     pages: state.pageListReducer,
-    rolesPages: state.rolesPagesListReducer
+    chanceRolesPagesList: state.changeRolesPagesReducer,
+    rolesPages: state.rolesPagesListReducer,
+    tokenSuccess:state.tokenReducer
   };
 }
 
@@ -120,7 +126,8 @@ const mapDispatchToProps = {
   getRoles,
   getPages,
   saveRolesPages,
-  getRolesPages
+  chanceRolesPages
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RolesPages);

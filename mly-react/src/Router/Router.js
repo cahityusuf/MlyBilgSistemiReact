@@ -1,7 +1,7 @@
 import React from 'react'
 import {Route, Switch} from "react-router-dom"
 import NotFound from "../Component/Common/NotFound"
-//import Dashboard from "../Component/Root/Dashboard"
+import Dashboard from "../Component/Root/Dashboard"
 import NewRole from "../Component/Authorization/Roles/NewRole"
 import NewPage from "../Component/Authorization/Pages/NewPage"
 import NewRequest from "../Component/Authorization/Requests/NewRequest"
@@ -10,15 +10,27 @@ import PagesRequest from "../Component/Authorization/PagesRequest/PagesRequest"
 import UserRoles from "../Component/Authorization/UserRoles/UserRoles"
 import SignInSide from "../Component/Authantication/SignInSide"
 import ProtectedRoute from "./ProtectedRoute"
+import { connect } from "react-redux";
 
+const LoginPage=()=>{
+    return <Route path="/" exact component={SignInSide}/>
+}
+
+const DashboardPage=()=>{
+    return <ProtectedRoute path="/" component={Dashboard}/>
+}
 
 const Router=()=> {
     return(
 
     <Switch>
-            <Route path="/" exact component={SignInSide}/>
-            <ProtectedRoute path="/login"  component={SignInSide}/>
-            {/* <ProtectedRoute path="/dashboard" component={Dashboard}/> */}
+            if (!tokenSuccess.isAuthenticated) {
+                LoginPage
+            } else {
+                DashboardPage
+            }
+
+            <ProtectedRoute path="/dashboard" component={Dashboard}/>
             <ProtectedRoute path="/newrole" component={NewRole}/>
             <ProtectedRoute path="/newpage"  component={NewPage}/>
             <ProtectedRoute path="/newrequest"  component={NewRequest}/>
@@ -32,4 +44,10 @@ const Router=()=> {
     )
 }
 
-export default Router;
+function mapStateToProps(state) {
+    return {
+      tokenSuccess: state.tokenReducer
+    };
+  }
+
+export default connect(mapStateToProps)(Router);

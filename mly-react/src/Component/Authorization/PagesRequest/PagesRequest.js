@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getRequestDetail } from "../../../Redux/Actions/RequestAction";
 import { getRoles } from "../../../Redux/Actions/RolesActions";
-import { getRolesPages } from "../../../Redux/Actions/RolesPagesAction";
+import { chanceRolesPages } from "../../../Redux/Actions/RolesPagesAction";
 import AddPagesRequest from "./AddPagesRequest";
 import {
   getPagesRequest,
@@ -14,10 +14,11 @@ function RolesRequest({
   getRequestDetail,
   getRoles,
   getPagesRequest,
-  getRolesPages,
   savePagesRequest,
-  rolesPages,
+  chanceRolesPages,
+  chanceRolesPagesList,
   pagesRequests,
+  tokenSuccess,
   roles,
   requests,
   history,
@@ -28,10 +29,10 @@ function RolesRequest({
 
   useEffect(() => {
     if (requests.length === 0 && roles.length === 0 && pagesRequests.length===0) {
-      getRequestDetail();
-      getRoles();
-      getPagesRequest();
-      getRolesPages();
+      getRequestDetail(tokenSuccess.token);
+      getRoles(tokenSuccess.token);
+      getPagesRequest(tokenSuccess.token);
+      
     }
     setpagesRequest({ ...props.pagesRequests });
   }, [props.pagesRequests]);
@@ -43,17 +44,18 @@ function RolesRequest({
       ...previousRole,
       [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
-    console.log(pagesRequest)
+
     if (event.target.name === "roleId") {
-      getRolesPages(value);
+      chanceRolesPages(tokenSuccess.token,value);
     }
     if (event.target.name === "rolesPagesId") {
-      getPagesRequest(value);
+      getPagesRequest(value,tokenSuccess.token);
     }
     Validate(name, value);
   }
 
   function Validate(name, value) {
+
     if (value === "" && name === "rolId") {
       setErrors(previousErrors => ({
         ...previousErrors,
@@ -69,7 +71,6 @@ function RolesRequest({
 
   function handleSave(event) {
     event.preventDefault();
-    console.log(pagesRequest)
     let a = 0;
     pagesRequests.map(result => {
       if (
@@ -83,8 +84,7 @@ function RolesRequest({
 
     if (a === 0) {
       savePagesRequest(pagesRequest).then(() => {
-        console.log(pagesRequest.rolesPagesId)
-        getPagesRequest(pagesRequest.rolesPagesId);
+        getPagesRequest(pagesRequest.rolesPagesId,tokenSuccess.token);
         alertify.success("Sayfaya ait request başarıyla kaydedildi",5);
         //history.push("/");
       });
@@ -103,11 +103,11 @@ function RolesRequest({
     event.preventDefault();
   }
 
-  console.warn(pagesRequests)
+  console.log(requests)
   return (
     <AddPagesRequest
       roles={roles}
-      rolesPages={rolesPages}
+      rolesPages={chanceRolesPagesList}
       requests={requests}
       onChange={handleChange}
       onSave={handleSave}
@@ -127,16 +127,17 @@ function mapStateToProps(state) {
     roles: state.roleListReducer,
     requests:state.requestListReducer,
     pagesRequests: state.pagesRequestListReducer,
-    rolesPages:state.rolesPagesListReducer
+    chanceRolesPagesList: state.changeRolesPagesReducer,
+    tokenSuccess:state.tokenReducer
   };
 }
 
 const mapDispatchToProps = {
   getRoles,
-  getRolesPages,
   getRequestDetail,
   getPagesRequest,
-  savePagesRequest
+  savePagesRequest,
+  chanceRolesPages,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RolesRequest);

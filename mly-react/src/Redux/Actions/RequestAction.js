@@ -31,7 +31,7 @@ export function createRequestSuccess(request) {
 // }
 
 
-export function getRequestDetail()
+export function getRequestDetail(token)
 {
   return function(dispatch) {
     let url = UrlRepository.Url_RequestDetailList;
@@ -39,7 +39,7 @@ export function getRequestDetail()
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       }
     })
       .then(response => response.json())
@@ -47,14 +47,16 @@ export function getRequestDetail()
   };
 }
 
+
+
   
-export function saveRequestApi(request) {
+export function saveRequestApi(request,token) {
   return fetch(UrlRepository.Url_RequestSave, {
     method: "POST",
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      "Authorization" : `Bearer ${token}`
     },
     body: JSON.stringify(request)
   })
@@ -68,13 +70,13 @@ export function saveRequestApi(request) {
   // });
 }
   
-  export function updateRequestApi(request) {
+  export function updateRequestApi(request,token) {
     return fetch(UrlRepository.Url_RequestUpdate, {
       method: "PUT",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(request)
     })

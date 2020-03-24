@@ -17,33 +17,59 @@ export function updateRolesSuccess(roles) {
   return { type: actionsTypes.UPDATE_ROLES_SUCCESS, payload: roles };
 }
 
-export function saveRoleApi(role) {
-  return fetch(UrlRepository.Url_RoleSave, {
-    method: "POST",
+export function deleteRolesSuccess(roles) {
+  return { type: actionsTypes.DELETE_ROLES_SUCCESS, payload: roles };
+}
+
+export function deleteRoleApi(role,token) {
+  return fetch(UrlRepository.Url_RoleDelete, {
+    method: "DELETE",
     headers: {
       "content-type": "application/json",
       "Accept": "application/json",
-      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      "Authorization" : `Bearer ${token}`
     },
     body: JSON.stringify(role)
   })
     .then(handleResponce)
     .catch(handleError);
-
-  // return fetch(UrlRepository.Url_RoleSave+"/"+(role.id||""),{
-  //     method:role.id?"PUT":"POST",
-  //     headers:{"content-type":"application/json"},
-  //     body:JSON.stringify(role)
-  // });
 }
 
-export function updateRoleApi(role) {
+
+export function deleteRole(role, token) {
+  return function(dispatch) {
+    return deleteRoleApi(role, token)
+      .then(deleteRole => {
+        dispatch(deleteRolesSuccess(deleteRole));
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+
+
+export function saveRoleApi(role,token) {
+  return fetch(UrlRepository.Url_RoleSave, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "Accept": "application/json",
+      "Authorization" : `Bearer ${token}`
+    },
+    body: JSON.stringify(role)
+  })
+    .then(handleResponce)
+    .catch(handleError);
+}
+
+export function updateRoleApi(role,token) {
   return fetch(UrlRepository.Url_RoleUpdate, {
     method: "PUT",
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${localStorage.getItem('token')}`
+      "Authorization" : `Bearer ${token}`
     },
     body: JSON.stringify(role)
   })
@@ -63,9 +89,9 @@ export function saveRole(role, token) {
   };
 }
 
-export function updateRole(role) {
+export function updateRole(role,token) {
   return function(dispatch) {
-    return updateRoleApi(role)
+    return updateRoleApi(role,token)
       .then(updateRole => {
         dispatch(updateRolesSuccess(updateRole));
       })
@@ -84,7 +110,7 @@ export function getRoles(token) {
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        "Authorization" : `Bearer ${token}`
       }
 
       }).then(response=>response.json())

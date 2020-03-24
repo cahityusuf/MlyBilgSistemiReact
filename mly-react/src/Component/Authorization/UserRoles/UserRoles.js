@@ -14,6 +14,7 @@ function RolesRequest({
   getRoles,
   getUsers,
   saveUserRoles,
+  tokenAccess,
   users,
   roles,
   userRoles,
@@ -25,9 +26,9 @@ function RolesRequest({
 
   useEffect(() => {
     if (users.length === 0 && roles.length === 0) {
-      getUserRoles();
-      getRoles();
-      getUsers();
+      getUserRoles(tokenAccess.token);
+      getRoles(tokenAccess.token);
+      getUsers(tokenAccess.token);
     }
     setUsersRoles({ ...props.usersRoles });
   }, [props.usersRoles]);
@@ -41,7 +42,7 @@ function RolesRequest({
     }));
 
     if (event.target.name === "userId") {
-      getUserRoles(value);
+      getUserRoles(value,tokenAccess.token);
     }
 
     Validate(name, value);
@@ -66,8 +67,7 @@ function RolesRequest({
     let a = 0;
     userRoles.map(result => {
       if (
-        usersRoles.userId === result.userId &&
-        usersRoles.roleId === result.roleId
+        usersRoles.userId === result.userId
       ) {
       
         a += 1;
@@ -77,7 +77,7 @@ function RolesRequest({
     if (a === 0) {
 
       saveUserRoles(usersRoles).then(() => {
-        getUserRoles(usersRoles.userId);
+        getUserRoles(usersRoles.userId,tokenAccess.token);
         alertify.success("Kullanıcı rolü başarıyla kaydedildi",5);
       //   //history.push("/");
        });
@@ -85,7 +85,7 @@ function RolesRequest({
 
     } else {
       alertify.confirm(
-        "Yetki vermeye çalıştığınız sayfa zaten yetkili",
+        "Bir kullanıcıya birden fazla rol verilemez",
         function() {
           alertify.success("Tamam");
         },
@@ -102,7 +102,6 @@ function RolesRequest({
 
     <AddUserRoles
       roles={roles}
-      userRoles={userRoles}
       users={users}
       onChange={handleChange}
       onSave={handleSave}
@@ -121,6 +120,7 @@ function mapStateToProps(state) {
     roles: state.roleListReducer,
     users:state.listUserReducer,
     userRoles: state.listUserRolesReducer,
+    tokenAccess:state.tokenReducer
 
   };
 }
