@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MaterialTable from "material-table";
+import { connect } from "react-redux";
+import {
+  deleteRages,
+  getPages,
+  updatePage
+} from "../../../Redux/Actions/PageAction";
 
-export default function ListUserRoles(pages) {
+function ListUserRoles({pages,deleteRages,getPages,updatePage,tokenSuccess}) {
+
+  useEffect(() => {
+    if (pages.length === 0) {
+      getPages(tokenSuccess.token);
+    }
+  }, []);
+
+
    const [state, setState] = React.useState({
     columns: [
-      { title: 'Sayfa Url', field: 'url' },
+      { title: 'Sayfa Url', field: 'pagesURL' },
       { title: 'Sayfa Adı', field: 'pagesName' },
-      { title: 'Detayı', field: 'detail' },
-      { title: 'Sayfa İconu', field: 'pageIconName' },
+      { title: 'Detayı', field: 'pagesDetail' },
+      { title: 'Sayfa Iconu', field: 'pageIconName' },
       { title: 'Statü', field: 'status' }
 
     ],
-    
+    data:pages,
     options:[{
       headerStyle: {
         backgroundColor: '#01579b',
@@ -22,6 +36,7 @@ export default function ListUserRoles(pages) {
 
   return (
     <MaterialTable
+    localization={{ body: { editRow: { deleteText: 'Bu satırı silmek istediğinden emin misin?' } } }}
     options={{
       headerStyle: {
         backgroundColor: '#424242',
@@ -33,52 +48,39 @@ export default function ListUserRoles(pages) {
     }}
       title="Sayfa kayıt listesi"
       columns={state.columns}
-      data={pages.pages.map(page=>({
-      
-        url:page.pagesURL,
-        pagesName:page.pagesName,
-        detail:page.pagesDetail,
-        pageIconName:page.pageIconName,
-        status:page.status,
-        
-      }))}
+      data={pages}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
         onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
+          new Promise((resolve, reject) => {
             setTimeout(() => {
+              updatePage(newData, tokenSuccess.token).then(()=>{ getPages(tokenSuccess.token)});
               resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
             }, 600);
           }),
+
         onRowDelete: oldData =>
           new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          })
+            setTimeout(() => {          
+              deleteRages(oldData, tokenSuccess.token).then(()=>{getPages(tokenSuccess.token)});
+              resolve();           
+          },600)
+        }),
       }}
     />
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    pages: state.pageListReducer,
+    tokenSuccess:state.tokenReducer
+  };
+}
+
+const mapDispatchToProps = {
+  deleteRages,
+  getPages,
+  updatePage
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListUserRoles);

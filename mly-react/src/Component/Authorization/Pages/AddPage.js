@@ -77,7 +77,7 @@ const AddUserRoles = ({ pages, onChange, onSave, error }) => {
           </Grid>
 
           <Grid item xs={12}>
-            <PageList pages={pages}></PageList>
+            <PageList></PageList>
           </Grid>
 
         </Grid>

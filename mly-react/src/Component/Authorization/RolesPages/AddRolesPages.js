@@ -73,7 +73,7 @@ const AddRolesPages = ({
 
           <hr />
           <Grid item xs={12}>
-            <ListRolesPages rolesPages={rolesPages}></ListRolesPages>
+            <ListRolesPages></ListRolesPages>
           </Grid>
         </Grid>
       </form>

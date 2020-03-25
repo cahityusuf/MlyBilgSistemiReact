@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MaterialTable from "material-table";
+import { connect } from "react-redux";
+import {
+  deletePagesRequest,
+  getPagesRequest,
+  updatePagesRequest
+} from "../../../Redux/Actions/PagesRequestAction";
 
-export default function ListPagesRequest(pagesRequests) {
+function ListPagesRequest({pagesRequests,deletePagesRequest,getPagesRequest,updatePagesRequest,tokenSuccess}) {
+
+  useEffect(() => {
+    if (pagesRequests.length === 0) {
+      getPagesRequest(pagesRequests.rolesPagesId,tokenSuccess.token);
+    }
+  }, []);
+
    const [state, setState] = React.useState({
     columns: [
-      { title: 'Role', field: 'role' },
-      { title: 'Sayfa Url', field: 'sayfaUrl' },
-      { title: 'Detay', field: 'detay' },
+      { title: 'Role', field: 'roleName' },
+      { title: 'Sayfa Url', field: 'pagesURL' },
+      { title: 'Detay', field: 'pagesDetail' },
       { title: 'Request Adı', field: 'requestName' },
       { title: 'Request Tipi', field: 'requestTypeName' }
 
     ],
+
+    data:pagesRequests,
     
     options:[{
       headerStyle: {
@@ -20,10 +35,9 @@ export default function ListPagesRequest(pagesRequests) {
     }]
   });
 
- 
-
   return (
     <MaterialTable
+    localization={{ body: { editRow: { deleteText: 'Bu satırı silmek istediğinden emin misin?' } } }}
     options={{
       headerStyle: {
         backgroundColor: '#424242',
@@ -35,52 +49,39 @@ export default function ListPagesRequest(pagesRequests) {
     }}
       title="Sayfaya ait requestler listesi"
       columns={state.columns}
-      data={pagesRequests.pagesRequests.map(pagesRequest=>({
-      
-        role:pagesRequest.roleName,
-        sayfaUrl:pagesRequest.pagesURL,
-        detay:pagesRequest.pagesDetail,
-        requestName:pagesRequest.requestName,
-        requestType:pagesRequest.requestTypeName
-        
-      }))}
+      data={pagesRequests}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
         onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
+          new Promise((resolve, reject) => {
             setTimeout(() => {
+              updatePagesRequest(newData, tokenSuccess.token).then(()=>{ getPagesRequest(newData.rolesPagesId,tokenSuccess.token)});
               resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
             }, 600);
           }),
+
         onRowDelete: oldData =>
           new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          })
+            setTimeout(() => {          
+              deletePagesRequest(oldData, tokenSuccess.token).then(()=>{getPagesRequest(oldData.rolesPagesId,tokenSuccess.token)});
+              resolve();           
+          },600)
+        }),
       }}
     />
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    pagesRequests: state.pagesRequestListReducer,
+    tokenSuccess:state.tokenReducer
+  };
+}
+
+const mapDispatchToProps = {
+  deletePagesRequest,
+  getPagesRequest,
+  updatePagesRequest
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListPagesRequest);

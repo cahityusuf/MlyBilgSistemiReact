@@ -85,7 +85,7 @@ const AddPagesRequest = ({
 
           <hr />
           <Grid item xs={12}>
-            <ListPagesRequest pagesRequests={pagesRequests}></ListPagesRequest>
+            <ListPagesRequest></ListPagesRequest>
           </Grid>
         </Grid>
       </form>

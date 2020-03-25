@@ -67,7 +67,7 @@ const AddRequest = ({ requestList, requestType, onChange, onSave, error }) => {
           </Grid>
 
           <Grid item xs={12}>
-            <ListRequest requestList={requestList}></ListRequest>
+            <ListRequest></ListRequest>
           </Grid>
         </Grid>
       </form>

@@ -1,82 +1,96 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MaterialTable from "material-table";
+import { connect } from "react-redux";
+import {
+  deleteRequest,
+  updateRequest,
+  getRequestDetail
+} from "../../../Redux/Actions/RequestAction";
 
-export default function ListRequest({requestList}) {
-   const [state, setState] = React.useState({
+function ListRequest({
+  requestDetail,
+  getRequestDetail,
+  updateRequest,
+  deleteRequest,
+  tokenSuccess
+}) {
+  useEffect(() => {
+    if (requestDetail.length === 0) {
+      getRequestDetail(tokenSuccess.token);
+    }
+  }, []);
+  const [state, setState] = React.useState({
     columns: [
-      { title: 'Request Adı', field: 'RequestName' },
-      { title: 'Request Tipi', field: 'RequestTypeName' },
-      { title: 'Detayı', field: 'TypeDetail' }
-      
-
+      { title: "Request Adı", field: "requestName" },
+      { title: "Request Tipi", field: "requestTypeName" },
+      { title: "Detayı", field: "typeDetail" }
     ],
-    
-    options:[{
-      headerStyle: {
-        backgroundColor: '#01579b',
-        color: '#FFF'
+    data: requestDetail,
+    options: [
+      {
+        headerStyle: {
+          backgroundColor: "#01579b",
+          color: "#FFF"
+        }
       }
-    }]
+    ]
   });
-
 
   return (
     <MaterialTable
-    options={{
-      headerStyle: {
-        backgroundColor: '#424242',
-        color: '#FFF'
-      },
-      rowStyle: {
-        backgroundColor: '#EEE',
-      }
-    }}
-      title="Request List"
+      localization={{
+        body: {
+          editRow: { deleteText: "Bu satırı silmek istediğinden emin misin?" }
+        }
+      }}
+      options={{
+        headerStyle: {
+          backgroundColor: "#424242",
+          color: "#FFF"
+        },
+        rowStyle: {
+          backgroundColor: "#EEE"
+        }
+      }}
+      title="Request Listesi"
       columns={state.columns}
-      data={requestList.map(requestDetail=>({
-      
-        RequestName:requestDetail.requestName,
-        RequestTypeName:requestDetail.requestTypeName,
-        TypeDetail:requestDetail.typeDetail
-        
-      }))}
+      data={requestDetail}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
         onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
+          new Promise((resolve, reject) => {
             setTimeout(() => {
+              updateRequest(newData, tokenSuccess.token).then(() => {
+                getRequestDetail(tokenSuccess.token);
+              });
               resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
             }, 600);
           }),
+
         onRowDelete: oldData =>
           new Promise(resolve => {
             setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
+              deleteRequest(oldData, tokenSuccess.token).then(() => {
+                getRequestDetail(tokenSuccess.token);
               });
+              resolve();
             }, 600);
           })
       }}
     />
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    tokenSuccess: state.tokenReducer,
+    requestDetail: state.requestListReducer
+  };
+}
+
+const mapDispatchToProps = {
+  deleteRequest,
+  updateRequest,
+  getRequestDetail
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListRequest);

@@ -101,7 +101,6 @@ function RolesPages({
       onChange={handleChange}
       onSave={handleSave}
       errors={errors}
-      rolesPages={chanceRolesPagesList}
       //rolesPages={chanceRolesPages!==null ? chanceRolesPages : []}
     />
   );

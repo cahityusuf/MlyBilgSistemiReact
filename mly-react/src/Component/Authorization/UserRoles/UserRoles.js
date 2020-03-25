@@ -34,7 +34,6 @@ function RolesRequest({
   }, [props.usersRoles]);
 
   function handleChange(event) {
-
     const { name, value } = event.target;
     setUsersRoles(previousRole => ({
       ...previousRole,
@@ -42,7 +41,7 @@ function RolesRequest({
     }));
 
     if (event.target.name === "userId") {
-      getUserRoles(value,tokenAccess.token);
+      getUserRoles(value, tokenAccess.token);
     }
 
     Validate(name, value);
@@ -66,23 +65,17 @@ function RolesRequest({
     event.preventDefault();
     let a = 0;
     userRoles.map(result => {
-      if (
-        usersRoles.userId === result.userId
-      ) {
-      
+      if (usersRoles.userId === result.userId) {
         a += 1;
       }
     });
 
     if (a === 0) {
-
       saveUserRoles(usersRoles).then(() => {
-        getUserRoles(usersRoles.userId,tokenAccess.token);
-        alertify.success("Kullanıcı rolü başarıyla kaydedildi",5);
-      //   //history.push("/");
-       });
-
-
+        getUserRoles(usersRoles.userId, tokenAccess.token);
+        alertify.success("Kullanıcı rolü başarıyla kaydedildi", 5);
+        //   //history.push("/");
+      });
     } else {
       alertify.confirm(
         "Bir kullanıcıya birden fazla rol verilemez",
@@ -94,12 +87,9 @@ function RolesRequest({
         }
       );
     }
-
-
   }
 
   return (
-
     <AddUserRoles
       roles={roles}
       users={users}
@@ -118,10 +108,9 @@ function RolesRequest({
 function mapStateToProps(state) {
   return {
     roles: state.roleListReducer,
-    users:state.listUserReducer,
+    users: state.listUserReducer,
     userRoles: state.listUserRolesReducer,
-    tokenAccess:state.tokenReducer
-
+    tokenAccess: state.tokenReducer
   };
 }
 

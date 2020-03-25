@@ -1,45 +1,60 @@
-import * as actionsTypes from './ActionTypes'
+import * as actionsTypes from "./ActionTypes";
 import UrlRepository from "./UrlRepository";
 
-export function ChangeRequest(request)
-{
-    return {type:actionsTypes.CHANGE_REQUEST,payload:request}
+export function ChangeRequest(request) {
+  return { type: actionsTypes.CHANGE_REQUEST, payload: request };
 }
 
-export function getRequestSuccess(request)
-{
-    return {type:actionsTypes.GET_REQUEST_SUCCESS,payload:request}
+export function getRequestSuccess(request) {
+  return { type: actionsTypes.GET_REQUEST_SUCCESS, payload: request };
 }
 
 export function createRequestSuccess(request) {
-    return { type: actionsTypes.CREATE_REQUEST_SUCCESS, payload: request };
-  }
-  
-  export function updateRequestSuccess(request) {
-    return { type: actionsTypes.UPDATE_REQUEST_SUCCESS, payload: request };
-  }
+  return { type: actionsTypes.CREATE_REQUEST_SUCCESS, payload: request };
+}
 
-// export function getRequest()
-// {
-//     return function(dispatch)
-//     {
-//         let  url =UrlRepository.Url_RequestList
+export function updateRequestSuccess(request) {
+  return { type: actionsTypes.UPDATE_REQUEST_SUCCESS, payload: request };
+}
 
-//         return fetch(url).then(response=>response.json())
-//         .then(result=>dispatch(getRequestSuccess(result)));
-//     }
-// }
+export function deleteRequestSuccess(request) {
+  return { type: actionsTypes.DELETE_REQUEST_SUCCESS, payload: request };
+}
+
+export function deleteRequestApi(request,token) {
+  return fetch(UrlRepository.Url_RequestDelete, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      "Accept": "application/json",
+      "Authorization" : `Bearer ${token}`
+    },
+    body: JSON.stringify(request)
+  })
+    .then(handleResponce)
+    .catch(handleError);
+}
 
 
-export function getRequestDetail(token)
-{
+export function deleteRequest(request, token) {
+  return function(dispatch) {
+    return deleteRequestApi(request, token)
+      .then(deleteRequest => {
+        dispatch(deleteRequestSuccess(deleteRequest));
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+export function getRequestDetail(token) {
   return function(dispatch) {
     let url = UrlRepository.Url_RequestDetailList;
-    return fetch(url,{
+    return fetch(url, {
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       }
     })
       .then(response => response.json())
@@ -47,16 +62,13 @@ export function getRequestDetail(token)
   };
 }
 
-
-
-  
-export function saveRequestApi(request,token) {
+export function saveRequestApi(request, token) {
   return fetch(UrlRepository.Url_RequestSave, {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(request)
   })
@@ -69,56 +81,54 @@ export function saveRequestApi(request,token) {
   //     body:JSON.stringify(role)
   // });
 }
-  
-  export function updateRequestApi(request,token) {
-    return fetch(UrlRepository.Url_RequestUpdate, {
-      method: "PUT",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization" : `Bearer ${token}`
-      },
-      body: JSON.stringify(request)
-    })
-      .then(handleResponce)
-      .catch(handleError);
-  }
-  
 
-  export function saveRequest(request) {
-    return function(dispatch) {
-      return saveRequestApi(request)
-        .then(saveRequestApi => {
-          dispatch(createRequestSuccess(saveRequestApi));
-        })
-        .catch(error => {
-          throw error;
-        });
-    };
-  }
+export function updateRequestApi(request, token) {
+  return fetch(UrlRepository.Url_RequestUpdate, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(request)
+  })
+    .then(handleResponce)
+    .catch(handleError);
+}
 
-  
-  export function updateRequest(request) {
-    return function(dispatch) {
-      return updateRequestApi(request)
-        .then(updateRequest => {
-          dispatch(updateRequestSuccess(updateRequest));
-        })
-        .catch(error => {
-          throw error;
-        });
-    };
+export function saveRequest(request) {
+  return function(dispatch) {
+    return saveRequestApi(request)
+      .then(saveRequestApi => {
+        dispatch(createRequestSuccess(saveRequestApi));
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+
+export function updateRequest(request, token) {
+  return function(dispatch) {
+    return updateRequestApi(request, token)
+      .then(updateRequest => {
+        dispatch(updateRequestSuccess(updateRequest));
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+
+export async function handleResponce(response) {
+  if (response.ok) {
+    return response.json();
   }
-  
-  export async function handleResponce(response) {
-    if (response.ok) {
-      return response.json();
-    }
-    const error = await response.text();
-    throw new Error(error);
-  }
-  
-  export function handleError(error) {
-    console.error("Bir hata oluştu");
-    throw error;
-  }
+  const error = await response.text();
+  throw new Error(error);
+}
+
+export function handleError(error) {
+  console.error("Bir hata oluştu");
+  throw error;
+}

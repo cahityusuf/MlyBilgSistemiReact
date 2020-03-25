@@ -1,82 +1,96 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MaterialTable from "material-table";
+import { connect } from "react-redux";
+import {
+  deleteRolesPages,
+  updateRolesPages,
+  chanceRolesPages
+} from "../../../Redux/Actions/RolesPagesAction";
 
-export default function ListRolesPages({rolesPages}) {
-   const [state, setState] = React.useState({
+function ListRolesPages({
+  chanceRolesPages,
+  deleteRolesPages,
+  updateRolesPages,
+  chanceRolesPagesList,
+  tokenSuccess
+}) {
+  useEffect(() => {
+    if (chanceRolesPagesList.length === 0) {
+      chanceRolesPages(tokenSuccess.token, tokenSuccess.roleId);
+    }
+  }, []);
+  const [state, setState] = React.useState({
     columns: [
-      { title: 'Role', field: 'role' },
-      { title: 'Sayfa Url', field: 'sayfaUrl' },
-      { title: 'Detay', field: 'detay' },
-
+      { title: "Role", field: "roleName" },
+      { title: "Sayfa Adı", field: "pageName" },
+      { title: "Sayfa Url", field: "pagesURL" },
+      { title: "Icon", field: "pageIconName" },
+      { title: "Detay", field: "pagesDetail" }
     ],
-    
-    options:[{
-      headerStyle: {
-        backgroundColor: '#01579b',
-        color: '#FFF'
+    data: chanceRolesPagesList,
+    options: [
+      {
+        headerStyle: {
+          backgroundColor: "#01579b",
+          color: "#FFF"
+        }
       }
-    }]
+    ]
   });
-
-
 
   return (
     <MaterialTable
-    options={{
-      headerStyle: {
-        backgroundColor: '#424242',
-        color: '#FFF'
-      },
-      rowStyle: {
-        backgroundColor: '#EEE',
-      }
-    }}
-      title="Editable Example"
+      localization={{
+        body: {
+          editRow: { deleteText: "Bu satırı silmek istediğinden emin misin?" }
+        }
+      }}
+      options={{
+        headerStyle: {
+          backgroundColor: "#424242",
+          color: "#FFF"
+        },
+        rowStyle: {
+          backgroundColor: "#EEE"
+        }
+      }}
+      title="Rollerin girmeye yetkili olduğu sayfalar"
       columns={state.columns}
-      data={rolesPages.map(rolespages=>({
-      
-        role:rolespages.roleName,
-        sayfaUrl:rolespages.pagesURL,
-        detay:rolespages.pagesDetail
-        
-      }))}
+      data={chanceRolesPagesList}
       editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
+        // onRowUpdate: (newData, oldData) =>
+        // new Promise((resolve, reject) => {
+        //   setTimeout(() => {
+        //     updateRolesPages(newData, tokenSuccess.token).then(()=>{ chanceRolesPages(tokenSuccess.token,newData.roleId)});
+        //     resolve();
+        //   }, 600);
+        // }),
+
         onRowDelete: oldData =>
           new Promise(resolve => {
             setTimeout(() => {
-              resolve();
-              setState(prevState => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
+              deleteRolesPages(oldData, tokenSuccess.token).then(() => {
+                chanceRolesPages(tokenSuccess.token, oldData.roleId);
               });
+              resolve();
             }, 600);
           })
       }}
     />
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    chanceRolesPagesList: state.changeRolesPagesReducer,
+    tokenSuccess: state.tokenReducer
+  };
+}
+
+const mapDispatchToProps = {
+  chanceRolesPages,
+  deleteRolesPages,
+  updateRolesPages
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListRolesPages);

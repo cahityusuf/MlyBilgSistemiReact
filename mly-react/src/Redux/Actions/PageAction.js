@@ -20,6 +20,37 @@ export function createPagesSuccess(pages) {
   }
 
 
+  export function deleteRagesSuccess(pages) {
+    return { type: actionsTypes.DELETE_PAGES_SUCCESS, payload: pages };
+  }
+  
+  export function deleteRagesApi(pages,token) {
+    return fetch(UrlRepository.Url_PageDelete, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization" : `Bearer ${token}`
+      },
+      body: JSON.stringify(pages)
+    })
+      .then(handleResponce)
+      .catch(handleError);
+  }
+  
+  
+  export function deleteRages(pages, token) {
+    return function(dispatch) {
+      return deleteRagesApi(pages, token)
+        .then(deletePage => {
+          dispatch(deleteRagesSuccess(deletePage));
+        })
+        .catch(error => {
+          throw error;
+        });
+    };
+  }
+
 export function getPages(token)
 {
     return function(dispatch)

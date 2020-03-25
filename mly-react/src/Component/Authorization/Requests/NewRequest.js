@@ -85,7 +85,6 @@ function NewRequest({
   console.log("Kafadar"+" "+RequestType)
   return (
     <AddRequest
-      requestList={RequestDetail}
       requestType={RequestType}
       onChange={handleChange}
       onSave={handleSave}

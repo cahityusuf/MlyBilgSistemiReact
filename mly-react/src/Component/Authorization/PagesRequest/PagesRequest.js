@@ -112,7 +112,6 @@ function RolesRequest({
       onChange={handleChange}
       onSave={handleSave}
       errors={errors}
-      pagesRequests={pagesRequests}
     />
   );
 }
