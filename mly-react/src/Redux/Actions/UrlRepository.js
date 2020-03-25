@@ -9,6 +9,11 @@ export default  {
     Url_PageUpdate:"https://localhost:44335/api/pages/update",
     Url_PageDelete:"https://localhost:44335/api/pages/delete",
 
+    Url_NavigationTitlesList:"https://localhost:44335/api/navigationtitles/list",
+    Url_NavigationTitlesSave:"https://localhost:44335/api/navigationtitles/add",
+    Url_NavigationTitlesUpdate:"https://localhost:44335/api/navigationtitles/update",
+    Url_NavigationTitlesDelete:"https://localhost:44335/api/navigationtitles/delete",
+
     Url_RequestList:"https://localhost:44335/api/requests/list",
     Url_RequestSave:"https://localhost:44335/api/requests/add",
     Url_RequestUpdate:"https://localhost:44335/api/requests/update", 
@@ -16,6 +21,7 @@ export default  {
     Url_RequestDelete:"https://localhost:44335/api/requests/delete",
 
     Url_RolesPagesList:"https://localhost:44335/api/rolespages/list",
+    Url_RolesPagesNaviList:"https://localhost:44335/api/rolespages/listnavidetail",
     Url_RolesPagesDetailList:"https://localhost:44335/api/rolespages/listdetail",
     Url_RolesPagesSave:"https://localhost:44335/api/rolespages/add",
     Url_RolesPagesUpdate:"https://localhost:44335/api/rolespages/update",

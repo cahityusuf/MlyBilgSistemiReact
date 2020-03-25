@@ -5,6 +5,10 @@ export function getRolesPagesSuccess(rolesId) {
   return { type: actionsTypes.GET_ROLES_PAGES_SUCCESS, payload: rolesId };
 }
 
+export function getNaviRolesPagesSuccess(rolesId) {
+  return { type: actionsTypes.GET_NAVI_ROLES_PAGES_SUCCESS, payload: rolesId };
+}
+
 export function changeRolesPagesSuccess(rolesId) {
   return { type: actionsTypes.CHANGE_ROLES_PAGES, payload: rolesId };
 }
@@ -58,9 +62,9 @@ export function chanceRolesPages(token, roleId) {
 
     return fetch(url, {
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        "Authorization": `Bearer ${token}`
       }
     })
       .then(response => response.json())
@@ -78,13 +82,33 @@ export function getRolesPages(token, roleId) {
 
     return fetch(url, {
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        "Authorization": `Bearer ${token}`
       }
     })
       .then(response => response.json())
       .then(result => dispatch(getRolesPagesSuccess(result)));
+  };
+}
+
+export function getNaviRolesPages(token, naviId) {
+  return function(dispatch) {
+    let url = UrlRepository.Url_RolesPagesNaviList;
+
+    if (naviId) {
+      url = url + "?naviId=" + naviId;
+    }
+
+    return fetch(url, {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(result => dispatch(getNaviRolesPagesSuccess(result)));
   };
 }
 
