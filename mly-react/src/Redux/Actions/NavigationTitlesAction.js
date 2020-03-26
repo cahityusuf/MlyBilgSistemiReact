@@ -7,6 +7,11 @@ export function getNavigationTitlesSuccess(navigation)
     return {type:actionsTypes.GET_NAVIGATION_TITLES_SUCCESS,payload:navigation}
 }
 
+export function getNavigationTitlesDetailSuccess(navigation)
+{
+    return {type:actionsTypes.GET_NAVIGATION_TITLES_DETAIL_SUCCESS,payload:navigation}
+}
+
 export function createNavigationTitlesSuccess(navigation) {
     return { type: actionsTypes.CREATE_NAVIGATION_TITLES_SUCCESS, payload: navigation };
   }
@@ -46,6 +51,25 @@ export function createNavigationTitlesSuccess(navigation) {
         });
     };
   }
+
+export function getNavigationTitlesDetail(token)
+{
+
+  return function(dispatch) {
+
+    let url = UrlRepository.Url_NavigationTitlesDetailList;
+    return fetch(url, {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(result => dispatch(getNavigationTitlesDetailSuccess(result)));
+  };
+
+}
 
 export function getNavigationTitles(token)
 {

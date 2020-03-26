@@ -12,6 +12,7 @@ export default  {
     pagesRequests:[],
     pages:[],
     navigationTitle:[],
+    navigationTitleDetail:[],
     users:[],
     userRoles:[],
     requests:[],

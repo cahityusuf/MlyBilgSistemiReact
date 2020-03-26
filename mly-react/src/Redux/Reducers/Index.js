@@ -27,6 +27,7 @@ import tokenReducer from "./LoginReducer/TokenReducer"
 import changeRolesPagesReducer from "./RolesPagesReducer/ChangeRolesPagesReducer"
 import navigationTitlesReducer from "./NavigationTitlesReducer/ListNavigationTitlesReducer"
 import listNaviRolesPagesReduce from "./RolesPagesReducer/ListNaviRolesPagesReducer"
+import listNavigationTitlesDetailReducer from "./NavigationTitlesReducer/ListNavigationTitleDetailReducer"
 
 
 const rootReducer = combineReducers({
@@ -56,7 +57,8 @@ const rootReducer = combineReducers({
     tokenReducer,
     changeRolesPagesReducer,
     navigationTitlesReducer,
-    listNaviRolesPagesReduce
+    listNaviRolesPagesReduce,
+    listNavigationTitlesDetailReducer
 })
 
 export default rootReducer;

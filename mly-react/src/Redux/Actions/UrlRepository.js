@@ -10,6 +10,7 @@ export default  {
     Url_PageDelete:"https://localhost:44335/api/pages/delete",
 
     Url_NavigationTitlesList:"https://localhost:44335/api/navigationtitles/list",
+    Url_NavigationTitlesDetailList:"https://localhost:44335/api/navigationtitles/listdetail",
     Url_NavigationTitlesSave:"https://localhost:44335/api/navigationtitles/add",
     Url_NavigationTitlesUpdate:"https://localhost:44335/api/navigationtitles/update",
     Url_NavigationTitlesDelete:"https://localhost:44335/api/navigationtitles/delete",
