@@ -7,11 +7,11 @@ import {
   deleteUserRoles
 } from "../../../Redux/Actions/UserRolesAction";
 
-function ListUserRoles({userRoles,getUserRoles,updateUserRoles,deleteUserRoles,tokenSuccess}) {
+function ListUserRoles({userRoles,getUserRoles,userId,updateUserRoles,deleteUserRoles,tokenSuccess}) {
 
   useEffect(() => {
     if (userRoles.length === 0) {
-      getUserRoles(tokenSuccess.token);
+      getUserRoles(userId,tokenSuccess.token);
     }
 
   }, []);

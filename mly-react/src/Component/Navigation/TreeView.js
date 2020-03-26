@@ -1,222 +1,157 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
-import Typography from '@material-ui/core/Typography';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Label from '@material-ui/icons/Label';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import InfoIcon from '@material-ui/icons/Info';
-import ForumIcon from '@material-ui/icons/Forum';
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { getNavigationTitlesDetail } from "../../Redux/Actions/NavigationTitlesAction";
-import { connect } from "react-redux";
-
-const useTreeItemStyles = makeStyles(theme => ({
-  root: {
-    color: theme.palette.text.secondary,
-    '&:hover > $content': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    '&:focus > $content, &$selected > $content': {
-      backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
-      color: 'var(--tree-view-color)',
-    },
-    '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
-      backgroundColor: 'transparent',
-    },
-  },
-  content: {
-    color: theme.palette.text.secondary,
-    borderTopRightRadius: theme.spacing(2),
-    borderBottomRightRadius: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-    fontWeight: theme.typography.fontWeightMedium,
-    '$expanded > &': {
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  },
-  group: {
-    marginLeft: 0,
-    '& $content': {
-      paddingLeft: theme.spacing(2),
-    },
-  },
-  expanded: {},
-  selected: {},
-  label: {
-    fontWeight: 'inherit',
-    color: 'inherit',
-  },
-  labelRoot: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0.5, 0),
-  },
-  labelIcon: {
-    marginRight: theme.spacing(1),
-  },
-  labelText: {
-    fontWeight: 'inherit',
-    flexGrow: 1,
-  },
-}));
-
-function StyledTreeItem(props) {
-  const classes = useTreeItemStyles();
-  const { labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other } = props;
-
-  return (
-    <TreeItem
-      label={
-        <div className={classes.labelRoot}>
-          <LabelIcon color="inherit" className={classes.labelIcon} />
-          <Typography variant="body2" className={classes.labelText}>
-            {labelText}
-          </Typography>
-          <Typography variant="caption" color="inherit">
-            {labelInfo}
-          </Typography>
-        </div>
-      }
-      style={{
-        '--tree-view-color': color,
-        '--tree-view-bg-color': bgColor,
-      }}
-      classes={{
-        root: classes.root,
-        content: classes.content,
-        expanded: classes.expanded,
-        selected: classes.selected,
-        group: classes.group,
-        label: classes.label,
-      }}
-      {...other}
-    />
-  );
-}
-
-StyledTreeItem.propTypes = {
-  bgColor: PropTypes.string,
-  color: PropTypes.string,
-  labelIcon: PropTypes.elementType.isRequired,
-  labelInfo: PropTypes.string,
-  labelText: PropTypes.string.isRequired,
-};
-
-const useStyles = makeStyles({
-  root: {
-    height: 264,
-    flexGrow: 1,
-    maxWidth: 400,
-  },
-});
-
-function TreeViewGMail({
-     navigationDetail,
-     tokenSuccess,
-     getNavigationTitlesDetail
-   }) {
-  const classes = useStyles();
-
-
-    useEffect(() => {
-    if (navigationDetail.length === 0) {
-      getNavigationTitlesDetail(tokenSuccess.token);
-    }
-  }, []);
-
-
-  return (
-    <TreeView
-      className={classes.root}
-      defaultExpanded={['3']}
-      defaultCollapseIcon={<ArrowDropDownIcon />}
-      defaultExpandIcon={<ArrowRightIcon />}
-      defaultEndIcon={<div style={{ width: 24 }} />}
-    >
-
-      {navigationDetail.map(item => (
-        <StyledTreeItem nodeId={item.naviId} label={item.naviTitleName} labelIcon={item.pageIconName}>
-          {item.pages.map(result => (
-            <StyledTreeItem nodeId={item.pagesId} label={result.pagesName} labelIcon={result.pageIconName} color="#1a73e8" bgColor="#e8f0fe" labelInfo="2,294" />
-          ))}
-        </StyledTreeItem>
-      ))}
-
-      
-    </TreeView>
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-    tokenSuccess: state.tokenReducer,
-    navigationDetail: state.listNavigationTitlesDetailReducer
-  };
-}
-
-const mapDispatchToProps = {
-  getNavigationTitlesDetail
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TreeViewGMail);
-
-
-
-
-// import React, { useEffect } from "react";
-// import { makeStyles } from "@material-ui/core/styles";
-// import TreeView from "@material-ui/lab/TreeView";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-// import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-// import TreeItem from "@material-ui/lab/TreeItem";
-// import { connect } from "react-redux";
+// import React, { useEffect } from 'react';
+// import PropTypes from 'prop-types';
+// import { makeStyles } from '@material-ui/core/styles';
+// import TreeView from '@material-ui/lab/TreeView';
+// import TreeItem from '@material-ui/lab/TreeItem';
+// import Typography from '@material-ui/core/Typography';
+// import MailIcon from '@material-ui/icons/Mail';
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import Label from '@material-ui/icons/Label';
+// import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+// import InfoIcon from '@material-ui/icons/Info';
+// import ForumIcon from '@material-ui/icons/Forum';
+// import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+// import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+// import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 // import { getNavigationTitlesDetail } from "../../Redux/Actions/NavigationTitlesAction";
+// import { connect } from "react-redux";
+// import MaterialIcon from "../Toolbox/MaterialIcon";
+
+// const useTreeItemStyles = makeStyles(theme => ({
+//   root: {
+//     color: theme.palette.text.secondary,
+//     '&:hover > $content': {
+//       backgroundColor: theme.palette.action.hover,
+//     },
+//     '&:focus > $content, &$selected > $content': {
+//       backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
+//       color: 'var(--tree-view-color)',
+//     },
+//     '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
+//       backgroundColor: 'transparent',
+//     },
+//   },
+//   content: {
+//     color: theme.palette.text.secondary,
+//     borderTopRightRadius: theme.spacing(2),
+//     borderBottomRightRadius: theme.spacing(2),
+//     paddingRight: theme.spacing(1),
+//     fontWeight: theme.typography.fontWeightMedium,
+//     '$expanded > &': {
+//       fontWeight: theme.typography.fontWeightRegular,
+//     },
+//   },
+//   group: {
+//     marginLeft: 0,
+//     '& $content': {
+//       paddingLeft: theme.spacing(2),
+//     },
+//   },
+//   expanded: {},
+//   selected: {},
+//   label: {
+//     fontWeight: 'inherit',
+//     color: 'inherit',
+//   },
+//   labelRoot: {
+//     display: 'flex',
+//     alignItems: 'center',
+//     padding: theme.spacing(0.5, 0),
+//   },
+//   labelIcon: {
+//     marginRight: theme.spacing(1),
+//   },
+//   labelText: {
+//     fontWeight: 'inherit',
+//     flexGrow: 1,
+//   },
+// }));
+
+// function StyledTreeItem(props) {
+//   const classes = useTreeItemStyles();
+//   const { labelText, labelIcon: MaterialIcon, labelInfo, color, bgColor, ...other } = props;
+
+//   return (
+//     <TreeItem
+//       label={
+//         <div className={classes.labelRoot}>
+          
+//           <LabelIcon color="inherit" className={classes.labelIcon} />
+//           <Typography variant="body2" className={classes.labelText}>
+//             {labelText}
+//           </Typography>
+//           <Typography variant="caption" color="inherit">
+//             {labelInfo}
+//           </Typography>
+//         </div>
+//       }
+//       style={{
+//         '--tree-view-color': color,
+//         '--tree-view-bg-color': bgColor,
+//       }}
+//       classes={{
+//         root: classes.root,
+//         content: classes.content,
+//         expanded: classes.expanded,
+//         selected: classes.selected,
+//         group: classes.group,
+//         label: classes.label,
+//       }}
+//       {...other}
+//     />
+//   );
+// }
+
+// StyledTreeItem.propTypes = {
+//   bgColor: PropTypes.string,
+//   color: PropTypes.string,
+//   labelIcon: PropTypes.elementType.isRequired,
+//   labelInfo: PropTypes.string,
+//   labelText: PropTypes.string.isRequired,
+// };
 
 // const useStyles = makeStyles({
 //   root: {
-//     height: 216,
+//     height: 264,
 //     flexGrow: 1,
-//     maxWidth: 400
-//   }
+//     maxWidth: 400,
+//   },
 // });
 
-// function MultiSelectTreeView({
-//   navigationDetail,
-//   tokenSuccess,
-//   getNavigationTitlesDetail
-// }) {
+// function TreeViewGMail({
+//      navigationDetail,
+//      tokenSuccess,
+//      getNavigationTitlesDetail
+//    }) {
+//   const classes = useStyles();
 
-//   useEffect(() => {
+
+//     useEffect(() => {
 //     if (navigationDetail.length === 0) {
 //       getNavigationTitlesDetail(tokenSuccess.token);
 //     }
 //   }, []);
 
-//   const classes = useStyles();
 
 //   return (
 //     <TreeView
 //       className={classes.root}
-//       defaultCollapseIcon={<ExpandMoreIcon />}
-//       defaultExpandIcon={<ChevronRightIcon />}
-//       multiSelect
+//       defaultExpanded={['3']}
+//       defaultCollapseIcon={<ArrowDropDownIcon />}
+//       defaultExpandIcon={<ArrowRightIcon />}
+//       defaultEndIcon={<div style={{ width: 24 }} />}
 //     >
+
 //       {navigationDetail.map(item => (
-//         <TreeItem nodeId="1" label={item.naviTitleName}>
-//           {item.pages.map(resultt => (
-//             <TreeItem nodeId="2" label={resultt.pagesName} />
+        
+//         <StyledTreeItem nodeId={item.naviId} labelText={item.naviTitleName} label={item.naviTitleName} labelIcon={item.pageIconName}>
+//           {item.pages.map(result => (
+//             <StyledTreeItem nodeId={item.pagesId} labelText={result.naviTitleName} label={result.pagesName} labelIcon={result.pageIconName} color="#1a73e8" bgColor="#e8f0fe" labelInfo="2,294" />         
 //           ))}
-//         </TreeItem>
+//         </StyledTreeItem>
 //       ))}
+
+      
 //     </TreeView>
 //   );
 // }
@@ -235,7 +170,85 @@ export default connect(
 // export default connect(
 //   mapStateToProps,
 //   mapDispatchToProps
-// )(MultiSelectTreeView);
+// )(TreeViewGMail);
+
+
+
+
+import React, { useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TreeView from "@material-ui/lab/TreeView";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import TreeItem from "@material-ui/lab/TreeItem";
+import { connect } from "react-redux";
+import { getNavigationTitlesDetail } from "../../Redux/Actions/NavigationTitlesAction";
+import MaterialIcon from "../Toolbox/MaterialIcon";
+import { Link } from "react-router-dom";
+import { useHistory  } from "react-router-dom";
+
+
+const useStyles = makeStyles({
+  root: {
+    height: 216,
+    flexGrow: 1,
+    maxWidth: 400,
+    margin:10
+  }
+});
+
+
+
+function MultiSelectTreeView({
+  navigationDetail,
+  tokenSuccess,
+  getNavigationTitlesDetail
+}) {
+
+  const classes = useStyles();
+  const historyy = useHistory()
+
+  useEffect(() => {
+    if (navigationDetail.length === 0) {
+      getNavigationTitlesDetail(tokenSuccess.roleId,tokenSuccess.token);
+    }
+  }, []);
+
+  return (
+
+    <TreeView
+      className={classes.root}
+      defaultCollapseIcon={<ExpandMoreIcon />}
+      defaultExpandIcon={<ChevronRightIcon />}
+      multiSelect>
+      {navigationDetail[0].map(item => (
+        <TreeItem nodeId={item.naviId} label={item.naviTitleName}>
+          {item.pages.map(result => (
+          //  <Link to={result.pagesURL}>
+           <TreeItem nodeId={item.pagesId} onClick={()=>{ historyy.push(result.pagesURL)}} label={result.pagesName} />
+          //  </Link>                             
+          ))}
+        </TreeItem>
+      ))}
+    </TreeView>
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    tokenSuccess: state.tokenReducer,
+    navigationDetail: state.listNavigationTitlesDetailReducer
+  };
+}
+
+const mapDispatchToProps = {
+  getNavigationTitlesDetail
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MultiSelectTreeView);
 
 
 

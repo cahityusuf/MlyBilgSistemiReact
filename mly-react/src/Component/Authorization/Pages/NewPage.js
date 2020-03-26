@@ -86,7 +86,7 @@ function NewPage({ getPages,tokenSuccess, savePage, updatePage, pages, history, 
     }
   }
 
-  console.warn(pages)
+
   return (
     <AddPage
       onChange={handleChange}

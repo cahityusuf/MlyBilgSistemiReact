@@ -52,12 +52,17 @@ export function createNavigationTitlesSuccess(navigation) {
     };
   }
 
-export function getNavigationTitlesDetail(token)
+export function getNavigationTitlesDetail(roleId,token)
 {
 
   return function(dispatch) {
 
     let url = UrlRepository.Url_NavigationTitlesDetailList;
+
+    if (roleId) {
+      url = url + "?roleId=" + roleId;
+    }
+
     return fetch(url, {
       headers: {
         "Accept": "application/json",

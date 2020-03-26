@@ -69,7 +69,7 @@ const AddUserRoles = ({
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <ListUserRoles></ListUserRoles>
+            <ListUserRoles userId={users.id}></ListUserRoles>
           </Grid>
         </Grid>
       </form>
