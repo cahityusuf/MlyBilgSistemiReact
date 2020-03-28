@@ -3,20 +3,14 @@ import { connect } from "react-redux";
 import { getRoles } from "../../../Redux/Actions/RolesActions";
 import { getPages } from "../../../Redux/Actions/PageAction";
 import AddRolesPages from "./AddRolesPages";
-import {
-  saveRolesPages,chanceRolesPages
-} from "../../../Redux/Actions/RolesPagesAction";
 import alertify from "alertifyjs";
 
 function RolesPages({
   getRoles,
   getPages,
-  chanceRolesPages,
-  saveRolesPages,
   roles,
   pages,
   rolesPages,
-  chanceRolesPagesList,
   tokenSuccess,
   history,
   ...props
@@ -28,7 +22,6 @@ function RolesPages({
     if (roles.length === 0 && pages.length === 0) {
       getRoles(tokenSuccess.token);
       getPages(tokenSuccess.token);
-      chanceRolesPages(tokenSuccess.token,tokenSuccess.roleId)
     }
     setRolesPages({ ...props.rolesPage });
   }, [props.rolesPage]);
@@ -40,7 +33,7 @@ function RolesPages({
       [name]: name === "categoryId" ? parseInt(value, 10) : value
     }));
     if (event.target.name === "roleId") {
-      chanceRolesPages(tokenSuccess.token,value)
+     // chanceRolesPages(tokenSuccess.token,value)
     }
     Validate(name, value);
   }
@@ -75,11 +68,11 @@ function RolesPages({
     });
 
     if (a === 0) {
-      saveRolesPages(rolesPage).then(() => {
-        chanceRolesPages(tokenSuccess.token,rolesPage.roleId);
+      //saveRolesPages(rolesPage).then(() => {
+        //chanceRolesPages(tokenSuccess.token,rolesPage.roleId);
         alertify.success(rolesPage.name+" "+ "isimli rol başarıyla kaydedildi",5);
         //history.push("/");
-      });
+      //});
     } else {
       alertify.confirm(
         "Yetki vermeye çalıştığınız sayfa zaten yetkili",
@@ -115,17 +108,13 @@ function mapStateToProps(state) {
   return {
     roles: state.roleListReducer,
     pages: state.pageListReducer,
-    chanceRolesPagesList: state.changeRolesPagesReducer,
-    rolesPages: state.rolesPagesListReducer,
     tokenSuccess:state.tokenReducer
   };
 }
 
 const mapDispatchToProps = {
   getRoles,
-  getPages,
-  saveRolesPages,
-  chanceRolesPages
+  getPages
 
 };
 

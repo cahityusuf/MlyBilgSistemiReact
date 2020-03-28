@@ -35,7 +35,6 @@ const Router=()=> {
             <ProtectedRoute path="/newpage"  component={NewPage}/>
             <ProtectedRoute path="/newrequest"  component={NewRequest}/>
             <ProtectedRoute path="/pagesrequests"  component={PagesRequest}/>
-            <ProtectedRoute path="/rolespages"  component={RolesPages}/>
             <ProtectedRoute path="/rolespages/:rolId"  component={RolesPages}/>
             <ProtectedRoute path="/userroles"  component={UserRoles}/>
             <ProtectedRoute component={NotFound}/>

@@ -1,220 +1,220 @@
-import React, { useEffect, useState } from "react";
-import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-//import RecentActorsOutlined from '@material-ui/icons/RecentActorsOutlined';
-import Router from "../../Router/Router";
-import { connect } from "react-redux";
-import { getRolesPages } from "../../Redux/Actions/RolesPagesAction";
-import { Link } from "react-router-dom";
-import MaterialIcon from "../Toolbox/MaterialIcon";
+// import React, { useEffect, useState } from "react";
+// import clsx from "clsx";
+// import { makeStyles, useTheme } from "@material-ui/core/styles";
+// import Drawer from "@material-ui/core/Drawer";
+// import AppBar from "@material-ui/core/AppBar";
+// import Toolbar from "@material-ui/core/Toolbar";
+// import List from "@material-ui/core/List";
+// import CssBaseline from "@material-ui/core/CssBaseline";
+// import Typography from "@material-ui/core/Typography";
+// import Divider from "@material-ui/core/Divider";
+// import IconButton from "@material-ui/core/IconButton";
+// import MenuIcon from "@material-ui/icons/Menu";
+// import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+// import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemText from "@material-ui/core/ListItemText";
+// import InboxIcon from "@material-ui/icons/MoveToInbox";
+// import MailIcon from "@material-ui/icons/Mail";
+// //import RecentActorsOutlined from '@material-ui/icons/RecentActorsOutlined';
+// import Router from "../../Router/Router";
+// import { connect } from "react-redux";
+// import { getRolesPages } from "../../Redux/Actions/RolesPagesAction";
+// import { Link } from "react-router-dom";
+// import MaterialIcon from "../Toolbox/MaterialIcon";
 
-const drawerWidth = 240;
+// const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex"
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  menuButton: {
-    marginRight: 36
-  },
-  hide: {
-    display: "none"
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap"
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1
-    }
-  },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
-  }
-}));
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     display: "flex"
+//   },
+//   appBar: {
+//     zIndex: theme.zIndex.drawer + 1,
+//     transition: theme.transitions.create(["width", "margin"], {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.leavingScreen
+//     })
+//   },
+//   appBarShift: {
+//     marginLeft: drawerWidth,
+//     width: `calc(100% - ${drawerWidth}px)`,
+//     transition: theme.transitions.create(["width", "margin"], {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.enteringScreen
+//     })
+//   },
+//   menuButton: {
+//     marginRight: 36
+//   },
+//   hide: {
+//     display: "none"
+//   },
+//   drawer: {
+//     width: drawerWidth,
+//     flexShrink: 0,
+//     whiteSpace: "nowrap"
+//   },
+//   drawerOpen: {
+//     width: drawerWidth,
+//     transition: theme.transitions.create("width", {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.enteringScreen
+//     })
+//   },
+//   drawerClose: {
+//     transition: theme.transitions.create("width", {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.leavingScreen
+//     }),
+//     overflowX: "hidden",
+//     width: theme.spacing(7) + 1,
+//     [theme.breakpoints.up("sm")]: {
+//       width: theme.spacing(9) + 1
+//     }
+//   },
+//   toolbar: {
+//     display: "flex",
+//     alignItems: "center",
+//     justifyContent: "flex-end",
+//     padding: theme.spacing(0, 1),
+//     // necessary for content to be below app bar
+//     ...theme.mixins.toolbar
+//   },
+//   content: {
+//     flexGrow: 1,
+//     padding: theme.spacing(3)
+//   }
+// }));
 
-function Dashboard({ rolesPages, getRolesPages, tokenSuccess, ...props }) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [rolePages, setRolesPages] = useState({ ...props.rolePages });
+// function Dashboard({ rolesPages, getRolesPages, tokenSuccess, ...props }) {
+//   const classes = useStyles();
+//   const theme = useTheme();
+//   const [open, setOpen] = React.useState(false);
+//   const [rolePages, setRolesPages] = useState({ ...props.rolePages });
 
-  useEffect(() => {
-    if (rolesPages.length === 0) {
-      getRolesPages(tokenSuccess.token, tokenSuccess.roleId);
-    }
-    setRolesPages({ ...props.rolePages });
-  }, [props.rolePages]);
+//   useEffect(() => {
+//     if (rolesPages.length === 0) {
+//       getRolesPages(tokenSuccess.token, tokenSuccess.roleId);
+//     }
+//     setRolesPages({ ...props.rolePages });
+//   }, [props.rolePages]);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+//   const handleDrawerOpen = () => {
+//     setOpen(true);
+//   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+//   const handleDrawerClose = () => {
+//     setOpen(false);
+//   };
 
-  console.log("cahit   " + tokenSuccess.token);
+//   console.log("cahit   " + tokenSuccess.token);
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
-          })
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {rolesPages.map(result => (
-            <Link to={result.pagesURL}>
-              <ListItem button key={result.rolesPagesId}>
-                <ListItemIcon>
-                  {result.rolesPagesId ? (
-                    <MaterialIcon iconName={result.pageIconName}>
-                      {" "}
-                    </MaterialIcon>
-                  ) : (
-                    <MaterialIcon iconName={result.pageIconName}>
-                      {" "}
-                    </MaterialIcon>
-                  )}{" "}
-                </ListItemIcon>
-                <ListItemText primary={result.pageName} />
-              </ListItem>
-            </Link>
-          ))}
-          {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))} */}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Router />
-      </main>
-    </div>
-  );
-}
+//   return (
+//     <div className={classes.root}>
+//       <CssBaseline />
+//       <AppBar
+//         position="fixed"
+//         className={clsx(classes.appBar, {
+//           [classes.appBarShift]: open
+//         })}
+//       >
+//         <Toolbar>
+//           <IconButton
+//             color="inherit"
+//             aria-label="open drawer"
+//             onClick={handleDrawerOpen}
+//             edge="start"
+//             className={clsx(classes.menuButton, {
+//               [classes.hide]: open
+//             })}
+//           >
+//             <MenuIcon />
+//           </IconButton>
+//           <Typography variant="h6" noWrap>
+//             Mini variant drawer
+//           </Typography>
+//         </Toolbar>
+//       </AppBar>
+//       <Drawer
+//         variant="permanent"
+//         className={clsx(classes.drawer, {
+//           [classes.drawerOpen]: open,
+//           [classes.drawerClose]: !open
+//         })}
+//         classes={{
+//           paper: clsx({
+//             [classes.drawerOpen]: open,
+//             [classes.drawerClose]: !open
+//           })
+//         }}
+//       >
+//         <div className={classes.toolbar}>
+//           <IconButton onClick={handleDrawerClose}>
+//             {theme.direction === "rtl" ? (
+//               <ChevronRightIcon />
+//             ) : (
+//               <ChevronLeftIcon />
+//             )}
+//           </IconButton>
+//         </div>
+//         <Divider />
+//         <List>
+//           {rolesPages.map(result => (
+//             <Link to={result.pagesURL}>
+//               <ListItem button key={result.rolesPagesId}>
+//                 <ListItemIcon>
+//                   {result.rolesPagesId ? (
+//                     <MaterialIcon iconName={result.pageIconName}>
+//                       {" "}
+//                     </MaterialIcon>
+//                   ) : (
+//                     <MaterialIcon iconName={result.pageIconName}>
+//                       {" "}
+//                     </MaterialIcon>
+//                   )}{" "}
+//                 </ListItemIcon>
+//                 <ListItemText primary={result.pageName} />
+//               </ListItem>
+//             </Link>
+//           ))}
+//           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+//             <ListItem button key={text}>
+//               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+//               <ListItemText primary={text} />
+//             </ListItem>
+//           ))} */}
+//         </List>
+//         <Divider />
+//         <List>
+//           {["All mail", "Trash", "Spam"].map((text, index) => (
+//             <ListItem button key={text}>
+//               <ListItemIcon>
+//                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+//               </ListItemIcon>
+//               <ListItemText primary={text} />
+//             </ListItem>
+//           ))}
+//         </List>
+//       </Drawer>
+//       <main className={classes.content}>
+//         <div className={classes.toolbar} />
+//         <Router />
+//       </main>
+//     </div>
+//   );
+// }
 
-function mapStateToProps(state) {
-  return {
-    rolesPages: state.rolesPagesListReducer,
-    tokenSuccess: state.tokenReducer
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     rolesPages: state.rolesPagesListReducer,
+//     tokenSuccess: state.tokenReducer
+//   };
+// }
 
-const mapDispatchToProps = {
-  getRolesPages
-};
+// const mapDispatchToProps = {
+//   getRolesPages
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+// export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

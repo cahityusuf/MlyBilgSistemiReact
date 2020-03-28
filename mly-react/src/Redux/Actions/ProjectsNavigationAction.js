@@ -2,31 +2,31 @@ import * as actionsTypes from './ActionTypes'
 import UrlRepository from "./UrlRepository";
 
 
-export function getNavigationTitlesSuccess(navigation)
+export function getProjectNavigationSuccess(navigation)
 {
-    return {type:actionsTypes.GET_NAVIGATION_TITLES_SUCCESS,payload:navigation}
+    return {type:actionsTypes.GET_PROJECTS_NAVIGATION_SUCCESS,payload:navigation}
 }
 
-export function getNavigationTitlesDetailSuccess(navigation)
+export function getProjectNavigationDetailSuccess(navigation)
 {
-    return {type:actionsTypes.GET_NAVIGATION_TITLES_DETAIL_SUCCESS,payload:navigation}
+    return {type:actionsTypes.GET_PROJECTS_NAVIGATION_DETAIL_SUCCESS,payload:navigation}
 }
 
-export function createNavigationTitlesSuccess(navigation) {
-    return { type: actionsTypes.CREATE_NAVIGATION_TITLES_SUCCESS, payload: navigation };
+export function createProjectNavigationSuccess(navigation) {
+    return { type: actionsTypes.CREATE_PROJECTS_NAVIGATION_SUCCESS, payload: navigation };
   }
   
-  export function updateNavigationTitlesSuccess(navigation) {
-    return { type: actionsTypes.UPDATE_NAVIGATION_TITLES_SUCCESS, payload: navigation };
+  export function updateProjectNavigationSuccess(navigation) {
+    return { type: actionsTypes.UPDATE_PROJECTS_NAVIGATION_SUCCESS, payload: navigation };
   }
 
 
-  export function deleteNavigationTitlesSuccess(navigation) {
-    return { type: actionsTypes.DELETE_NAVIGATION_TITLES_SUCCESS, payload: navigation };
+  export function deleteProjectNavigationSuccess(navigation) {
+    return { type: actionsTypes.DELETE_PROJECTS_NAVIGATION_SUCCESS, payload: navigation };
   }
   
-  export function deleteNavigationTitlesApi(navigation,token) {
-    return fetch(UrlRepository.Url_NavigationTitlesDelete, {
+  export function deleteProjectNavigationApi(navigation,token) {
+    return fetch(UrlRepository.Url_ProjectNavigationDelete, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -40,11 +40,11 @@ export function createNavigationTitlesSuccess(navigation) {
   }
   
   
-  export function deleteNavigationTitles(navigation, token) {
+  export function deleteProjectNavigation(navigation, token) {
     return function(dispatch) {
-      return deleteNavigationTitlesApi(navigation, token)
+      return deleteProjectNavigationApi(navigation, token)
         .then(deleteNavigation => {
-          dispatch(deleteNavigationTitlesSuccess(deleteNavigation));
+          dispatch(deleteProjectNavigationSuccess(deleteNavigation));
         })
         .catch(error => {
           throw error;
@@ -52,12 +52,12 @@ export function createNavigationTitlesSuccess(navigation) {
     };
   }
 
-export function getNavigationTitlesDetail(roleId,token)
+export function getProjectNavigationDetail(roleId,token)
 {
 
   return function(dispatch) {
 
-    let url = UrlRepository.Url_NavigationTitlesDetailList;
+    let url = UrlRepository.Url_ProjectNavigationDetailList;
 
     if (roleId) {
       url = url + "?roleId=" + roleId;
@@ -71,28 +71,28 @@ export function getNavigationTitlesDetail(roleId,token)
       }
     })
       .then(response => response.json())
-      .then(result => dispatch(getNavigationTitlesDetailSuccess(result)));
+      .then(result => dispatch(getProjectNavigationDetailSuccess(result)));
   };
 
 }
 
-export function getNavigationTitles(token)
+export function getProjectNavigation(token)
 {
     return function(dispatch)
     {
-        return fetch(UrlRepository.Url_NavigationTitlesList,{
+        return fetch(UrlRepository.Url_ProjectNavigationList,{
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
             "Authorization" : `Bearer ${token}`
           }
         }).then(response=>response.json())
-        .then(result=>dispatch(getNavigationTitlesSuccess(result)));
+        .then(result=>dispatch(getProjectNavigationSuccess(result)));
     }
 }
 
-export function saveNavigationTitlesApi(navigation,token) {
-    return fetch(UrlRepository.Url_NavigationTitlesSave, {
+export function saveProjectNavigationApi(navigation,token) {
+    return fetch(UrlRepository.Url_ProjectNavigationSave, {
       method: "POST",
       headers: {
         "Accept": "application/json",
@@ -106,8 +106,8 @@ export function saveNavigationTitlesApi(navigation,token) {
   
   }
   
-  export function updateNavigationTitlesApi(navigation,token) {
-    return fetch(UrlRepository.Url_NavigationTitlesUpdate, {
+  export function updateProjectNavigationApi(navigation,token) {
+    return fetch(UrlRepository.Url_ProjectNavigationUpdate, {
       method: "PUT",
       headers: {
         "Accept": "application/json",
@@ -120,11 +120,11 @@ export function saveNavigationTitlesApi(navigation,token) {
       .catch(handleError);
   }
   
-  export function saveNavigationTitles(navigation) {
+  export function saveProjectNavigation(navigation) {
     return function(dispatch) {
-      return saveNavigationTitlesApi(navigation)
+      return saveProjectNavigationApi(navigation)
         .then(savedNavigation => {
-          dispatch(createNavigationTitlesSuccess(savedNavigation));
+          dispatch(createProjectNavigationSuccess(savedNavigation));
         })
         .catch(error => {
           throw error;
@@ -132,11 +132,11 @@ export function saveNavigationTitlesApi(navigation,token) {
     };
   }
   
-  export function updateNavigationTitles(navigation) {
+  export function updateProjectNavigation(navigation) {
     return function(dispatch) {
-      return updateNavigationTitlesApi(navigation)
+      return updateProjectNavigationApi(navigation)
         .then(updateNavigation => {
-          dispatch(updateNavigationTitlesSuccess(updateNavigation));
+          dispatch(updateProjectNavigationSuccess(updateNavigation));
         })
         .catch(error => {
           throw error;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getRequestDetail } from "../../../Redux/Actions/RequestAction";
 import { getRoles } from "../../../Redux/Actions/RolesActions";
-import { chanceRolesPages } from "../../../Redux/Actions/RolesPagesAction";
 import AddPagesRequest from "./AddPagesRequest";
 import {
   getPagesRequest,
@@ -15,8 +14,6 @@ function RolesRequest({
   getRoles,
   getPagesRequest,
   savePagesRequest,
-  chanceRolesPages,
-  chanceRolesPagesList,
   pagesRequests,
   tokenSuccess,
   roles,
@@ -46,7 +43,7 @@ function RolesRequest({
     }));
 
     if (event.target.name === "roleId") {
-      chanceRolesPages(tokenSuccess.token,value);
+      //chanceRolesPages(tokenSuccess.token,value);
     }
     if (event.target.name === "rolesPagesId") {
       getPagesRequest(value,tokenSuccess.token);
@@ -107,7 +104,7 @@ function RolesRequest({
   return (
     <AddPagesRequest
       roles={roles}
-      rolesPages={chanceRolesPagesList}
+      //rolesPages={chanceRolesPagesList}
       requests={requests}
       onChange={handleChange}
       onSave={handleSave}
@@ -126,7 +123,6 @@ function mapStateToProps(state) {
     roles: state.roleListReducer,
     requests:state.requestListReducer,
     pagesRequests: state.pagesRequestListReducer,
-    chanceRolesPagesList: state.changeRolesPagesReducer,
     tokenSuccess:state.tokenReducer
   };
 }
@@ -135,8 +131,7 @@ const mapDispatchToProps = {
   getRoles,
   getRequestDetail,
   getPagesRequest,
-  savePagesRequest,
-  chanceRolesPages,
+  savePagesRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RolesRequest);

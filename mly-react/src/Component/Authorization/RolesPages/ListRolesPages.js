@@ -1,24 +1,12 @@
 import React, { useEffect } from "react";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
-import {
-  deleteRolesPages,
-  updateRolesPages,
-  chanceRolesPages
-} from "../../../Redux/Actions/RolesPagesAction";
+
 
 function ListRolesPages({
-  chanceRolesPages,
-  deleteRolesPages,
-  updateRolesPages,
-  chanceRolesPagesList,
   tokenSuccess
 }) {
-  useEffect(() => {
-    if (chanceRolesPagesList.length === 0) {
-      chanceRolesPages(tokenSuccess.token, tokenSuccess.roleId);
-    }
-  }, []);
+
   const [state, setState] = React.useState({
     columns: [
       { title: "Role", field: "roleName" },
@@ -27,7 +15,7 @@ function ListRolesPages({
       { title: "Icon", field: "pageIconName" },
       { title: "Detay", field: "pagesDetail" }
     ],
-    data: chanceRolesPagesList,
+    //data: chanceRolesPagesList,
     options: [
       {
         headerStyle: {
@@ -56,7 +44,7 @@ function ListRolesPages({
       }}
       title="Rollerin girmeye yetkili olduğu sayfalar"
       columns={state.columns}
-      data={chanceRolesPagesList}
+      //data={chanceRolesPagesList}
       editable={{
         // onRowUpdate: (newData, oldData) =>
         // new Promise((resolve, reject) => {
@@ -69,9 +57,9 @@ function ListRolesPages({
         onRowDelete: oldData =>
           new Promise(resolve => {
             setTimeout(() => {
-              deleteRolesPages(oldData, tokenSuccess.token).then(() => {
-                chanceRolesPages(tokenSuccess.token, oldData.roleId);
-              });
+              //deleteRolesPages(oldData, tokenSuccess.token).then(() => {
+                //chanceRolesPages(tokenSuccess.token, oldData.roleId);
+              //});
               resolve();
             }, 600);
           })
@@ -88,9 +76,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  chanceRolesPages,
-  deleteRolesPages,
-  updateRolesPages
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListRolesPages);

@@ -12,7 +12,7 @@ export default  {
     pagesRequests:[],
     pages:[],
     navigationTitle:[],
-    navigationTitleDetail:[],
+    projectsNavigationDetail:[],
     users:[],
     userRoles:[],
     requests:[],
