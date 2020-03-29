@@ -8,20 +8,27 @@ import NewRequest from "../Component/Authorization/Requests/NewRequest"
 import RolesPages from "../Component/Authorization/RolesPages/RolesPages"
 import PagesRequest from "../Component/Authorization/PagesRequest/PagesRequest"
 import UserRoles from "../Component/Authorization/UserRoles/UserRoles"
+import NewProject from "../Component/Authorization/Projects/NewProject"
 import SignInSide from "../Component/Authantication/SignInSide"
 import ProtectedRoute from "./ProtectedRoute"
 import { connect } from "react-redux";
+import { getProjectNavigationDetail } from "../Redux/Actions/ProjectsNavigationAction";
 
 const LoginPage=()=>{
     return <Route path="/" exact component={SignInSide}/>
 }
 
 const DashboardPage=()=>{
+
     return <ProtectedRoute path="/" component={Dashboard}/>
 }
 
+
 const Router=()=> {
+
+
     return(
+     
 
     <Switch>
             if (!tokenSuccess.isAuthenticated) {
@@ -37,10 +44,11 @@ const Router=()=> {
             <ProtectedRoute path="/pagesrequests"  component={PagesRequest}/>
             <ProtectedRoute path="/rolespages/:rolId"  component={RolesPages}/>
             <ProtectedRoute path="/userroles"  component={UserRoles}/>
+            <ProtectedRoute path="/newproject"  component={NewProject}/>
             <ProtectedRoute component={NotFound}/>
      </Switch>    
-  
     )
+        
 }
 
 function mapStateToProps(state) {
@@ -48,5 +56,6 @@ function mapStateToProps(state) {
       tokenSuccess: state.tokenReducer
     };
   }
+
 
 export default connect(mapStateToProps)(Router);

@@ -19,6 +19,8 @@ import { useHistory  } from "react-router-dom";
 
 
 
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -71,7 +73,7 @@ const SignInSide=({saveToken,tokenSuccess,error, ...props}) => {
   const classes = useStyles();
   const historyy = useHistory()
 
-  useEffect(() => {
+  useEffect(() => {  
     setLogin({ ...props.login });
   }, [props.login]);
 
@@ -103,9 +105,9 @@ const SignInSide=({saveToken,tokenSuccess,error, ...props}) => {
     event.preventDefault();
     saveToken(login).then(() => {
 
-      //historyy.push("newrole")     
-      });    
-    }
+         
+    })
+  }
 
 
   return (
@@ -192,4 +194,4 @@ const mapDispatchToProps = {
   saveToken
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInSide);
+export default connect(mapStateToProps,mapDispatchToProps)(SignInSide);

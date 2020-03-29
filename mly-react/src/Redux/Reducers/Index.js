@@ -24,7 +24,7 @@ import saveRequestTypeReducer from "./RequestTypeReducer/SaveRequestTypeReducer"
 import errorReducer from "./ErrorReducer/ErrorReducer"
 import tokenReducer from "./LoginReducer/TokenReducer"
 import listProjectsNavigationDetailReducer from "./ProjectsNavigationReducer/ListProjectsNavigationDetailReducer"
-
+import listProjectsNavigationReducer from "./ProjectsNavigationReducer/ListProjectsNavigationReducer"
 
 const rootReducer = combineReducers({
     changePageReducer,
@@ -49,7 +49,8 @@ const rootReducer = combineReducers({
     saveRequestTypeReducer,
     errorReducer,
     tokenReducer,
-    listProjectsNavigationDetailReducer
+    listProjectsNavigationDetailReducer,
+    listProjectsNavigationReducer
 })
 
 export default rootReducer;

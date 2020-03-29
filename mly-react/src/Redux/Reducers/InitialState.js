@@ -13,6 +13,7 @@ export default  {
     pages:[],
     navigationTitle:[],
     projectsNavigationDetail:[],
+    projectsNavigation:[],
     users:[],
     userRoles:[],
     requests:[],
@@ -21,6 +22,7 @@ export default  {
     
     savedRole:{}, //default kayıt edilecek seçenekler yer alabilir. Ör: Ip adresi gibi
     savedPages:{},
+    savedProjectsNavigation:{},
     savedRequest:{},
     savedRolesPages:{},
     savedPagesRequest:{},

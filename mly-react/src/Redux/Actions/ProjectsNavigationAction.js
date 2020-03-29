@@ -55,24 +55,24 @@ export function createProjectNavigationSuccess(navigation) {
 export function getProjectNavigationDetail(roleId,token)
 {
 
-  return function(dispatch) {
-
-    let url = UrlRepository.Url_ProjectNavigationDetailList;
-
-    if (roleId) {
-      url = url + "?roleId=" + roleId;
-    }
-
-    return fetch(url, {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+    return function(dispatch) {
+      let url = UrlRepository.Url_ProjectNavigationDetailList;
+  
+      if (roleId) {
+        url = url + "?roleId=" + roleId;
       }
-    })
-      .then(response => response.json())
-      .then(result => dispatch(getProjectNavigationDetailSuccess(result)));
-  };
+  
+      return fetch(url, {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(result => dispatch(getProjectNavigationDetailSuccess(result)));
+    };
+
 
 }
 

@@ -9,6 +9,7 @@ export function createLoginSuccess(login) {
   return { type: actionsTypes.CREATE_LOGIN_SUCCESS, payload: login };
 }
 
+
 export function createTokenSuccess(
   tokenSuccess,
   expiration,
@@ -19,6 +20,7 @@ export function createTokenSuccess(
   isAuthenticated
 
 ) {
+
   const payload = {
     token: tokenSuccess,
     expiration: expiration,
@@ -29,6 +31,7 @@ export function createTokenSuccess(
     isAuthenticated: isAuthenticated
 
   }
+
   return {
     type: actionsTypes.CREATE_TOKEN_SUCCESS,
     payload:payload
@@ -87,7 +90,7 @@ export function saveToken(login) {
   return function(dispatch) {
     return saveTokenApi(login)
       .then(savedToken => {
-        //console.warn('Token', savedToken)
+        
         dispatch(
           createTokenSuccess(
             savedToken.token,
@@ -99,7 +102,7 @@ export function saveToken(login) {
             true
           )
         );
-        //dispatch(createLoginSuccess(savedToken));
+
       })
       .catch(error => {
         dispatch(loginFail(null, null, null, null,null,null, false));
